@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "媒体资讯";
+}
+<style>
+    .navbar-about {
+        border: 1px solid gray;
+        position: fixed;
+        top: 150px;
+        z-index: 10;
+    }
+
+    .about-content h2 {
+        color: #337ab7;
+        margin-top: 0px;
+        font-weight: bold;
+    }
+</style>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="tab-content about-content">
+                    <div class="tab-pane active" id="companynews">
+                        <h2>公司新闻</h2>
+                        <hr />
+
+
+                    </div>
+                    <div class="tab-pane" id="industrytrends">
+                        <h2>行业洞察</h2>
+                        <hr />
+
+
+                    </div>
+                    <div class="tab-pane" id="intellmake">
+                        <h2>智能制造</h2>
+                        <hr />
+                    </div>
+                    <div class="tab-pane" id="intellhardware">
+                        <h2>智能硬件</h2>
+                        <hr />
+                    </div>
+                    <div class="tab-pane" id="activity">
+                        <h2>展会活动</h2>
+                        <hr />
+                    </div>
+                    <div class="tab-pane" id="innovationinfo">
+                        <h2>创新创业</h2>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <ul class="nav nav-tabs" id="infoTab">
+                    <li class="active"><a href="#companynews"><strong>公司新闻</strong></a></li>
+                    <li><a href="#industrytrends"><strong>行业洞察</strong></a></li>
+                    <li><a href="#intellmake"><strong>智能制造</strong></a></li>
+                    <li><a href="#intellhardware"><strong>智能硬件</strong></a></li>
+                    <li><a href="#activity"><strong>展会活动</strong></a></li>
+                    <li><a href="#innovationinfo"><strong>创新创业</strong></a></li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+
+    $(function () {
+        $('#infoTab a:first').tab('show');//初始化显示哪个tab
+
+        $('#infoTab a').click(function (e) {
+            e.preventDefault();//阻止a链接的跳转行为
+            $(this).tab('show');//显示当前选中的链接及关联的content
+        })
+    })
+</script>

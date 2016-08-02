@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardaGroup.Web", "HardaGroup.Web\HardaGroup.Web.csproj", "{7FB924BE-6531-400E-B884-FFFBF37FED14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardaGroup.Service", "HardaGroup.Service\HardaGroup.Service.csproj", "{54270633-59CE-4DCA-8BBD-C5873EB9E9DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardaGroup.Utility", "HardaGroup.Utility\HardaGroup.Utility.csproj", "{C2BAE937-B368-4165-BD09-B23D87EE3238}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardaGroup.Models", "HardaGroup.Models\HardaGroup.Models.csproj", "{3F94BCE4-4E28-47C0-89DD-A15430EA9481}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardaGroup.Entities", "HardaGroup.Entities\HardaGroup.Entities.csproj", "{791C5414-503E-46F4-BCA1-2C7645298C3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardaGroup.DataAccess", "HardaGroup.DataAccess\HardaGroup.DataAccess.csproj", "{979A785B-C8C6-4B96-B948-61385D114235}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7FB924BE-6531-400E-B884-FFFBF37FED14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FB924BE-6531-400E-B884-FFFBF37FED14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FB924BE-6531-400E-B884-FFFBF37FED14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FB924BE-6531-400E-B884-FFFBF37FED14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54270633-59CE-4DCA-8BBD-C5873EB9E9DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54270633-59CE-4DCA-8BBD-C5873EB9E9DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54270633-59CE-4DCA-8BBD-C5873EB9E9DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54270633-59CE-4DCA-8BBD-C5873EB9E9DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2BAE937-B368-4165-BD09-B23D87EE3238}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2BAE937-B368-4165-BD09-B23D87EE3238}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2BAE937-B368-4165-BD09-B23D87EE3238}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2BAE937-B368-4165-BD09-B23D87EE3238}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F94BCE4-4E28-47C0-89DD-A15430EA9481}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F94BCE4-4E28-47C0-89DD-A15430EA9481}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F94BCE4-4E28-47C0-89DD-A15430EA9481}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F94BCE4-4E28-47C0-89DD-A15430EA9481}.Release|Any CPU.Build.0 = Release|Any CPU
+		{791C5414-503E-46F4-BCA1-2C7645298C3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{791C5414-503E-46F4-BCA1-2C7645298C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{791C5414-503E-46F4-BCA1-2C7645298C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{791C5414-503E-46F4-BCA1-2C7645298C3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{979A785B-C8C6-4B96-B948-61385D114235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{979A785B-C8C6-4B96-B948-61385D114235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{979A785B-C8C6-4B96-B948-61385D114235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{979A785B-C8C6-4B96-B948-61385D114235}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
