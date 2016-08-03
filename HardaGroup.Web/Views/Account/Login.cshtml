@@ -1,63 +1,80 @@
 ﻿@using HardaGroup.Web.Models
 @model LoginViewModel
 @{
+    Layout = null;
     ViewBag.Title = "登录";
 }
 
-<h2>@ViewBag.Title。</h2>
-<div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="~/Content/login-style.css">
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.placeholder.js"></script>
+</head>
+
+
+<body>
+    <div class="container">
+        <div id="content">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <h4>使用本地帐户登录。</h4>
+
+                <h1>欢迎登录华尔达</h1>
                 <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.ValidationSummary(true, null, new { @class = "login-tip" })
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        @Html.TextBoxFor(m => m.UserName, new { @placeholder = "用户名", @class = "username" })
+                        <br />
+                        @Html.ValidationMessageFor(m => m.UserName, null, new { @class = "login-tip" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        @Html.PasswordFor(m => m.Password, new { @placeholder = "密 码", @class = "password" })
+                        <br />
+                        @Html.ValidationMessageFor(m => m.Password, null, new { @class = "login-tip" })
                     </div>
                 </div>
+
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
+                    <div class="col-md-offset-2 col-md-10 left">
                         <div class="checkbox">
                             @Html.CheckBoxFor(m => m.RememberMe)
                             @Html.LabelFor(m => m.RememberMe)
                         </div>
                     </div>
+                    <div style="clear:both"></div>
+
                 </div>
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="登录" class="btn btn-default" />
-                    </div>
+                    <input type="submit" value="登录" />
+                    <a href="/">回到首页</a>
+                    <a href="/Account/Register">Register</a>
                 </div>
-                <p>
-                    @Html.ActionLink("注册为新用户", "Register")
-                </p>
-                @* 在为密码重置功能启用帐户确认后启用此项
-                    <p>
-                        @Html.ActionLink("忘记了密码?", "ForgotPassword")
-                    </p>*@
             }
-        </section>
-    </div>
+        </div><!-- content -->
+    </div><!-- container -->
     <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
+        <div id="socialLoginForm" style="display:none">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel() { ReturnUrl = ViewBag.ReturnUrl })
+        </div>
     </div>
-</div>
+</body>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+</html>
+<script>
+    $(function () {
+        // Invoke the plugin
+        $('input, textarea').placeholder({ customClass: 'my-placeholder' });
+
+    });
+</script>

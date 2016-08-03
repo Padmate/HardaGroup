@@ -170,7 +170,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -182,6 +181,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Common.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\login-style.css" />
     <Content Include="Content\main.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\font-awesome\css\font-awesome.css" />
@@ -196,10 +196,12 @@
     <Content Include="images\big_model.jpg" />
     <Content Include="images\favicon.png" />
     <Content Include="images\hardagroup_logo.png" />
+    <Content Include="images\login-bg.jpg" />
     <Content Include="images\logo.png" />
     <Content Include="images\mac.jpg" />
     <Content Include="images\medium_model.jpg" />
     <Content Include="images\small_model.jpg" />
+    <Content Include="Scripts\animatedheader.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\fontawesome-webfont.eot" />
@@ -237,12 +239,14 @@
     <Content Include="fonts\font-awesome\scss\_stacked.scss" />
     <Content Include="fonts\font-awesome\scss\_variables.scss" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\classie.js" />
     <Content Include="Scripts\headroom.min.js" />
     <Content Include="Scripts\html5shiv.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jQuery.headroom.min.js" />
+    <Content Include="Scripts\jquery.placeholder.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -301,6 +305,28 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HardaGroup.DataAccess\HardaGroup.DataAccess.csproj">
+      <Project>{979a785b-c8c6-4b96-b948-61385d114235}</Project>
+      <Name>HardaGroup.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HardaGroup.Entities\HardaGroup.Entities.csproj">
+      <Project>{791c5414-503e-46f4-bca1-2c7645298c3b}</Project>
+      <Name>HardaGroup.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HardaGroup.Models\HardaGroup.Models.csproj">
+      <Project>{3f94bce4-4e28-47c0-89dd-a15430ea9481}</Project>
+      <Name>HardaGroup.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HardaGroup.Service\HardaGroup.Service.csproj">
+      <Project>{54270633-59ce-4dca-8bbd-c5873eb9e9dd}</Project>
+      <Name>HardaGroup.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HardaGroup.Utility\HardaGroup.Utility.csproj">
+      <Project>{c2bae937-b368-4165-bd09-b23d87ee3238}</Project>
+      <Name>HardaGroup.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,41 +1,66 @@
 ﻿@model HardaGroup.Web.Models.RegisterViewModel
 @{
+    Layout = null;
     ViewBag.Title = "注册";
 }
 
-<h2>@ViewBag.Title。</h2>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="~/Content/login-style.css">
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/jquery.placeholder.js"></script>
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>创建新帐户。</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="注册" />
-        </div>
-    </div>
-}
+</head>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+
+<body>
+    <div class="container">
+        <div id="content">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h4>注册新账户。</h4>
+                <hr />
+                @Html.ValidationSummary(false, null, new { @class = "login-tip" })
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.UserName, new { @placeholder = "用户名", @class = "username" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Password, new { @placeholder = "密码", @class = "password" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @placeholder = "确认密码", @class = "password" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.EmailAddress, new { @placeholder = "邮箱", @class = "email" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="注册" />
+                    <a href="/">回到首页</a>
+                    <a href="/Account/Login">Login</a>
+
+                </div>
+            }
+        </div><!-- content -->
+    </div><!-- container -->
+</body>
+
+</html>
+<script>
+    $(function () {
+        // Invoke the plugin
+        $('input, textarea').placeholder({ customClass: 'my-placeholder' });
+
+    });
+</script>

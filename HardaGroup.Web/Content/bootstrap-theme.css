@@ -1,14 +1,20 @@
 /*******************************/
 /*         Navigatioin         */
 /*******************************/
+header{
+    padding-top:100px;
+}
 .navbar-inverse 
 { 
     border-radius: 0; 
-    background-color:transparent; 
+    background-color:white; 
     border-bottom:none;
     min-height:100px; 
     padding-top:25px; 
     margin-bottom:0;
+    -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+    -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+    box-shadow: 0 -1px 10px rgba(0,0,0,.5);
 
 }
 .navbar-inverse-secondary{
@@ -21,19 +27,42 @@
 }
 
 .navbar-inverse .navbar-nav > li > a,
-.navbar-inverse .navbar-nav > .open ul > a { color:rgba(255, 255, 255, .4); }
+.navbar-inverse .navbar-nav > .open ul > a 
+{ 
+    color:#333; 
+    font-weight:bold;
+}
 
 .navbar-inverse .navbar-nav > .active > a,
 .navbar-inverse .navbar-nav > .active > a:hover, 
-.navbar-inverse .navbar-nav > .active > a:focus { color: #fff; background:none ; }
-.navbar-inverse .navbar-nav > .open > a{ background:none; color:white; }
+.navbar-inverse .navbar-nav > .active > a:focus 
+{ 
+    color:#337ab7; 
+    background:none; 
 
+}
+.navbar-inverse .navbar-nav > .open > a
+{ 
+    background:none; 
+    color:#000; 
+
+}
 .navbar-inverse .navbar-nav>li>a:hover, 
 .navbar-inverse .navbar-nav>li>a:focus,
 .navbar-inverse .navbar-nav>.open>a:hover, 
-.navbar-inverse .navbar-nav>.open>a:focus { background:none; color:white; }
+.navbar-inverse .navbar-nav>.open>a:focus 
+{ 
+    color:#337ab7; 
+    background:none; 
 
-.navbar-inverse .navbar-nav > .active > a { background:none; color:white; }
+}
+
+.navbar-inverse .navbar-nav > .active > a 
+{ 
+    color:#337ab7; 
+    background:none; 
+    
+}
 
 .navbar-inverse .navbar-brand { font-family: "Open sans", helvetica, arial; font-size: 24px; color:white; padding:0 0 0 15px; margin:12px 0 0 0; }
 	.navbar-inverse .navbar-brand img { margin-top:-8px;}
@@ -41,23 +70,45 @@
 .navbar-nav .dropdown-menu {
 	left:-5px;
 	font-size: 13px;
-	background-color: rgba(0, 0, 0, .7);
+	background-color: #333;
 	border: 0px none;
 	-webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px;
 	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
 }
-.navbar-nav .dropdown-menu > li > a { color:rgba(255, 255, 255, .7); padding:7px 20px; }
+.navbar-nav .dropdown-menu > li > a 
+{ 
+    color:#FFF; 
+    padding:7px 20px; 
+}
 	.navbar-nav .dropdown-menu > li > a:hover,
 	.navbar-nav .dropdown-menu > li > a:focus,
-	.navbar-nav .dropdown-menu > .active > a:hover{ background: rgba(255, 255, 255, .1); color:white; }
+	.navbar-nav .dropdown-menu > .active > a:hover{ 
+        background: rgba(255, 255, 255, .1); 
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E5333333,endColorstr=#E5333333); /*IE8*/
+        color:white; 
+
+	}
 
 .navbar-nav .dropdown-menu > .active > a,
-.navbar-nav .dropdown-menu > .active > a:focus { background: none; color:#fff; }
+.navbar-nav .dropdown-menu > .active > a:focus 
+{ 
+    background: rgba(255, 255, 255, .1); 
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E5333333,endColorstr=#E5333333); /*IE8*/ 
+    color:#fff; 
 
-.navbar-nav .btn { border:1px solid rgba(255, 255, 255, .2); margin-left:5px; margin-top:5px; padding-top:10px; padding-bottom:10px; }
+}
 
+.navbar-nav .btn 
+{ 
+    border:1px solid gray; 
+    margin-left:5px; 
+    margin-top:5px; 
+    padding-top:10px; 
+    padding-bottom:10px; 
+
+}
 .navbar-nav a.btn:focus, 
-.navbar-nav a.btn:hover  { border:1px solid rgba(255,255,255,.6); }
+.navbar-nav a.btn:hover  { border:1px solid gray; }
 
 .navbar-collapse { border:0 none;  border-top:0 none; box-shadow: none; }
 @media (max-width: 767px) {

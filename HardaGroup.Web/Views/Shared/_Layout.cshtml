@@ -10,7 +10,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Padmate Allen">
 
@@ -29,42 +30,38 @@
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="~/Scripts/html5shiv.js"></script>
-    <script src="~/Scripts/respond.min.js"></script>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 
 <body class="home">
     <!-- Fixed navbar -->
-    @{
-        var bgClass = "";
-        if (ViewBag.From != "Default")
-        {
-            bgClass = "navbar-inverse-secondary";
-        }
-    }
     
-    <div class="navbar navbar-inverse navbar-fixed-top headroom @bgClass">
+    
+    <div class="navbar navbar-inverse navbar-fixed-top headroom">
         <div class="container">
             <div class="navbar-header">
                 <!-- Button for smallest screens -->
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span> 
-                    <span class="icon-bar"></span> 
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/"><img src="~/images/hardagroup_logo.png" alt="hardagroup"></a>
             </div>
             <div class="navbar-collapse collapse">
+                @Html.Partial("_LoginPartial")
                 <ul class="nav navbar-nav pull-right head-nav">
                     @if (ViewBag.From != "Default")
                     {
-                        <li><a  href="/">首页</a></li>
+                        <li><a href="/">首页</a></li>
 
                     }
                     <li class="checkmenu"><a href="/Home/About">关于华尔达</a></li>
                     <li class="checkmenu"><a href="/IntelligentManufacturing/Index">智能制造</a></li>
-                    
+
                     <li class="dropdown checkmenu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">解决方案 <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -79,26 +76,42 @@
                     <li class="checkmenu"><a href="/Information/Index">媒体资讯</a></li>
 
                     <li class="checkmenu"><a href="/Home/JoinUs">加入华尔达</a></li>
-                    @*@Html.Partial("_LoginPartial")*@
+
 
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
     </div>
-    @if (ViewBag.From != "Default")
-    {
-        <header id="head" class="secondary"></header>
 
-    }
-    
     <!-- JavaScript libs are placed at the end of the document so the pages load faster -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    <script src="~/Scripts/headroom.min.js"></script>
-    <script src="~/Scripts/jQuery.headroom.min.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/classie.js"></script>
+    <script src="~/Scripts/animatedheader.js"></script>
+
+    @*<script src="~/Scripts/headroom.min.js"></script>
+    <script src="~/Scripts/jQuery.headroom.min.js"></script>*@
     <script src="~/Scripts/template.js"></script>
 
     @RenderSection("scripts", required: false)
+
+    @if (ViewBag.From != "Default")
+    {
+        <header>
+            <div id="head-img" class="carousel slide">
+                <!-- 轮播（Carousel）指标 -->
+                <ol class="carousel-indicators">
+                </ol>
+                <!-- 轮播（Carousel）项目 -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img src="http://www.zowee.com.cn/upload/image/20160721/20160721171126_5312.jpg" alt="Third slide">
+                    </div>
+                </div>
+            </div>
+
+        </header>
+    }
     <div>
         @RenderBody()
 
@@ -109,8 +122,23 @@
         <div class="footer1">
             <div class="container">
                 <div class="row">
+                    <div class="col-md-4 widget">
+                        <h3 class="widget-title">旗下网站</h3>
+                        <div class="widget-body">
+                            <ul>
+                                <li>
+                                    <a class="customer-content-xs"  href="http://www.xiamenip.cn">智能<sup>+</sup>创新创业公共服务平台</a>
 
-                    <div class="col-md-3 widget">
+                                </li>
+                                <li>
+                                    <a class="customer-content-xs" href="http://www.padmate.cn">派美特</a>
+
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="col-md-4 widget">
                         <h3 class="widget-title">联系我们</h3>
                         <div class="widget-body">
                             <p>
@@ -122,7 +150,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-3 widget">
+                    <div class="col-md-4 widget">
                         <h3 class="widget-title">关注我们</h3>
                         <div class="widget-body">
                             <p class="follow-me-icons">
@@ -134,13 +162,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6 widget">
-                        <h3 class="widget-title">Text widget</h3>
-                        <div class="widget-body">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi, dolores, quibusdam architecto voluptatem amet fugiat nesciunt placeat provident cumque accusamus itaque voluptate modi quidem dolore optio velit hic iusto vero praesentium repellat commodi ad id expedita cupiditate repellendus possimus unde?</p>
-                            <p>Eius consequatur nihil quibusdam! Laborum, rerum, quis, inventore ipsa autem repellat provident assumenda labore soluta minima alias temporibus facere distinctio quas adipisci nam sunt explicabo officia tenetur at ea quos doloribus dolorum voluptate reprehenderit architecto sint libero illo et hic.</p>
-                        </div>
-                    </div>
+                    
 
                 </div> <!-- /row of widgets -->
             </div>
