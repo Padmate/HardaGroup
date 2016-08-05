@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HardaGroup.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -14,6 +15,10 @@ namespace HardaGroup.Web.Controllers
         /// <returns></returns>
         public ActionResult ComponentProduct()
         {
+            List<M_Image> bgImages = new List<M_Image>(){
+                new M_Image(){VirtualPath ="../images/solution.png", Name="solution.png"}
+            };
+            ViewData["bgimages"] = bgImages;
             return View();
         }
 
@@ -23,6 +28,10 @@ namespace HardaGroup.Web.Controllers
         /// <returns></returns>
         public ActionResult Research()
         {
+            List<M_Image> bgImages = new List<M_Image>(){
+                new M_Image(){VirtualPath ="../images/solution.png", Name="solution.png"}
+            };
+            ViewData["bgimages"] = bgImages;
             return View();
         }
     }

@@ -1,9 +1,15 @@
-﻿@{
+﻿@using HardaGroup.Models;
+@{
     Layout = null;
     var title = "HARDA|华尔达集团";
     if(!string.IsNullOrEmpty(ViewBag.Title))
     {
         title = ViewBag.Title+"|"+title;
+    }
+    
+    List<M_Image> bgimages = (List<M_Image>)ViewData["bgimages"];
+    if (bgimages == null){
+        bgimages = new List<M_Image>();
     }
 }
 <!DOCTYPE html>
@@ -22,9 +28,11 @@
     <link rel="stylesheet" href="~/Content/font-awesome.min.css">
 
     <!-- Custom styles for our template -->
-    <link rel="stylesheet" href="~/Content/bootstrap-theme.css" media="screen">
+    
+    <link rel="stylesheet" href="~/Content/theme/default-theme.css" media="screen">
     <link rel="stylesheet" href="~/Content/main.css">
     <link rel="stylesheet" href="~/Content/animate.css">
+    <link rel="stylesheet" href="~/Content/theme/theme-switcher.css">
     <link rel="stylesheet" href="~/Content/Common.css">
     <link rel="stylesheet" href="~/fonts/font-awesome/css/font-awesome.min.css">
 
@@ -36,10 +44,45 @@
 
 </head>
 
-<body class="home">
+<body id="page-top" class="home">
     <!-- Fixed navbar -->
-    
-    
+
+    <div class="theme_style_switcher">
+        <div class="style-switch-button">
+            <i class="fa fa-spin fa-cog"></i>
+        </div>
+        <h4>模板选择</h4>
+        <a id="default" href="javaScript:void(0)"></a>
+        <a id="black" href="javaScript:void(0)"></a>
+        <a id="green" href="javaScript:void(0)"></a>
+        <a id="pink" href="javaScript:void(0)"></a>
+        <a id="blue" href="javaScript:void(0)"></a>
+        <a id="purple" href="javaScript:void(0)"></a>
+    </div>
+
+    <!--右侧边栏-->
+    <div class="nav-float nav-right-float">
+        <ul>
+            <!--返回顶部-->
+            <li id="linavtop" class="navtop">
+                <a class="rightSection page-scroll information-box" href="#page-top"
+                   style="display: block; background-color: #337ab7">
+                    <i class=" fa fa-angle-up">
+                    </i>
+                    <div class="information-box-caption">
+                        <div class="information-box-caption-content">
+
+                            <div style="font-size:medium;height:50px;">
+                                返回<br />顶部
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+            </li>
+        </ul>
+    </div>
+
     <div class="navbar navbar-inverse navbar-fixed-top headroom">
         <div class="container">
             <div class="navbar-header">
@@ -52,33 +95,41 @@
                 <a class="navbar-brand" href="/"><img src="~/images/hardagroup_logo.png" alt="hardagroup"></a>
             </div>
             <div class="navbar-collapse collapse">
-                @Html.Partial("_LoginPartial")
-                <ul class="nav navbar-nav pull-right head-nav">
-                    @if (ViewBag.From != "Default")
-                    {
-                        <li><a href="/">首页</a></li>
+                <div class="navbar-top text-right">
+                    <a href="/Home/Contact">联系我们 |</a>
+                    <a href="javaScript:void(0)">English</a>
+                </div>
+                <div class="navbar-bottom">
+                     @Html.Partial("_LoginPartial")
+                    <ul class="nav navbar-nav pull-right head-nav">
+                        @if (ViewBag.From != "Default")
+                        {
+                            <li><a href="/">首页</a></li>
 
-                    }
-                    <li class="checkmenu"><a href="/Home/About">关于华尔达</a></li>
-                    <li class="checkmenu"><a href="/IntelligentManufacturing/Index">智能制造</a></li>
+                        }
 
-                    <li class="dropdown checkmenu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">解决方案 <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="http://www.padmate.cn" target="_blank">智能产品及新型电子产品</a></li>
-                            <li><a href="/Solution/ComponentProduct">组件产品</a></li>
-                            <li><a href="http://www.harda.net" target="_blank">卫浴产品</a></li>
-                            <li><a href="/Solution/Research">研发</a></li>
+                        <li class="checkmenu"><a href="/Home/About">关于华尔达</a></li>
+                        <li class="checkmenu"><a href="/IntelligentManufacturing/Index">智能制造</a></li>
 
-                        </ul>
-                    </li>
-                    <li class="checkmenu"><a href="/Innovation/Index">创新创业</a></li>
-                    <li class="checkmenu"><a href="/Information/Index">媒体资讯</a></li>
+                        <li class="dropdown checkmenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">解决方案 <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="http://www.padmate.cn" target="_blank">智能产品及新型电子产品</a></li>
+                                <li><a href="/Solution/ComponentProduct">组件产品</a></li>
+                                <li><a href="http://www.harda.net" target="_blank">卫浴产品</a></li>
+                                <li><a href="/Solution/Research">研发</a></li>
 
-                    <li class="checkmenu"><a href="/Home/JoinUs">加入华尔达</a></li>
+                            </ul>
+                        </li>
+                        <li class="checkmenu"><a href="/Innovation/Index">创新创业</a></li>
+                        <li class="checkmenu"><a href="/Information/Index">媒体资讯</a></li>
+
+                        <li class="checkmenu"><a href="/Home/JoinUs">加入华尔达</a></li>
 
 
-                </ul>
+                    </ul>
+                </div>
+                
             </div><!--/.nav-collapse -->
         </div>
     </div>
@@ -88,35 +139,65 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/classie.js"></script>
     <script src="~/Scripts/animatedheader.js"></script>
+    <script src="~/Scripts/jquery.cookie.js"></script>
+    <script src="~/Scripts/jq_scroll.js"></script>
 
-    @*<script src="~/Scripts/headroom.min.js"></script>
-    <script src="~/Scripts/jQuery.headroom.min.js"></script>*@
     <script src="~/Scripts/template.js"></script>
 
     @RenderSection("scripts", required: false)
 
-    @if (ViewBag.From != "Default")
-    {
-        <header>
-            <div id="head-img" class="carousel slide">
-                <!-- 轮播（Carousel）指标 -->
-                <ol class="carousel-indicators">
-                </ol>
-                <!-- 轮播（Carousel）项目 -->
-                <div class="carousel-inner">
-                    <div class="item active">
-                        <img src="http://www.zowee.com.cn/upload/image/20160721/20160721171126_5312.jpg" alt="Third slide">
-                    </div>
-                </div>
-            </div>
 
-        </header>
-    }
+    <header>
+        <div id="headbg-img" class="carousel slide">
+            <!-- 轮播（Carousel）指标 -->
+            <ol class="carousel-indicators">
+                @if (bgimages.Count > 1)
+                {
+                    for (int i = 0; i < bgimages.Count; i++)
+                    {
+                        var activeClass = "";
+                        if (i == 0)
+                        {
+                            activeClass = "active";
+                        }
+                        <li data-target="#headbg-img" data-slide-to="@i" class="@activeClass"></li>
+                    }
+                }
+                
+            </ol>
+            <!-- 轮播（Carousel）项目 -->
+            <div class="carousel-inner">
+                @for (int i = 0; i < bgimages.Count; i++)
+                {
+                    var activeClass = "";
+                    if (i == 0)
+                    {
+                        activeClass = "active";
+                    }
+                    <div class="item @activeClass">
+                        <img class="img-responsive" src="@bgimages[i].VirtualPath" alt="@bgimages[i].Name.Split('.').First()">
+
+                    </div>
+                }
+            </div>
+            @if (bgimages.Count > 1)
+            {
+                <!-- 轮播（Carousel）导航 -->
+                <a class="carousel-control" href="#headbg-img"
+                   data-slide="prev"><span class="icon-prev" style="font-size: 50px; top: 70%;"></span></a>
+                <a class="carousel-control" style="right:0;left:auto;" href="#headbg-img"
+                   data-slide="next"><span class="icon-next" style="font-size: 50px; top: 70%;"></span></a>
+            }
+            
+        </div>
+    </header>
+
+    
     <div>
         @RenderBody()
 
     </div>
-   
+
     <footer id="footer" class="top-space">
 
         <div class="footer1">
@@ -127,7 +208,7 @@
                         <div class="widget-body">
                             <ul>
                                 <li>
-                                    <a class="customer-content-xs"  href="http://www.xiamenip.cn">智能<sup>+</sup>创新创业公共服务平台</a>
+                                    <a class="customer-content-xs" href="http://www.xiamenip.cn">智能<sup>+</sup>创新创业公共服务平台</a>
 
                                 </li>
                                 <li>
@@ -162,7 +243,7 @@
                         </div>
                     </div>
 
-                    
+
 
                 </div> <!-- /row of widgets -->
             </div>
@@ -193,3 +274,48 @@
 
 </body>
 </html>
+<script>
+    $(function () {
+        
+        var cookieTheme = $.cookie("harda-theme");
+        if (cookieTheme)
+        {
+            LoadCss(cookieTheme);
+        } 
+
+        $(".style-switch-button").click(function () {
+            
+            var hasActive = $(".theme_style_switcher").hasClass("style-switch-active");
+            if(!hasActive)
+            {
+                $(".theme_style_switcher").addClass("style-switch-active");
+            }else
+            {
+                $(".theme_style_switcher").removeClass("style-switch-active");
+            }
+        });
+
+        $(".theme_style_switcher>a").click(function () {
+            LoadCss(this.id);
+            $.cookie("harda-theme", this.id, { expires: 7, path: '/' });
+
+        });
+
+        
+    });
+
+    function LoadCss(cssname) {
+        //兼容IE8
+        dynamicLoading.css("../Content/theme/" + cssname + "-theme.css");
+
+        //只支持IE9+
+        //$("<link>")
+        //.attr({
+        //    rel: "stylesheet",
+        //    type: "text/css",
+        //    href: "../Content/theme/" + cssname + "-theme.css"
+        //})
+        //.appendTo("head");
+    }
+
+</script>

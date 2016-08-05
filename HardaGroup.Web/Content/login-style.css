@@ -1,5 +1,5 @@
 body {
-	background: #DCDDDF url(../images/login-bg.jpg);
+	background: #DCDDDF url(../images/login-bg1.jpg);
 	color: #000;
 	font: 14px Arial;
 	margin: 0 auto;
@@ -32,11 +32,11 @@ form:after {
 .container { margin: 25px auto; position: relative; width: 900px; }
 #content {
 	background: #f9f9f9;
-	background: -moz-linear-gradient(top,  rgba(248,248,248,1) 0%, rgba(249,249,249,1) 100%);
-	background: -webkit-linear-gradient(top,  rgba(248,248,248,1) 0%,rgba(249,249,249,1) 100%);
-	background: -o-linear-gradient(top,  rgba(248,248,248,1) 0%,rgba(249,249,249,1) 100%);
-	background: -ms-linear-gradient(top,  rgba(248,248,248,1) 0%,rgba(249,249,249,1) 100%);
-	background: linear-gradient(top,  rgba(248,248,248,1) 0%,rgba(249,249,249,1) 100%);
+	background: -moz-linear-gradient(top,  rgba(248,248,248,1) 0%, #1682ab 100%);
+	background: -webkit-linear-gradient(top,  rgba(248,248,248,1) 0%,#1682ab 100%);
+	background: -o-linear-gradient(top,  rgba(248,248,248,1) 0%,#1682ab 100%);
+	background: -ms-linear-gradient(top,  rgba(248,248,248,1) 0%,#1682ab 100%);
+	background: linear-gradient(top,  rgba(248,248,248,1) 0%,#1682ab 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8f8f8', endColorstr='#f9f9f9',GradientType=0 );
 	-webkit-box-shadow: 0 1px 0 #fff inset;
 	-moz-box-shadow: 0 1px 0 #fff inset;
@@ -48,7 +48,6 @@ form:after {
 	padding: 25px 0 0;
 	position: relative;
 	text-align: center;
-	text-shadow: 0 1px 0 #fff;
 	width: 400px;
 }
 #content h1 {
@@ -198,9 +197,9 @@ form:after {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fec151', endColorstr='#fee79a',GradientType=0 );
 }
 #content form div a {
-	color: #004a80;
+	color: white;
     float: right;
-    font-size: 12px;
+    font-size: 13px;
     margin: 30px 15px 0 0;
     text-decoration: underline;
 }

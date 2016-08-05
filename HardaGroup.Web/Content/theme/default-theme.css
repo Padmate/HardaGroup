@@ -3,6 +3,7 @@
 /*******************************/
 header{
     padding-top:100px;
+    background-color:white;
 }
 .navbar-inverse 
 { 
@@ -63,6 +64,14 @@ header{
     background:none; 
     
 }
+.navbar-top>a{
+    color:#333;
+}
+.navbar-top>a:hover,
+.navbar-top>a:focus{
+    color:#337ab7;
+}
+
 
 .navbar-inverse .navbar-brand { font-family: "Open sans", helvetica, arial; font-size: 24px; color:white; padding:0 0 0 15px; margin:12px 0 0 0; }
 	.navbar-inverse .navbar-brand img { margin-top:-8px;}
@@ -70,31 +79,29 @@ header{
 .navbar-nav .dropdown-menu {
 	left:-5px;
 	font-size: 13px;
-	background-color: #333;
-	border: 0px none;
-	-webkit-border-radius: 0px; -moz-border-radius: 0px; border-radius: 0px;
+	background-color: white;
+	border: 1px solid #dfdfdf;
+	-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius:5px;
 	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
 }
 .navbar-nav .dropdown-menu > li > a 
 { 
-    color:#FFF; 
+    color:#333; 
     padding:7px 20px; 
 }
 	.navbar-nav .dropdown-menu > li > a:hover,
 	.navbar-nav .dropdown-menu > li > a:focus,
 	.navbar-nav .dropdown-menu > .active > a:hover{ 
-        background: rgba(255, 255, 255, .1); 
-        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E5333333,endColorstr=#E5333333); /*IE8*/
-        color:white; 
+        background: none;
+        color:#337ab7; 
 
 	}
 
 .navbar-nav .dropdown-menu > .active > a,
 .navbar-nav .dropdown-menu > .active > a:focus 
 { 
-    background: rgba(255, 255, 255, .1); 
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#E5333333,endColorstr=#E5333333); /*IE8*/ 
-    color:#fff; 
+    background:none;
+    color:#337ab7; 
 
 }
 

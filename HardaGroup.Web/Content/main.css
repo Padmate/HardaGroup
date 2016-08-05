@@ -97,3 +97,88 @@ section{
     padding:50px 0px;
 }
 
+/*totop*/
+.nav-float{
+    width: 60px;
+    position: fixed;
+    z-index: 1999;
+    background-color:transparent;
+    margin: 10% 0 0 10px;
+}
+.nav-left-float {
+    left:0;
+    top:50px;
+}
+
+.nav-right-float {
+    bottom: 50px;
+    right:0;
+}
+
+.rightSection {
+    display: none;
+    font-size: 32px;
+    font-weight: bold;
+    height: 50px;
+    text-align: center;
+    text-decoration: none;
+    width: 50px;
+    z-index: 9999;
+    color: white;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.rightSection:hover, .rightSection:focus {
+    text-decoration: none;
+    outline: none;
+}
+.navtop{
+    visibility:hidden;
+}
+
+
+/*新闻滚动*/
+.scrollbox {
+    height: 40px;
+    line-height: 40px;
+}
+
+#scrollDiv {
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
+}
+/*这里的高度和超出隐藏是必须的*/
+#scrollDiv li {
+    height: 40px;
+    line-height: 40px;
+    vertical-align: bottom;
+    zoom: 1;
+}
+
+#scrollDiv li a {
+    color: #333;
+    text-decoration: none;
+}
+
+.news-section{
+    padding: 10px 0px;
+    margin:10px auto;
+    }
+.scrollnews{
+    background: #f7f7f7;
+    padding: 10px 0px;
+    margin:0;
+    -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius:5px;
+	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+
+}
+#but_up,#but_down{
+    padding:10px;
+    box-shadow: 0px 6px 12px lightgray;
+    background-color:#337ab7;
+    color:white;
+}

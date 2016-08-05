@@ -1,0 +1,75 @@
+﻿header{
+    background-color:#3676a1;
+}
+.navbar-inverse{
+    background-color:#3676a1;
+}
+@media (max-width: 767px) {
+	.navbar-inverse {  background:rgba(0,0,0,.9); }
+}
+
+.navbar-inverse .navbar-nav > li > a,
+.navbar-inverse .navbar-nav > .open ul > a 
+{ 
+    color:#ddd; 
+    font-weight:bold;
+}
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover, 
+.navbar-inverse .navbar-nav > .active > a:focus 
+{ 
+    color:#fff; 
+    background:none; 
+
+}
+.navbar-inverse .navbar-nav > .open > a
+{ 
+    background:none; 
+    color:#000; 
+
+}
+.navbar-inverse .navbar-nav>li>a:hover, 
+.navbar-inverse .navbar-nav>li>a:focus,
+.navbar-inverse .navbar-nav>.open>a:hover, 
+.navbar-inverse .navbar-nav>.open>a:focus 
+{ 
+    color:#fff; 
+    background:none; 
+
+}
+
+.navbar-inverse .navbar-nav > .active > a 
+{ 
+    color:#fff; 
+    background:none; 
+    
+}
+.navbar-nav .dropdown-menu {
+	left:-5px;
+	font-size: 13px;
+	background-color: white;
+	border: 1px solid #dfdfdf;
+	-webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius:5px;
+	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+}
+.navbar-nav .dropdown-menu > li > a 
+{ 
+    color:#333; 
+    padding:7px 20px; 
+}
+	.navbar-nav .dropdown-menu > li > a:hover,
+	.navbar-nav .dropdown-menu > li > a:focus,
+	.navbar-nav .dropdown-menu > .active > a:hover{ 
+        background: none;
+        color:#3676a1; 
+
+	}
+
+.navbar-nav .dropdown-menu > .active > a,
+.navbar-nav .dropdown-menu > .active > a:focus 
+{ 
+    background:none;
+    color:#3676a1; 
+
+}
