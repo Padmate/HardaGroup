@@ -24,6 +24,9 @@ else
 {
     <ul class="nav navbar-nav navbar-right">
 
-        <li>@Html.ActionLink("登录/注册", "Login", "Account", new { area = "", ReturnUrl = Request.Url.PathAndQuery }, htmlAttributes: new { id = "loginLink", @class = "btn" })</li>
+        @{
+            var text = HardaGroup.Web.Globalization.language.Login + " / " + @HardaGroup.Web.Globalization.language.Register;
+        }
+        <li>@Html.ActionLink(text, "Login", "Account", new { area = "", ReturnUrl = Request.Url.PathAndQuery }, htmlAttributes: new { id = "loginLink", @class = "btn" })</li>
     </ul>
 }

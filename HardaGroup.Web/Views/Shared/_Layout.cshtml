@@ -97,22 +97,24 @@
             <div class="navbar-collapse collapse">
                 <div class="navbar-top text-right">
                     <a href="/Home/Contact">联系我们 |</a>
-                    <a href="javaScript:void(0)">English</a>
+                    <a class="language" href="/en-US">English</a>/
+                    <a class="language" href="/">中文</a>
+
                 </div>
                 <div class="navbar-bottom">
                      @Html.Partial("_LoginPartial")
                     <ul class="nav navbar-nav pull-right head-nav">
                         @if (ViewBag.From != "Default")
                         {
-                            <li><a href="/">首页</a></li>
+                            <li><a href="/">@HardaGroup.Web.Globalization.language.Home</a></li>
 
                         }
 
-                        <li class="checkmenu"><a href="/Home/About">关于华尔达</a></li>
-                        <li class="checkmenu"><a href="/IntelligentManufacturing/Index">智能制造</a></li>
+                        <li class="checkmenu"><a href="/Home/About">@HardaGroup.Web.Globalization.language.AboutHarda</a></li>
+                        <li class="checkmenu"><a href="/IntelligentManufacturing/Index">@HardaGroup.Web.Globalization.language.IntelligentManufacturing</a></li>
 
                         <li class="dropdown checkmenu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">解决方案 <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@HardaGroup.Web.Globalization.language.Solution <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="http://www.padmate.cn" target="_blank">智能产品及新型电子产品</a></li>
                                 <li><a href="/Solution/ComponentProduct">组件产品</a></li>
@@ -121,10 +123,10 @@
 
                             </ul>
                         </li>
-                        <li class="checkmenu"><a href="/Innovation/Index">创新创业</a></li>
-                        <li class="checkmenu"><a href="/Information/Index">媒体资讯</a></li>
+                        <li class="checkmenu"><a href="/Innovation/Index">@HardaGroup.Web.Globalization.language.Innovation</a></li>
+                        <li class="checkmenu"><a href="/Information/Index">@HardaGroup.Web.Globalization.language.MediaInformation</a></li>
 
-                        <li class="checkmenu"><a href="/Home/JoinUs">加入华尔达</a></li>
+                        <li class="checkmenu"><a href="/Home/JoinUs">@HardaGroup.Web.Globalization.language.JoinHarda</a></li>
 
 
                     </ul>
@@ -301,7 +303,21 @@
 
         });
 
-        
+        //
+        //$(".language").click(function () {
+        //    event.preventDefault();
+
+        //    //获取当前页面的URL，不包括主机名
+        //    var currentUrl = window.location.pathname.toLocaleLowerCase()
+        //    //去除url中的语言信息
+        //    currentUrl = currentUrl.replace("/zh","").replace('/zh-cn','').replace('/en-us','');
+            
+        //    //获取当前点击的语言选择路径
+        //    var currentClickUrl = this.pathname;
+        //    //拼接语言与当前页面url,根据语言刷新当前页面
+        //    window.location.href = currentClickUrl + currentUrl;
+
+        //});
     });
 
     function LoadCss(cssname) {
