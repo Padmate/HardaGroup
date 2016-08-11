@@ -17,8 +17,8 @@ namespace HardaGroup.Web
             routes.MapRoute(
                 "Globalization", // 路由名称
                 "{language}/{controller}/{action}/{id}", // 带有参数的 URL
-                new { language = "zh", controller = "Home", action = "Default", id = UrlParameter.Optional }, // 参数默认值
-                new { language = "^[a-zA-Z]{2}(-[a-zA-Z]{2})?$" }    //参数约束
+                new { language = "zh-cn", controller = "Home", action = "Default", id = UrlParameter.Optional }, // 参数默认值
+                new { language = "(?i)^(zh-cn|en-us)$" }    //参数只匹配zh-cn和en-us，不区分大小写
             );
 
             routes.MapRoute(

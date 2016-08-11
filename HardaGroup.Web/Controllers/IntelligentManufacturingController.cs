@@ -16,7 +16,7 @@ namespace HardaGroup.Web.Controllers
         public ActionResult Index(){
 
             List<M_Image> bgImages = new List<M_Image>(){
-                new M_Image(){VirtualPath ="../images/intellmake.png", Name="intellmake.png"}
+                new M_Image(){VirtualPath ="/images/intellmake.png", Name="intellmake.png"}
             };
             ViewData["bgimages"] = bgImages;
 

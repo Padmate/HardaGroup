@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HardaGroup.Web.Globalization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,5 +9,6 @@ namespace HardaGroup.Web.Controllers
 {
     public class BaseController:Controller
     {
+
     }
 }

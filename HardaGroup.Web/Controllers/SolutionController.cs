@@ -16,7 +16,7 @@ namespace HardaGroup.Web.Controllers
         public ActionResult ComponentProduct()
         {
             List<M_Image> bgImages = new List<M_Image>(){
-                new M_Image(){VirtualPath ="../images/solution.png", Name="solution.png"}
+                new M_Image(){VirtualPath ="/images/solution.png", Name="solution.png"}
             };
             ViewData["bgimages"] = bgImages;
             return View();
@@ -29,7 +29,7 @@ namespace HardaGroup.Web.Controllers
         public ActionResult Research()
         {
             List<M_Image> bgImages = new List<M_Image>(){
-                new M_Image(){VirtualPath ="../images/solution.png", Name="solution.png"}
+                new M_Image(){VirtualPath ="/images/solution.png", Name="solution.png"}
             };
             ViewData["bgimages"] = bgImages;
             return View();

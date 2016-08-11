@@ -11,7 +11,7 @@ using HardaGroup.Web.Models;
 namespace HardaGroup.Web.Controllers
 {
     [Authorize]
-    public class ManageController : Controller
+    public class ManageController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;

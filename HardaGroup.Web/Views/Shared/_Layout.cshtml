@@ -1,4 +1,6 @@
 ﻿@using HardaGroup.Models;
+@using HardaGroup.Utility;
+
 @{
     Layout = null;
     var title = "HARDA|华尔达集团";
@@ -11,6 +13,10 @@
     if (bgimages == null){
         bgimages = new List<M_Image>();
     }
+
+    string cltureUri = GlobalizationHelp.GetCltureUri();
+    
+    
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -96,7 +102,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <div class="navbar-top text-right">
-                    <a href="/Home/Contact">联系我们 |</a>
+                    <a href="@cltureUri/Home/Contact">联系我们 |</a>
                     <a class="language" href="/en-US">English</a>/
                     <a class="language" href="/">中文</a>
 
@@ -110,23 +116,23 @@
 
                         }
 
-                        <li class="checkmenu"><a href="/Home/About">@HardaGroup.Web.Globalization.language.AboutHarda</a></li>
-                        <li class="checkmenu"><a href="/IntelligentManufacturing/Index">@HardaGroup.Web.Globalization.language.IntelligentManufacturing</a></li>
+                        <li class="checkmenu"><a href="@cltureUri/Home/About">@HardaGroup.Web.Globalization.language.AboutHarda</a></li>
+                        <li class="checkmenu"><a href="@cltureUri/IntelligentManufacturing/Index">@HardaGroup.Web.Globalization.language.IntelligentManufacturing</a></li>
 
                         <li class="dropdown checkmenu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">@HardaGroup.Web.Globalization.language.Solution <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="http://www.padmate.cn" target="_blank">智能产品及新型电子产品</a></li>
-                                <li><a href="/Solution/ComponentProduct">组件产品</a></li>
+                                <li><a href="@cltureUri/Solution/ComponentProduct">组件产品</a></li>
                                 <li><a href="http://www.harda.net" target="_blank">卫浴产品</a></li>
-                                <li><a href="/Solution/Research">研发</a></li>
+                                <li><a href="@cltureUri/Solution/Research">研发</a></li>
 
                             </ul>
                         </li>
-                        <li class="checkmenu"><a href="/Innovation/Index">@HardaGroup.Web.Globalization.language.Innovation</a></li>
-                        <li class="checkmenu"><a href="/Information/Index">@HardaGroup.Web.Globalization.language.MediaInformation</a></li>
+                        <li class="checkmenu"><a href="@cltureUri/Innovation/Index">@HardaGroup.Web.Globalization.language.Innovation</a></li>
+                        <li class="checkmenu"><a href="@cltureUri/Information/Index">@HardaGroup.Web.Globalization.language.MediaInformation</a></li>
 
-                        <li class="checkmenu"><a href="/Home/JoinUs">@HardaGroup.Web.Globalization.language.JoinHarda</a></li>
+                        <li class="checkmenu"><a href="@cltureUri/Home/JoinUs">@HardaGroup.Web.Globalization.language.JoinHarda</a></li>
 
 
                     </ul>
@@ -303,21 +309,29 @@
 
         });
 
-        //
-        //$(".language").click(function () {
-        //    event.preventDefault();
-
-        //    //获取当前页面的URL，不包括主机名
-        //    var currentUrl = window.location.pathname.toLocaleLowerCase()
-        //    //去除url中的语言信息
-        //    currentUrl = currentUrl.replace("/zh","").replace('/zh-cn','').replace('/en-us','');
+        
+        $(".language").click(function () {
+            event.preventDefault();
             
-        //    //获取当前点击的语言选择路径
-        //    var currentClickUrl = this.pathname;
-        //    //拼接语言与当前页面url,根据语言刷新当前页面
-        //    window.location.href = currentClickUrl + currentUrl;
+            //获取当前页面的URL，不包括主机名
+            var currentUrl = window.location.pathname.toLocaleLowerCase()
+            //去除url中的语言信息
+            currentUrl = currentUrl.replace("/zh","").replace('/zh-cn','').replace('/en-us','');
+            
+            //获取当前选择的语言的路径
+            var currentClickUrl = this.pathname;
 
-        //});
+            //重新生包含clture的新的url
+            var cultureUrl = currentClickUrl + currentUrl;
+
+            //将连续的多个/替换成一个
+            var re = /\/+/g; 
+            cultureUrl = cultureUrl.replace(re, "\/");
+            
+            //拼接语言与当前页面url,根据语言刷新当前页面
+            window.location.href = cultureUrl;
+
+        });
     });
 
     function LoadCss(cssname) {
