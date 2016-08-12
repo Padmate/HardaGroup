@@ -26,7 +26,10 @@ namespace HardaGroup.Web.Controllers
             return View();
         }
 
-
+        /// <summary>
+        /// 关于华尔达
+        /// </summary>
+        /// <returns></returns>
         public ActionResult About()
         {
             List<M_Image> bgImages = new List<M_Image>(){
@@ -37,7 +40,7 @@ namespace HardaGroup.Web.Controllers
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult ContactUs()
         {
             List<M_Image> bgImages = new List<M_Image>(){
                 new M_Image(){VirtualPath ="/images/contact.png", Name="contact.png"}

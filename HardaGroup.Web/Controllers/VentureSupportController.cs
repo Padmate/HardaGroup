@@ -7,12 +7,12 @@ using System.Web.Mvc;
 
 namespace HardaGroup.Web.Controllers
 {
-    public class InformationController:BaseController
+    public class VentureSupportController:BaseController
     {
         public ActionResult Index()
         {
             List<M_Image> bgImages = new List<M_Image>(){
-                new M_Image(){VirtualPath ="/images/info.png", Name="info.png"}
+                new M_Image(){VirtualPath ="/images/creative.png", Name="creative.png"}
             };
             ViewData["bgimages"] = bgImages;
             return View();

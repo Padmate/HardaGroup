@@ -7,13 +7,13 @@ using System.Web.Mvc;
 
 namespace HardaGroup.Web.Controllers
 {
-    public class SolutionController:BaseController
+    public class SolutionsController:BaseController
     {
         /// <summary>
         /// 组件产品
         /// </summary>
         /// <returns></returns>
-        public ActionResult ComponentProduct()
+        public ActionResult PartsAndModules ()
         {
             List<M_Image> bgImages = new List<M_Image>(){
                 new M_Image(){VirtualPath ="/images/solution.png", Name="solution.png"}
@@ -26,7 +26,7 @@ namespace HardaGroup.Web.Controllers
         /// 研发
         /// </summary>
         /// <returns></returns>
-        public ActionResult Research()
+        public ActionResult ResearchAndDevelopment()
         {
             List<M_Image> bgImages = new List<M_Image>(){
                 new M_Image(){VirtualPath ="/images/solution.png", Name="solution.png"}

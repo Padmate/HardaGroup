@@ -1,4 +1,10 @@
 ﻿@using Microsoft.AspNet.Identity
+@using System.Configuration;
+@{
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+        
+}
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -12,6 +18,13 @@
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu login-li-bg">
+                @if (User.IsInRole("Admin"))
+                {
+                <li>
+                    <a href="@string.Format("/manage{0}",urlRewriteExtension)">后台管理</a>
+                </li>
+                }
+
                 <li><a href="javascript:document.getElementById('logoutForm').submit()">注销</a></li>
             </ul>
         </li>

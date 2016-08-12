@@ -120,14 +120,14 @@
   <data name="AboutHarda" xml:space="preserve">
     <value>关于华尔达</value>
   </data>
+  <data name="AdvancedManufacturing" xml:space="preserve">
+    <value>智能制造</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>联系我们</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>首页</value>
-  </data>
-  <data name="Innovation" xml:space="preserve">
-    <value>创新创业</value>
-  </data>
-  <data name="IntelligentManufacturing" xml:space="preserve">
-    <value>智能制造</value>
   </data>
   <data name="JoinHarda" xml:space="preserve">
     <value>加入华尔达</value>
@@ -135,13 +135,28 @@
   <data name="Login" xml:space="preserve">
     <value>登录</value>
   </data>
-  <data name="MediaInformation" xml:space="preserve">
+  <data name="PartsAndModules" xml:space="preserve">
+    <value>组件产品</value>
+  </data>
+  <data name="PlumbingProducts" xml:space="preserve">
+    <value>卫浴产品</value>
+  </data>
+  <data name="Press" xml:space="preserve">
     <value>媒体资讯</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>注册</value>
   </data>
-  <data name="Solution" xml:space="preserve">
+  <data name="ResearchAndDevelopment" xml:space="preserve">
+    <value>研发</value>
+  </data>
+  <data name="SmartAndInnovativeProducts" xml:space="preserve">
+    <value>智能产品以及创新电子产品</value>
+  </data>
+  <data name="Solutions" xml:space="preserve">
     <value>解决方案</value>
+  </data>
+  <data name="VentureSupport" xml:space="preserve">
+    <value>创新创业</value>
   </data>
 </root>

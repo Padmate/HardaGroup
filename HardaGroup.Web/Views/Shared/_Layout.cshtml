@@ -1,6 +1,7 @@
 ﻿@using HardaGroup.Models;
 @using HardaGroup.Utility;
-
+@using System.Configuration;
+@using HardaGroup.Web.Globalization;
 @{
     Layout = null;
     var title = "HARDA|华尔达集团";
@@ -15,7 +16,8 @@
     }
 
     string cltureUri = GlobalizationHelp.GetCltureUri();
-    
+
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
     
 }
 <!DOCTYPE html>
@@ -98,11 +100,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/"><img src="~/images/hardagroup_logo.png" alt="hardagroup"></a>
+                <a class="navbar-brand" href="@cltureUri/"><img src="~/images/hardagroup_logo.png" alt="华尔达集团"></a>
             </div>
             <div class="navbar-collapse collapse">
                 <div class="navbar-top text-right">
-                    <a href="@cltureUri/Home/Contact">联系我们 |</a>
+                    <a href="@string.Format("{0}/contact-us{1}",cltureUri,urlRewriteExtension)">@language.ContactUs |</a>
                     <a class="language" href="/en-US">English</a>/
                     <a class="language" href="/">中文</a>
 
@@ -112,27 +114,51 @@
                     <ul class="nav navbar-nav pull-right head-nav">
                         @if (ViewBag.From != "Default")
                         {
-                            <li><a href="/">@HardaGroup.Web.Globalization.language.Home</a></li>
+                            <li><a href="@cltureUri/">@language.Home</a></li>
 
                         }
 
-                        <li class="checkmenu"><a href="@cltureUri/Home/About">@HardaGroup.Web.Globalization.language.AboutHarda</a></li>
-                        <li class="checkmenu"><a href="@cltureUri/IntelligentManufacturing/Index">@HardaGroup.Web.Globalization.language.IntelligentManufacturing</a></li>
+                        <li class="checkmenu">
+                            <a href="@string.Format("{0}/about{1}",cltureUri,urlRewriteExtension)">
+                                @language.AboutHarda
+                            </a>
+                        </li>
+                        <li class="checkmenu">
+                            <a href="@string.Format("{0}/advanced-manufacturing{1}", cltureUri, urlRewriteExtension)">
+                                @language.AdvancedManufacturing
+                            </a>
+                        </li>
 
                         <li class="dropdown checkmenu">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@HardaGroup.Web.Globalization.language.Solution <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@language.Solutions <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="http://www.padmate.cn" target="_blank">智能产品及新型电子产品</a></li>
-                                <li><a href="@cltureUri/Solution/ComponentProduct">组件产品</a></li>
-                                <li><a href="http://www.harda.net" target="_blank">卫浴产品</a></li>
-                                <li><a href="@cltureUri/Solution/Research">研发</a></li>
+                                <li>
+                                    <a href="@string.Format("{0}/solutions/research-and-development{1}", cltureUri, urlRewriteExtension)">
+                                        @language.ResearchAndDevelopment
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="http://www.padmate.cn" target="_blank">@language.SmartAndInnovativeProducts</a>
+                                </li>
+                                <li>
+                                    <a href="@string.Format("{0}/solutions/parts-and-modules{1}", cltureUri, urlRewriteExtension)">
+                                        @language.PartsAndModules
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="http://www.harda.net" target="_blank">@language.PlumbingProducts</a>
+                                </li>
 
                             </ul>
                         </li>
-                        <li class="checkmenu"><a href="@cltureUri/Innovation/Index">@HardaGroup.Web.Globalization.language.Innovation</a></li>
-                        <li class="checkmenu"><a href="@cltureUri/Information/Index">@HardaGroup.Web.Globalization.language.MediaInformation</a></li>
+                        <li class="checkmenu">
+                            <a href="@string.Format("{0}/venture-support{1}", cltureUri, urlRewriteExtension)">
+                                @language.VentureSupport
+                            </a>
+                        </li>
+                        <li class="checkmenu"><a href="@string.Format("{0}/press{1}", cltureUri, urlRewriteExtension)">@language.Press</a></li>
 
-                        <li class="checkmenu"><a href="@cltureUri/Home/JoinUs">@HardaGroup.Web.Globalization.language.JoinHarda</a></li>
+                        <li class="checkmenu"><a href="@string.Format("{0}/join-us{1}", cltureUri, urlRewriteExtension)">@language.JoinHarda</a></li>
 
 
                     </ul>

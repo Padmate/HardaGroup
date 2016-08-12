@@ -120,14 +120,14 @@
   <data name="AboutHarda" xml:space="preserve">
     <value>AboutHarda</value>
   </data>
+  <data name="AdvancedManufacturing" xml:space="preserve">
+    <value>AdvancedManufacturing</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>ContactUs</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
-  </data>
-  <data name="Innovation" xml:space="preserve">
-    <value>Innovation</value>
-  </data>
-  <data name="IntelligentManufacturing" xml:space="preserve">
-    <value>IntelligentManufacturing</value>
   </data>
   <data name="JoinHarda" xml:space="preserve">
     <value>JoinHarda</value>
@@ -135,13 +135,28 @@
   <data name="Login" xml:space="preserve">
     <value>Login</value>
   </data>
-  <data name="MediaInformation" xml:space="preserve">
-    <value>MediaInformation</value>
+  <data name="PartsAndModules" xml:space="preserve">
+    <value>Parts &amp; Modules</value>
+  </data>
+  <data name="PlumbingProducts" xml:space="preserve">
+    <value>PlumbingProducts</value>
+  </data>
+  <data name="Press" xml:space="preserve">
+    <value>Press</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>
   </data>
-  <data name="Solution" xml:space="preserve">
-    <value>Solution</value>
+  <data name="ResearchAndDevelopment" xml:space="preserve">
+    <value>Research &amp; Development</value>
+  </data>
+  <data name="SmartAndInnovativeProducts" xml:space="preserve">
+    <value>Smart &amp; InnovativeProducts</value>
+  </data>
+  <data name="Solutions" xml:space="preserve">
+    <value>Solutions</value>
+  </data>
+  <data name="VentureSupport" xml:space="preserve">
+    <value>VentureSupport</value>
   </data>
 </root>

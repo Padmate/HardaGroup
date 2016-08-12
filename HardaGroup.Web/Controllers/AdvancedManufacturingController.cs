@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace HardaGroup.Web.Controllers
 {
-    public class IntelligentManufacturingController:BaseController
+    public class AdvancedManufacturingController:BaseController
     {
         /// <summary>
         /// 智能制造

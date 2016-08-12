@@ -70,29 +70,29 @@ namespace HardaGroup.Web.Globalization {
         }
         
         /// <summary>
+        ///   查找类似 智能制造 的本地化字符串。
+        /// </summary>
+        public static string AdvancedManufacturing {
+            get {
+                return ResourceManager.GetString("AdvancedManufacturing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 联系我们 的本地化字符串。
+        /// </summary>
+        public static string ContactUs {
+            get {
+                return ResourceManager.GetString("ContactUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 首页 的本地化字符串。
         /// </summary>
         public static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 创新创业 的本地化字符串。
-        /// </summary>
-        public static string Innovation {
-            get {
-                return ResourceManager.GetString("Innovation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   查找类似 智能制造 的本地化字符串。
-        /// </summary>
-        public static string IntelligentManufacturing {
-            get {
-                return ResourceManager.GetString("IntelligentManufacturing", resourceCulture);
             }
         }
         
@@ -115,11 +115,29 @@ namespace HardaGroup.Web.Globalization {
         }
         
         /// <summary>
+        ///   查找类似 组件产品 的本地化字符串。
+        /// </summary>
+        public static string PartsAndModules {
+            get {
+                return ResourceManager.GetString("PartsAndModules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 卫浴产品 的本地化字符串。
+        /// </summary>
+        public static string PlumbingProducts {
+            get {
+                return ResourceManager.GetString("PlumbingProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 媒体资讯 的本地化字符串。
         /// </summary>
-        public static string MediaInformation {
+        public static string Press {
             get {
-                return ResourceManager.GetString("MediaInformation", resourceCulture);
+                return ResourceManager.GetString("Press", resourceCulture);
             }
         }
         
@@ -133,11 +151,38 @@ namespace HardaGroup.Web.Globalization {
         }
         
         /// <summary>
+        ///   查找类似 研发 的本地化字符串。
+        /// </summary>
+        public static string ResearchAndDevelopment {
+            get {
+                return ResourceManager.GetString("ResearchAndDevelopment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 智能产品以及创新电子产品 的本地化字符串。
+        /// </summary>
+        public static string SmartAndInnovativeProducts {
+            get {
+                return ResourceManager.GetString("SmartAndInnovativeProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 解决方案 的本地化字符串。
         /// </summary>
-        public static string Solution {
+        public static string Solutions {
             get {
-                return ResourceManager.GetString("Solution", resourceCulture);
+                return ResourceManager.GetString("Solutions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 创新创业 的本地化字符串。
+        /// </summary>
+        public static string VentureSupport {
+            get {
+                return ResourceManager.GetString("VentureSupport", resourceCulture);
             }
         }
     }

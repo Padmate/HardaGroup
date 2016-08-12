@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ActionlessForm">
+      <HintPath>..\RefBin\ActionlessForm.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -92,6 +95,9 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="URLRewriter">
+      <HintPath>..\RefBin\URLRewriter.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -161,11 +167,11 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\InformationController.cs" />
-    <Compile Include="Controllers\InnovationController.cs" />
-    <Compile Include="Controllers\IntelligentManufacturingController.cs" />
+    <Compile Include="Controllers\PressController.cs" />
+    <Compile Include="Controllers\VentureSupportController.cs" />
+    <Compile Include="Controllers\AdvancedManufacturingController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\SolutionController.cs" />
+    <Compile Include="Controllers\SolutionsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -186,6 +192,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\admin.css" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\theme\default-theme.css" />
     <Content Include="Content\bootstrap.css" />
@@ -200,6 +207,7 @@
     <Content Include="Content\theme\pink-theme.css" />
     <Content Include="Content\theme\purple-theme.css" />
     <Content Include="Content\theme\theme-switcher.css" />
+    <Content Include="Content\admin-skin.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\font-awesome\css\font-awesome.css" />
     <Content Include="fonts\font-awesome\css\font-awesome.min.css" />
@@ -213,6 +221,7 @@
     <Content Include="images\bg2.jpg" />
     <Content Include="images\bg3.jpg" />
     <Content Include="images\big_model.jpg" />
+    <Content Include="images\contact.png" />
     <Content Include="images\creative.png" />
     <Content Include="images\favicon.png" />
     <Content Include="images\hardagroup_logo.png" />
@@ -226,6 +235,8 @@
     <Content Include="images\news.png" />
     <Content Include="images\small_model.jpg" />
     <Content Include="images\solution.png" />
+    <Content Include="images\loginuser.jpg" />
+    <Content Include="Scripts\admin\app.js" />
     <Content Include="Scripts\animatedheader.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -296,7 +307,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -311,22 +322,20 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Default.cshtml" />
-    <Content Include="Views\IntelligentManufacturing\Index.cshtml" />
-    <Content Include="Views\Solution\ComponentProduct.cshtml" />
-    <Content Include="Views\Solution\Research.cshtml" />
-    <Content Include="Views\Innovation\Index.cshtml" />
-    <Content Include="Views\Information\Index.cshtml" />
+    <Content Include="Views\AdvancedManufacturing\Index.cshtml" />
+    <Content Include="Views\Solutions\PartsAndModules.cshtml" />
+    <Content Include="Views\Solutions\ResearchAndDevelopment.cshtml" />
+    <Content Include="Views\VentureSupport\Index.cshtml" />
+    <Content Include="Views\Press\Index.cshtml" />
     <Content Include="Views\Home\JoinUs.cshtml" />
     <Content Include="Views\Shared\_map.cshtml" />
+    <Content Include="Views\Shared\_Admin.cshtml" />
+    <Content Include="Views\Manage\BackgroundImage.cshtml" />
+    <Content Include="Views\Manage\AboutHarda.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
