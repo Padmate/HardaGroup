@@ -56,10 +56,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBConfiguration\ImageConfiguration.cs" />
+    <Compile Include="D_Image.cs" />
     <Compile Include="HardaDBContext.cs" />
     <Compile Include="Migrations\201608030729067_init.cs" />
     <Compile Include="Migrations\201608030729067_init.Designer.cs">
       <DependentUpon>201608030729067_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608120941263_addImageTable.cs" />
+    <Compile Include="Migrations\201608120941263_addImageTable.Designer.cs">
+      <DependentUpon>201608120941263_addImageTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608130224175_addImageCltureCloumn.cs" />
+    <Compile Include="Migrations\201608130224175_addImageCltureCloumn.Designer.cs">
+      <DependentUpon>201608130224175_addImageCltureCloumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608130310173_updateImageCultureColumn.cs" />
+    <Compile Include="Migrations\201608130310173_updateImageCultureColumn.Designer.cs">
+      <DependentUpon>201608130310173_updateImageCultureColumn.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,13 +82,26 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DBConfiguration\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201608030729067_init.resx">
       <DependentUpon>201608030729067_init.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608120941263_addImageTable.resx">
+      <DependentUpon>201608120941263_addImageTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608130224175_addImageCltureCloumn.resx">
+      <DependentUpon>201608130224175_addImageCltureCloumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608130310173_updateImageCultureColumn.resx">
+      <DependentUpon>201608130310173_updateImageCultureColumn.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HardaGroup.Entities\HardaGroup.Entities.csproj">
+      <Project>{791c5414-503e-46f4-bca1-2c7645298c3b}</Project>
+      <Name>HardaGroup.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

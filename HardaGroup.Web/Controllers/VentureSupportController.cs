@@ -1,4 +1,6 @@
 ﻿using HardaGroup.Models;
+using HardaGroup.Service;
+using HardaGroup.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +13,8 @@ namespace HardaGroup.Web.Controllers
     {
         public ActionResult Index()
         {
-            List<M_Image> bgImages = new List<M_Image>(){
-                new M_Image(){VirtualPath ="/images/creative.png", Name="creative.png"}
-            };
+            B_Image bImage = new B_Image();
+            List<M_Image> bgImages = bImage.GetBGImagesByType(Common.Image_VentureSupportBG);
             ViewData["bgimages"] = bgImages;
             return View();
         }

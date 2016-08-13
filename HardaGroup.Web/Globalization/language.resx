@@ -123,6 +123,9 @@
   <data name="AdvancedManufacturing" xml:space="preserve">
     <value>智能制造</value>
   </data>
+  <data name="BackwardManagement" xml:space="preserve">
+    <value>后台管理</value>
+  </data>
   <data name="ContactUs" xml:space="preserve">
     <value>联系我们</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="ResearchAndDevelopment" xml:space="preserve">
     <value>研发</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>注销</value>
   </data>
   <data name="SmartAndInnovativeProducts" xml:space="preserve">
     <value>智能产品以及创新电子产品</value>

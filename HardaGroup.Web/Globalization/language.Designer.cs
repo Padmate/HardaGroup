@@ -79,6 +79,15 @@ namespace HardaGroup.Web.Globalization {
         }
         
         /// <summary>
+        ///   查找类似 后台管理 的本地化字符串。
+        /// </summary>
+        public static string BackwardManagement {
+            get {
+                return ResourceManager.GetString("BackwardManagement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 联系我们 的本地化字符串。
         /// </summary>
         public static string ContactUs {
@@ -156,6 +165,15 @@ namespace HardaGroup.Web.Globalization {
         public static string ResearchAndDevelopment {
             get {
                 return ResourceManager.GetString("ResearchAndDevelopment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 注销 的本地化字符串。
+        /// </summary>
+        public static string SignOut {
+            get {
+                return ResourceManager.GetString("SignOut", resourceCulture);
             }
         }
         

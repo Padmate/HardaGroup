@@ -9,13 +9,16 @@
     {
         title = ViewBag.Title+"|"+title;
     }
+
+    string cultureCode = GlobalizationHelp.GetCurrentThreadCultureCode();
+    string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
     
     List<M_Image> bgimages = (List<M_Image>)ViewData["bgimages"];
     if (bgimages == null){
         bgimages = new List<M_Image>();
     }
-
-    string cltureUri = GlobalizationHelp.GetCltureUri();
+    bgimages = bgimages.Where(i => i.Culture == cultureCode).ToList();
+    
 
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
     
@@ -40,7 +43,7 @@
     <link rel="stylesheet" href="~/Content/theme/default-theme.css" media="screen">
     <link rel="stylesheet" href="~/Content/main.css">
     <link rel="stylesheet" href="~/Content/animate.css">
-    <link rel="stylesheet" href="~/Content/theme/theme-switcher.css">
+
     <link rel="stylesheet" href="~/Content/Common.css">
     <link rel="stylesheet" href="~/fonts/font-awesome/css/font-awesome.min.css">
 
@@ -53,20 +56,6 @@
 </head>
 
 <body id="page-top" class="home">
-    <!-- Fixed navbar -->
-
-    <div class="theme_style_switcher">
-        <div class="style-switch-button">
-            <i class="fa fa-spin fa-cog"></i>
-        </div>
-        <h4>模板选择</h4>
-        <a id="default" href="javaScript:void(0)"></a>
-        <a id="black" href="javaScript:void(0)"></a>
-        <a id="green" href="javaScript:void(0)"></a>
-        <a id="pink" href="javaScript:void(0)"></a>
-        <a id="blue" href="javaScript:void(0)"></a>
-        <a id="purple" href="javaScript:void(0)"></a>
-    </div>
 
     <!--右侧边栏-->
     <div class="nav-float nav-right-float">
@@ -100,11 +89,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="@cltureUri/"><img src="~/images/hardagroup_logo.png" alt="华尔达集团"></a>
+                <a class="navbar-brand" href="@cultureUri/"><img src="~/images/hardagroup_logo.png" alt="华尔达集团"></a>
             </div>
             <div class="navbar-collapse collapse">
                 <div class="navbar-top text-right">
-                    <a href="@string.Format("{0}/contact-us{1}",cltureUri,urlRewriteExtension)">@language.ContactUs |</a>
+                    <a href="@string.Format("{0}/contact-us{1}",cultureUri,urlRewriteExtension)">@language.ContactUs |</a>
                     <a class="language" href="/en-US">English</a>/
                     <a class="language" href="/">中文</a>
 
@@ -114,17 +103,17 @@
                     <ul class="nav navbar-nav pull-right head-nav">
                         @if (ViewBag.From != "Default")
                         {
-                            <li><a href="@cltureUri/">@language.Home</a></li>
+                            <li><a href="@cultureUri/">@language.Home</a></li>
 
                         }
 
                         <li class="checkmenu">
-                            <a href="@string.Format("{0}/about{1}",cltureUri,urlRewriteExtension)">
+                            <a href="@string.Format("{0}/about{1}",cultureUri,urlRewriteExtension)">
                                 @language.AboutHarda
                             </a>
                         </li>
                         <li class="checkmenu">
-                            <a href="@string.Format("{0}/advanced-manufacturing{1}", cltureUri, urlRewriteExtension)">
+                            <a href="@string.Format("{0}/advanced-manufacturing{1}", cultureUri, urlRewriteExtension)">
                                 @language.AdvancedManufacturing
                             </a>
                         </li>
@@ -133,7 +122,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">@language.Solutions <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="@string.Format("{0}/solutions/research-and-development{1}", cltureUri, urlRewriteExtension)">
+                                    <a href="@string.Format("{0}/solutions/research-and-development{1}", cultureUri, urlRewriteExtension)">
                                         @language.ResearchAndDevelopment
                                     </a>
                                 </li>
@@ -141,7 +130,7 @@
                                     <a href="http://www.padmate.cn" target="_blank">@language.SmartAndInnovativeProducts</a>
                                 </li>
                                 <li>
-                                    <a href="@string.Format("{0}/solutions/parts-and-modules{1}", cltureUri, urlRewriteExtension)">
+                                    <a href="@string.Format("{0}/solutions/parts-and-modules{1}", cultureUri, urlRewriteExtension)">
                                         @language.PartsAndModules
                                     </a>
                                 </li>
@@ -152,13 +141,13 @@
                             </ul>
                         </li>
                         <li class="checkmenu">
-                            <a href="@string.Format("{0}/venture-support{1}", cltureUri, urlRewriteExtension)">
+                            <a href="@string.Format("{0}/venture-support{1}", cultureUri, urlRewriteExtension)">
                                 @language.VentureSupport
                             </a>
                         </li>
-                        <li class="checkmenu"><a href="@string.Format("{0}/press{1}", cltureUri, urlRewriteExtension)">@language.Press</a></li>
+                        <li class="checkmenu"><a href="@string.Format("{0}/press{1}", cultureUri, urlRewriteExtension)">@language.Press</a></li>
 
-                        <li class="checkmenu"><a href="@string.Format("{0}/join-us{1}", cltureUri, urlRewriteExtension)">@language.JoinHarda</a></li>
+                        <li class="checkmenu"><a href="@string.Format("{0}/join-us{1}", cultureUri, urlRewriteExtension)">@language.JoinHarda</a></li>
 
 
                     </ul>
@@ -173,10 +162,10 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/classie.js"></script>
     <script src="~/Scripts/animatedheader.js"></script>
-    <script src="~/Scripts/jquery.cookie.js"></script>
     <script src="~/Scripts/jq_scroll.js"></script>
 
     <script src="~/Scripts/template.js"></script>
+    <script src="~/Scripts/Globalization.js"></script>
 
     @RenderSection("scripts", required: false)
 
@@ -311,67 +300,8 @@
 <script>
     $(function () {
         
-        var cookieTheme = $.cookie("harda-theme");
-        if (cookieTheme)
-        {
-            LoadCss(cookieTheme);
-        } 
-
-        $(".style-switch-button").click(function () {
-            
-            var hasActive = $(".theme_style_switcher").hasClass("style-switch-active");
-            if(!hasActive)
-            {
-                $(".theme_style_switcher").addClass("style-switch-active");
-            }else
-            {
-                $(".theme_style_switcher").removeClass("style-switch-active");
-            }
-        });
-
-        $(".theme_style_switcher>a").click(function () {
-            LoadCss(this.id);
-            $.cookie("harda-theme", this.id, { expires: 7, path: '/' });
-
-        });
-
         
-        $(".language").click(function () {
-            event.preventDefault();
-            
-            //获取当前页面的URL，不包括主机名
-            var currentUrl = window.location.pathname.toLocaleLowerCase()
-            //去除url中的语言信息
-            currentUrl = currentUrl.replace("/zh","").replace('/zh-cn','').replace('/en-us','');
-            
-            //获取当前选择的语言的路径
-            var currentClickUrl = this.pathname;
-
-            //重新生包含clture的新的url
-            var cultureUrl = currentClickUrl + currentUrl;
-
-            //将连续的多个/替换成一个
-            var re = /\/+/g; 
-            cultureUrl = cultureUrl.replace(re, "\/");
-            
-            //拼接语言与当前页面url,根据语言刷新当前页面
-            window.location.href = cultureUrl;
-
-        });
     });
 
-    function LoadCss(cssname) {
-        //兼容IE8
-        dynamicLoading.css("../Content/theme/" + cssname + "-theme.css");
-
-        //只支持IE9+
-        //$("<link>")
-        //.attr({
-        //    rel: "stylesheet",
-        //    type: "text/css",
-        //    href: "../Content/theme/" + cssname + "-theme.css"
-        //})
-        //.appendTo("head");
-    }
-
+   
 </script>

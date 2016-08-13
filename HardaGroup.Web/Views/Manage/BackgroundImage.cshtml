@@ -1,18 +1,278 @@
-﻿@{
-    Layout = "~/Views/Shared/_Admin.cshtml";
-    ViewBag.Title = (string)ViewData["type"];
-    
-}
+﻿@using HardaGroup.Utility;
 
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    string imageType = @Request["type"];
+    string imageTypeName = !string.IsNullOrEmpty(imageType) ? Common.Dic_ImageType[imageType] : string.Empty;
+    ViewBag.Title = imageTypeName;
+
+    string culture = GlobalizationHelp.GetCurrentThreadCultureCode();
+}
+<script>
+    jQuery.browser = {}; (function () { jQuery.browser.msie = false; jQuery.browser.version = 0; if (navigator.userAgent.match(/MSIE ([0-9]+)./)) { jQuery.browser.msie = true; jQuery.browser.version = RegExp.$1; } })();
+</script>
+<link rel="stylesheet" type="text/css" href="~/Scripts/webuploader/webuploader.css">
+<script src="~/Scripts/webuploader/webuploader.js"></script>
+<script src="~/Scripts/jquery.dragsort-0.5.1.js"></script>
+
+<style>
+    #imageList {
+        list-style-type: none;
+        margin: 0px;
+        padding: 0px;
+    }
+
+        #imageList li {
+            float: left;
+            padding: 5px;
+            width: 360px;
+            height: 200px;
+            position: relative;
+        }
+
+    /*1920*640 比例缩小*/
+    .imageSmall {
+        width: 350px;
+        height: 116px;
+    }
+
+    /*1920*400*/
+    .imageSmall2 {
+        width: 350px;
+        height: 72px;
+    }
+
+    .imageButtonPanel {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        z-index: 300;
+    }
+
+        .imageButtonPanel a {
+            height: 40px;
+            line-height: 40px;
+            width: 40px;
+            float: right;
+            position: relative;
+            color: lightgray;
+        }
+
+    .imageButtonDiv {
+        position: absolute;
+    }
+</style>
 <section class="content">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-        <div class="col-md-12">
-            背景图片管理 @ViewBag.Title
+        <div class="col-xs-12 col-is-12 col-sm-12 col-md-12">
+            <div id="homebg-image">
+
+                <!--dom结构部分-->
+                <div id="uploader-demo">
+                    <!--用来存放item-->
+                    <div id="fileList" class="uploader-list"></div>
+                    @if (imageType == Common.Image_HomeBG)
+                    {
+                        <div style="color: red; ">图片分辨率大小：1920*640</div>
+                    }
+                    else
+                    {
+                        <div style="color: red; ">图片分辨率大小：1920*400</div>
+                    }
+
+                    <div id="filePicker">添加图片</div>
+                    <div id="status"></div>
+                </div>
+
+                <div>
+                    <h3 class="text-center text-primary">拖动图片进行排序，图片顺序即为首页轮播顺序</h3>
+                    <ul id="imageList"></ul>
+                </div>
 
 
+            </div>
         </div>
-        <!-- ./col -->
     </div>
 
 </section>
+<script>
+
+
+    $(document).ready(function () {
+
+        LoadBGImage();
+        InitWebUploader();
+
+
+        $("#imageList").dragsort({
+            dragSelector: "img",
+            dragBetween: true,
+            dragEnd: saveOrder,
+            placeHolderTemplate: "<li></li>"
+        });
+
+
+    });
+
+    function BindDeleteImageFun() {
+        $(".deleteImage").click(function () {
+            var imageId = $(this).parent().parent().attr("id");
+            $.ajax({
+                type: "POST",
+                url: "/Images/DeleteImage",
+                dataType: "json",
+                data: { Id: imageId },
+                async: false,   //同步
+                success: function (message) {
+                    if (message.Success == false || message.Success == "false") {
+                        $("#status").html("<lable style='color:red;'>" + message.Content + "</lable>");
+                    } else {
+                        //重新加载图片
+                        LoadBGImage();
+                    }
+
+                }
+            });
+        });
+    }
+
+    function saveOrder() {
+
+        var imageListDic = [];
+        $('#imageList').find('li').each(function () {
+            var imgId = $(this).attr("id");
+            var imgSequence = $(this).index();
+            var obj = {
+                Id: imgId,
+                Sequence: imgSequence
+            };
+            imageListDic.push(obj);
+        })
+
+        var jsonParam = JSON.stringify(imageListDic);
+        $.ajax({
+            type: "POST",
+            url: "/Images/UpdateImageSequence",
+            dataType: "json",
+            data: jsonParam,
+            async: false,   //同步
+            success: function (status) {
+                //图片更新后不做任何操作
+            }
+        });
+
+    };
+
+    function InitWebUploader() {
+        var obj = {
+            imageType: '@imageType',
+            culture:'@culture',
+            Sequence: 2
+        };
+
+        // 初始化Web Uploader
+        var uploader = WebUploader.create({
+            auto: true,   // 选完文件后，是否自动上传。
+            swf: '../Scripts/webuploader/Uploader.swf',
+            server: '/Images/UploadBGImageByType',
+            formData: obj,  //额外参数传递
+            duplicate: true, //可重复上传同一文件
+            pick: '#filePicker',
+            compress: false, //图片不压缩
+            //pick: '#filePicker',  // 选择文件的按钮。可选。内部根据当前运行是创建，可能是input元素，也可能是flash.
+            accept: {           // 只允许选择图片文件。
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            },
+            fileSingleSizeLimit: 1 * 1024 * 1024 // 单个文件最大不能超过1 M
+        });
+        uploader.on('fileQueued', function () {
+
+            //开始上传，添加遮罩
+            $("body").showLoading();
+        });
+
+        uploader.on('startUpload', function () {
+
+            //开始上传，添加遮罩
+            //$("body").showLoading();
+        });
+
+
+        uploader.on('error', function (handler) {
+
+            //隐藏遮罩
+            $("body").hideLoading();
+
+            if (handler == "Q_EXCEED_NUM_LIMIT") {
+                alert("超出最大张数");
+            }
+            if (handler == "F_DUPLICATE") {
+                alert("文件重复");
+            }
+            if (handler == "F_EXCEED_SIZE") {
+                $("#status").html("<lable style='color:red;'>图片大小不能超过1M</lable>");
+            }
+        });
+
+
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        uploader.on('uploadSuccess', function (file, response) {
+            if (response.Success == false || response.Success == "false") {
+                $("#status").html("<lable style='color:red;'>" + response.Content + "</lable>");
+            } else {
+                //上传成功，则重新加载图片
+                LoadBGImage();
+            }
+
+        });
+
+        // 完成上传完了，成功或者失败，先删除进度条。
+        uploader.on('uploadComplete', function (file) {
+            //$('#' + file.id).find('.progress').remove();
+            //隐藏遮罩
+            $("body").hideLoading();
+        });
+    }
+
+    //加载首页背景图片
+    function LoadBGImage() {
+        $.ajax({
+            type: "POST",
+            url: "/Images/GetCurrentCltureBGImagesByType",
+            dataType: "json",
+            data: { imageType: '@imageType',culture:'@culture' },
+            async: false,   //同步
+            success: function (bgImages) {
+                
+                var imgClass = "imageSmall";
+                if('@imageType' !='@Common.Image_HomeBG')
+                {
+                    imgClass = "imageSmall2";
+                }
+                $("#imageList").html("");
+                var dynamicHtml = ""
+                for (var i = 0; i < bgImages.length; i++) {
+                    dynamicHtml += '<li class="text-center" id="' + bgImages[i].Id + '">';
+                    dynamicHtml += '<img src="' + bgImages[i].VirtualPath + '" class="' + imgClass + '">';
+                    dynamicHtml += '<label>' + bgImages[i].Name + '</label>';
+                    dynamicHtml += '<div class="imageButtonPanel">';
+                    dynamicHtml += '<a href="javaScript:void(0)" class="deleteImage"><i class="fa fa-lg fa-remove"></i></a>';
+                    dynamicHtml += '</div>';
+                    dynamicHtml += '</li>';
+
+
+
+                }
+                $("#imageList").html(dynamicHtml);
+                //绑定删除事件
+                BindDeleteImageFun();
+                //清除状态
+                $("#status").html("");
+            }
+        });
+    }
+
+</script>

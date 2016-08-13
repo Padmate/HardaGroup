@@ -167,6 +167,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\PressController.cs" />
     <Compile Include="Controllers\VentureSupportController.cs" />
     <Compile Include="Controllers\AdvancedManufacturingController.cs" />
@@ -216,25 +217,16 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Globalization\Globalization-readme.txt" />
-    <Content Include="images\about.png" />
-    <Content Include="images\bg1.jpg" />
-    <Content Include="images\bg2.jpg" />
-    <Content Include="images\bg3.jpg" />
     <Content Include="images\big_model.jpg" />
-    <Content Include="images\contact.png" />
-    <Content Include="images\creative.png" />
     <Content Include="images\favicon.png" />
     <Content Include="images\hardagroup_logo.png" />
     <Content Include="images\hardar.jpg" />
-    <Content Include="images\info.png" />
-    <Content Include="images\intellmake.png" />
-    <Content Include="images\joinus.png" />
+    <Content Include="images\Loading\loading-red.gif" />
     <Content Include="images\login-bg.jpg" />
     <Content Include="images\login-bg1.jpg" />
     <Content Include="images\medium_model.jpg" />
     <Content Include="images\news.png" />
     <Content Include="images\small_model.jpg" />
-    <Content Include="images\solution.png" />
     <Content Include="images\loginuser.jpg" />
     <Content Include="Scripts\admin\app.js" />
     <Content Include="Scripts\animatedheader.js" />
@@ -277,12 +269,14 @@
     <None Include="Properties\PublishProfiles\hardagroup.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\classie.js" />
+    <Content Include="Scripts\Globalization.js" />
     <Content Include="Scripts\headroom.min.js" />
     <Content Include="Scripts\html5shiv.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jquery.dragsort-0.5.1.js" />
     <Content Include="Scripts\jQuery.headroom.min.js" />
     <Content Include="Scripts\jquery.placeholder.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -290,10 +284,18 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jq_scroll.js" />
+    <Content Include="Scripts\loading\jquery.showLoading.js" />
+    <Content Include="Scripts\loading\jquery.showLoading.min.js" />
+    <Content Include="Scripts\loading\showLoading.css" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\template.js" />
+    <Content Include="Scripts\webuploader\Uploader.swf" />
+    <Content Include="Scripts\webuploader\webuploader.css" />
+    <Content Include="Scripts\webuploader\webuploader.js" />
+    <Content Include="Scripts\webuploader\webuploader.min.js" />
+    <Content Include="Scripts\webuploader\webuploaderdefault.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -336,6 +338,7 @@
     <Content Include="Views\Shared\_Admin.cshtml" />
     <Content Include="Views\Manage\BackgroundImage.cshtml" />
     <Content Include="Views\Manage\AboutHarda.cshtml" />
+    <Content Include="System.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

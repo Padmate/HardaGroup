@@ -1,4 +1,6 @@
 ﻿using HardaGroup.Models;
+using HardaGroup.Service;
+using HardaGroup.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +13,8 @@ namespace HardaGroup.Web.Controllers
     {
         public ActionResult Default()
         {
-            List<M_Image> bgImages = new List<M_Image>(){
-                new M_Image(){VirtualPath ="/images/bg1.jpg", Name="bg1.jpg"},
-                new M_Image(){VirtualPath ="/images/bg2.jpg", Name="bg2.jpg"},
-                new M_Image(){VirtualPath ="/images/bg3.jpg", Name="bg3.jpg"}
-            };
+            B_Image bImage = new B_Image();
+            List<M_Image> bgImages = bImage.GetBGImagesByType(Common.Image_HomeBG);
             ViewData["bgimages"] = bgImages;
 
             return View();
@@ -32,9 +31,8 @@ namespace HardaGroup.Web.Controllers
         /// <returns></returns>
         public ActionResult About()
         {
-            List<M_Image> bgImages = new List<M_Image>(){
-                new M_Image(){VirtualPath ="/images/about.png", Name="about.png"}
-            };
+            B_Image bImage = new B_Image();
+            List<M_Image> bgImages = bImage.GetBGImagesByType(Common.Image_AboutBG);
             ViewData["bgimages"] = bgImages;
 
             return View();
@@ -42,9 +40,8 @@ namespace HardaGroup.Web.Controllers
 
         public ActionResult ContactUs()
         {
-            List<M_Image> bgImages = new List<M_Image>(){
-                new M_Image(){VirtualPath ="/images/contact.png", Name="contact.png"}
-            };
+            B_Image bImage = new B_Image();
+            List<M_Image> bgImages = bImage.GetBGImagesByType(Common.Image_ContactUsBG);
             ViewData["bgimages"] = bgImages;
 
             return View();
@@ -52,9 +49,8 @@ namespace HardaGroup.Web.Controllers
 
         public ActionResult JoinUs()
         {
-            List<M_Image> bgImages = new List<M_Image>(){
-                new M_Image(){VirtualPath ="/images/joinus.png", Name="joinus.png"}
-            };
+            B_Image bImage = new B_Image();
+            List<M_Image> bgImages = bImage.GetBGImagesByType(Common.Image_JoinUsBG);
             ViewData["bgimages"] = bgImages;
             return View();
         }

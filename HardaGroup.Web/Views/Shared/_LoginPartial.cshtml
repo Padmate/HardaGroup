@@ -1,8 +1,11 @@
 ﻿@using Microsoft.AspNet.Identity
 @using System.Configuration;
+@using HardaGroup.Utility;
+@using HardaGroup.Web.Globalization;
+
 @{
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
-
+    string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
         
 }
 @if (Request.IsAuthenticated)
@@ -21,11 +24,11 @@
                 @if (User.IsInRole("Admin"))
                 {
                 <li>
-                    <a href="@string.Format("/manage{0}",urlRewriteExtension)">后台管理</a>
+                    <a href="@string.Format("{0}/manage{1}", cultureUri, urlRewriteExtension)">@language.BackwardManagement</a>
                 </li>
                 }
 
-                <li><a href="javascript:document.getElementById('logoutForm').submit()">注销</a></li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()">@language.SignOut</a></li>
             </ul>
         </li>
 

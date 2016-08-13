@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,8 +40,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="B_Image.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HardaGroup.DataAccess\HardaGroup.DataAccess.csproj">
+      <Project>{979a785b-c8c6-4b96-b948-61385d114235}</Project>
+      <Name>HardaGroup.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HardaGroup.Entities\HardaGroup.Entities.csproj">
+      <Project>{791c5414-503e-46f4-bca1-2c7645298c3b}</Project>
+      <Name>HardaGroup.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HardaGroup.Models\HardaGroup.Models.csproj">
+      <Project>{3f94bce4-4e28-47c0-89dd-a15430ea9481}</Project>
+      <Name>HardaGroup.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HardaGroup.Utility\HardaGroup.Utility.csproj">
+      <Project>{c2bae937-b368-4165-bd09-b23d87ee3238}</Project>
+      <Name>HardaGroup.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

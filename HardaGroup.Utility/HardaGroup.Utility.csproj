@@ -30,8 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\RefBin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,8 +45,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.cs" />
     <Compile Include="GlobalizationHelp.cs" />
+    <Compile Include="JsonHandle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemConfiguration.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HardaGroup.Entities\HardaGroup.Entities.csproj">
+      <Project>{791c5414-503e-46f4-bca1-2c7645298c3b}</Project>
+      <Name>HardaGroup.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HardaGroup.Models\HardaGroup.Models.csproj">
+      <Project>{3f94bce4-4e28-47c0-89dd-a15430ea9481}</Project>
+      <Name>HardaGroup.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

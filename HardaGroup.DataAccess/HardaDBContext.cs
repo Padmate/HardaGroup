@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using HardaGroup.DataAccess.DBConfiguration;
+using HardaGroup.Entities;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -28,10 +30,12 @@ namespace HardaGroup.DataAccess
         {
         }
 
+        public DbSet<Image> Images { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Configurations.Add(new ImageConfiguration());
 
         }
 

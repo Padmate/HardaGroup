@@ -119,44 +119,66 @@
   </resheader>
   <data name="AboutHarda" xml:space="preserve">
     <value>AboutHarda</value>
+    <comment>关于华尔达</comment>
   </data>
   <data name="AdvancedManufacturing" xml:space="preserve">
     <value>AdvancedManufacturing</value>
+    <comment>智能制造</comment>
+  </data>
+  <data name="BackwardManagement" xml:space="preserve">
+    <value>BackwardManagement</value>
+    <comment>后台管理</comment>
   </data>
   <data name="ContactUs" xml:space="preserve">
     <value>ContactUs</value>
+    <comment>联系我们</comment>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
+    <comment>首页</comment>
   </data>
   <data name="JoinHarda" xml:space="preserve">
     <value>JoinHarda</value>
+    <comment>加入华尔达</comment>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
+    <comment>登录</comment>
   </data>
   <data name="PartsAndModules" xml:space="preserve">
     <value>Parts &amp; Modules</value>
+    <comment>组件产品</comment>
   </data>
   <data name="PlumbingProducts" xml:space="preserve">
     <value>PlumbingProducts</value>
+    <comment>卫浴产品</comment>
   </data>
   <data name="Press" xml:space="preserve">
     <value>Press</value>
+    <comment>媒体资讯</comment>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>
+    <comment>注册</comment>
   </data>
   <data name="ResearchAndDevelopment" xml:space="preserve">
     <value>Research &amp; Development</value>
+    <comment>研发</comment>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>SignOut</value>
+    <comment>注销</comment>
   </data>
   <data name="SmartAndInnovativeProducts" xml:space="preserve">
     <value>Smart &amp; InnovativeProducts</value>
+    <comment>智能产品以及创新电子产品</comment>
   </data>
   <data name="Solutions" xml:space="preserve">
     <value>Solutions</value>
+    <comment>解决方案</comment>
   </data>
   <data name="VentureSupport" xml:space="preserve">
     <value>VentureSupport</value>
+    <comment>创新创业</comment>
   </data>
 </root>

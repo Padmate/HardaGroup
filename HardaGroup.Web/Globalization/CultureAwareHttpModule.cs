@@ -43,13 +43,8 @@ namespace HardaGroup.Web.Globalization
                 Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture.ToString());
             }
 
-            //获取当前请求路径
-            var url = HttpContext.Current.Request.Url;
-            //获取上次请求路径
-            var urlRefferrer =HttpContext.Current.Request.UrlReferrer;
-            //刷新当前页面
-            //HttpContext.Current.Response.Redirect("");
         }
+
 
         /// <summary>
         /// 请求完后恢复culture
