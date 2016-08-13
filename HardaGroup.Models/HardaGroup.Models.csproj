@@ -42,8 +42,10 @@
   <ItemGroup>
     <Compile Include="BaseModel.cs" />
     <Compile Include="Message.cs" />
+    <Compile Include="M_About.cs" />
     <Compile Include="M_Image.cs" />
     <Compile Include="M_Mail.cs" />
+    <Compile Include="PageRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

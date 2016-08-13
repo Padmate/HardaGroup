@@ -56,7 +56,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBConfiguration\AboutConfiguration.cs" />
     <Compile Include="DBConfiguration\ImageConfiguration.cs" />
+    <Compile Include="D_About.cs" />
     <Compile Include="D_Image.cs" />
     <Compile Include="HardaDBContext.cs" />
     <Compile Include="Migrations\201608030729067_init.cs" />
@@ -74,6 +76,10 @@
     <Compile Include="Migrations\201608130310173_updateImageCultureColumn.cs" />
     <Compile Include="Migrations\201608130310173_updateImageCultureColumn.Designer.cs">
       <DependentUpon>201608130310173_updateImageCultureColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608130732038_addAboutTable.cs" />
+    <Compile Include="Migrations\201608130732038_addAboutTable.Designer.cs">
+      <DependentUpon>201608130732038_addAboutTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608130310173_updateImageCultureColumn.resx">
       <DependentUpon>201608130310173_updateImageCultureColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608130732038_addAboutTable.resx">
+      <DependentUpon>201608130732038_addAboutTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

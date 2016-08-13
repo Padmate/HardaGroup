@@ -1,0 +1,246 @@
+﻿@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    ViewBag.Title = "关于华尔达";
+}
+
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12 col-is-12 col-sm-12 col-md-12">
+
+            <div id="toolbar">
+                <button id="btnAdd" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-plus"></i>Add
+                </button>
+                <button id="btnEdit" class="btn btn-success">
+                    <i class="glyphicon glyphicon-plus"></i>Edit
+                </button>
+                <button id="btnDelete" class="btn btn-danger">
+                    <i class="glyphicon glyphicon-remove"></i> Delete
+                </button>
+            </div>
+            <table id="table"></table>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!--#region新增-->
+<div class="curd-model modal fade" id="aboutadd" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div id="divAddContainer"></div>
+
+
+        </div>
+    </div>
+</div>
+<!--#endregion 修改-->
+<!--#region修改-->
+<div class="curd-model modal fade" id="aboutedit" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div id="divEditContainer"></div>
+
+
+        </div>
+    </div>
+</div>
+
+<!--Script要放在HTML标签后，才能将值绑定到标签-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        InitTable();
+        InitToolBarButton();
+        InitModalEvent();
+    });
+    function InitTable()
+    {
+        $('#table').bootstrapTable({
+            height:500,
+            method: 'post',                 //The method type to request remote data.
+            url: '/About/GetPageData',
+            dataType: "json",               //The type of data that you are expecting back from the server.
+            contentType:'application/json',
+            pagination: true,               //True to show a pagination toolbar on table bottom.
+            pageSize: 10,                   //初始化每页显示几条
+            pageNumber:1,                   //初始化在第几页
+            pageList: [10,25,50,100,200,'All'],
+            sidePagination: "server",       //服务端请求
+            idField:'Id',
+            toolbar:'#toolbar',
+            showRefresh:true,
+            search:true,
+            queryParams: ConstructQueryParams,
+            //queryParamsType: "limit",
+            locale:'en-US',
+            columns: [{
+                checkbox: true
+            },
+            {
+                field: 'Id',
+                title: 'Id',
+                visible:false,
+            },
+            {
+                field: 'TypeCode',
+                title: '类别代码',
+                sortable: true
+
+            },
+            {
+                field: 'TypeName',
+                title: '类别名称',
+                sortable: true
+
+            },
+            {
+                field: 'Content',
+                title: '内容',
+                sortable: true
+
+            },
+            {
+                field: 'Culture',
+                title: '国际化代码',
+                sortable: true,
+                width: '10%'
+
+            },
+            {
+                field: 'Sequence',
+                title: 'Sequence',
+                sortable: true,
+                width:'10%'
+            }
+            ]
+        });
+    }
+    function ConstructQueryParams(param)
+    {
+        var params = {
+            limit: param.limit, //页面大小
+            offset:param.offset,//偏移数量
+            page: param.offset / param.limit, //页码
+            TypeName:param.search
+        };
+        return params;
+    }
+
+    function InitModalEvent() {
+        $('#aboutadd').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#aboutadd').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divAddContainer").html("");
+
+        })
+
+        $('#aboutedit').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#aboutedit').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divEditContainer").html("");
+
+        })
+    }
+
+    function CloseAddScreen() {
+        $('#aboutadd').modal('hide');
+
+    }
+    function CloseEditScreen() {
+        $('#aboutedit').modal('hide');
+
+    }
+
+    function InitToolBarButton()
+    {
+
+        $("#btnAdd").click(function(){
+            $('#aboutadd').modal('show');
+            $("#divAddContainer").load("/About/Add");
+        });
+
+        $("#btnEdit").click(function () {
+
+            var selections = $('#table').bootstrapTable('getSelections');
+            if (selections.length == 0) {
+                layer.alert("请选择要将要修改的数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            } else if (selections.length != 1)
+            {
+                layer.alert("只能选择一条数据进行修改", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+
+            var id = selections[0].Id;
+            $('#aboutedit').modal('show');
+            $("#divEditContainer").load("/About/Edit?id=" + id);
+
+        });
+
+        $("#btnDelete").click(function(){
+            var selections = $('#table').bootstrapTable('getSelections');
+            if(selections.length == 0)
+            {
+                layer.alert("请选择要将要删除的数据", {
+                    skin: 'layui-layer-molv'
+                            ,closeBtn: 0
+                            ,shift: 5 //动画类型
+                });
+                return ;
+            }
+            var aboutIds =[];
+            for(var i=0;i<selections.length;i++)
+            {
+                var id = selections[i].Id;
+                aboutIds.push(id);
+            }
+            //delete records
+            var jsonContactId = JSON.stringify(aboutIds);
+            $.ajax({
+                type: "post",//使用get方法访问后台
+                dataType: "json",//返回json格式的数据
+                url: "/About/BachDeleteById",
+                data: jsonContactId,
+                async:false,
+                success: function(message){
+                    if(message.Success)
+                    {
+                        RefreshTable();
+                    }else{
+                        layer.alert(message.Content, {
+                            skin: 'layui-layer-molv'
+                            ,closeBtn: 0
+                            ,shift: 5 //动画类型
+                        });
+                    }
+
+                }
+            });
+        });
+    }
+
+    function RefreshTable()
+    {
+        $('#table').bootstrapTable('refresh');
+
+    }
+</script>  

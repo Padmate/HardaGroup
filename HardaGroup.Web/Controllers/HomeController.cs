@@ -25,18 +25,6 @@ namespace HardaGroup.Web.Controllers
             return View();
         }
 
-        /// <summary>
-        /// 关于华尔达
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult About()
-        {
-            B_Image bImage = new B_Image();
-            List<M_Image> bgImages = bImage.GetBGImagesByType(Common.Image_AboutBG);
-            ViewData["bgimages"] = bgImages;
-
-            return View();
-        }
 
         public ActionResult ContactUs()
         {

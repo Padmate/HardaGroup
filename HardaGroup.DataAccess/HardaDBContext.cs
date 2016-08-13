@@ -31,11 +31,14 @@ namespace HardaGroup.DataAccess
         }
 
         public DbSet<Image> Images { get; set; }
+        public DbSet<About> Abouts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Configurations.Add(new ImageConfiguration());
+            modelBuilder.Configurations.Add(new AboutConfiguration());
+
 
         }
 

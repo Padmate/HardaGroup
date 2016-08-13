@@ -69,7 +69,7 @@ namespace HardaGroup.Web.Controllers
         /// 关于华尔达内容管理
         /// </summary>
         /// <returns></returns>
-        public ActionResult AboutHarda()
+        public ActionResult About()
         {
             return View();
         }

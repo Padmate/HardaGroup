@@ -174,3 +174,31 @@ div.divmiddle-box-content { display: table-cell; vertical-align: middle; }
         font-size: 22px;
     }
 }
+
+.curd-model .modal-content{
+        min-height:100%;
+    }
+    .curd-model .close-modal{
+    position:fixed;
+    width:75px;
+    height:75px;
+    background-color:transparent;
+    top:25px;
+    right:25px;
+    cursor:pointer
+}
+.curd-title{
+    margin:20px auto;
+}
+.input-large {
+    width: 50%;
+    max-width: 50%;
+    line-height: 35px;
+    height: 35px;
+}
+
+.textarea-large {
+    height: 150px;
+    width: 50%;
+    max-width: 50%;
+}
