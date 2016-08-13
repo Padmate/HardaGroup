@@ -43,6 +43,11 @@ else
         @{
             var text = HardaGroup.Web.Globalization.language.Login + " / " + @HardaGroup.Web.Globalization.language.Register;
         }
-        <li>@Html.ActionLink(text, "Login", "Account", new { area = "", ReturnUrl = Request.Url.PathAndQuery }, htmlAttributes: new { id = "loginLink", @class = "btn" })</li>
+        <li>
+            <a class="btn" id="loginLink" href="@string.Format("{0}/Account/login?ReturnUrl={1}", cultureUri,Request.Url.PathAndQuery)">
+                @text
+            </a>
+            @*@Html.ActionLink(text, "Login", "Account", new { area = "", ReturnUrl = Request.Url.PathAndQuery }, htmlAttributes: new { id = "loginLink", @class = "btn" })*@
+        </li>
     </ul>
 }
