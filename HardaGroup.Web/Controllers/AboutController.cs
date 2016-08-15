@@ -22,6 +22,36 @@ namespace HardaGroup.Web.Controllers
             List<M_Image> bgImages = bImage.GetBGImagesByType(Common.Image_AboutBG);
             ViewData["bgimages"] = bgImages;
 
+            //获取当前国际化代码
+            var culture = GlobalizationHelp.GetCurrentThreadCultureCode();
+            //根据当前国际化代码过滤数据
+            B_About bAbout = new B_About();
+            M_About searchModel = new M_About();
+            searchModel.Culture = culture;
+            List<M_About> allDatas = bAbout.GetByMulitCond(searchModel);
+
+            M_About mAbout = new M_About();
+            if (allDatas.Count > 0)
+            {
+                if (string.IsNullOrEmpty(typecode))
+                {
+                    //如果类型代码为空，则去默认第一条数据
+                    mAbout = allDatas.FirstOrDefault();
+                }
+                else
+                {
+                    //根据当前typecode过滤数据
+                    mAbout = allDatas.Where(a => a.TypeCode == typecode).FirstOrDefault();
+                    
+
+                }
+            }
+
+            if (mAbout == null) throw new HttpException(404,"");
+            ViewData["allDatas"] = allDatas;
+            ViewData["currentData"] = mAbout;
+            
+
             return View();
         }
 
@@ -39,6 +69,21 @@ namespace HardaGroup.Web.Controllers
 
             PageResult<M_About> pageResult = new PageResult<M_About>(totalCount, pageData);
             return Json(pageResult);
+        }
+
+        public ActionResult Detail(string id)
+        {
+            M_About mAbout = new M_About();
+            B_About bAbout = new B_About();
+            if(!string.IsNullOrEmpty(id))
+            {
+                var aboutId = System.Convert.ToInt32(id);
+                mAbout = bAbout.GetById(aboutId);
+            }
+            ViewData["about"] = mAbout;
+
+           
+            return View();
         }
 
         public ActionResult Add()

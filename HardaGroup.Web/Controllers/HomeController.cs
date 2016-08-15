@@ -42,5 +42,15 @@ namespace HardaGroup.Web.Controllers
             ViewData["bgimages"] = bgImages;
             return View();
         }
+
+        public ActionResult Error404()
+        {
+            return View();
+        }
+
+        public ActionResult Error500()
+        {
+            return View();
+        }
     }
 }

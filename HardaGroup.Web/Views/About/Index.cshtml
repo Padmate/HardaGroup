@@ -1,12 +1,17 @@
 ﻿@using HardaGroup.Utility;
 @using System.Configuration;
 @using HardaGroup.Web.Globalization;
+@using HardaGroup.Models;
 @{
-    ViewBag.Title = language.AboutHarda;    
     string cultureCode = GlobalizationHelp.GetCurrentThreadCultureCode();
     string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
 
+    var allDatas = (List<M_About>)ViewData["allDatas"];
+    var currentData = (M_About)ViewData["currentData"];
+
+    ViewBag.Title = currentData.TypeName+"|"+ language.AboutHarda;    
+    
 }
 
 <style>
@@ -22,57 +27,60 @@
         margin-top: 0px;
         font-weight: bold;
     }
+    .aboutTabs li{
+        width:100%;
+    }
+    .aboutTabs > li.active > a
+    {
+        color:#cd0200;
+    }
 </style>
 
 <section>
     <div class="container">
         <div class="row">
             <div class="col-md-2">
-                <ul class="nav nav-tabs">
-                    <li class="active">
-                        <a href="@string.Format("{0}/about/company-rofile{1}", cultureUri, urlRewriteExtension)">
-                            <strong>公司简介</strong>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="@string.Format("{0}/about/our-philosophy{1}", cultureUri, urlRewriteExtension)">
-                            <strong>经营理念</strong>
-                        </a>
-                    </li>
-                    <li><a href="#companymanage"><strong>公司治理</strong></a></li>
-                    <li><a href="#history"><strong>发展历程</strong></a></li>
-                    <li><a href="#responsibility"><strong>社会责任</strong></a></li>
-                    <li><a href="#managesystem"><strong>管理体系</strong></a></li>
-                    <li><a href="#honour"><strong>得奖荣誉</strong></a></li>
-                    <li><a href="#subcompany"><strong>分子公司</strong></a></li>
+                <ul class="nav nav-tabs aboutTabs">
+                    @foreach (var about in allDatas)
+                    {
+                        <li>
+                            <a href="@string.Format("{0}/about/{1}{2}", cultureUri,about.TypeCode, urlRewriteExtension)">
+                                <strong>@about.TypeName</strong>
+                            </a>
+                        </li>
+                    }
                 </ul>
 
             </div>
 
             <div class="col-md-10">
                 <div class="about-content">
-                        <h2>公司简介</h2>
-                        <hr />
-                        <div>
-                            <span style="line-height:250%;"><span style="font-size:18px;"><span style="color: rgb(68, 68, 68); widows: 1;">&nbsp; &nbsp;华尔达（厦门）塑胶有限公司，成立于2001年。华尔达与众多国际知名卫浴公司建立了长期合作伙伴关系，为客户提供产品概念设计、产品结构设计、模具开发、注塑生产和组装包装成品出货等等。华尔达拥有自己模具车间，注塑车间，精密冲压车间，喷涂和印刷流水线，抗静电净化组装车间以及产品测试实验室。2001年获得ISO9001质量体系认证，2014年即将通过ISO14000 和 QC080000 认证，获得国内外专利100多项。&nbsp;</span></span></span>
-                        </div>
-                        <p>
-                            <span style="line-height:250%;"><span style="font-size:18px;"><span style="color: rgb(68, 68, 68); widows: 1;">&nbsp;&nbsp;公司以&quot;满足客户需求、引领市场需求&quot;为企业经营宗旨；以&quot;精益求精的品质、精耕细作的市场&quot;为生存支撑点；以&quot;诚信务实、创新发展、合作双赢&quot;为销售基础以&quot;高效率、高速度、高责任、高性价比&quot;为商务要素；以&quot;廉洁奉公、团结进取、博爱互助、以人为本、优化流程创造价值&quot;为企业行为准则。最终实现公司&quot;以客户为中心、以质量求生存，以管理求效益，以创新求发展&quot;的战略科学发展观！&nbsp;</span></span></span>
-                        </p>
-                        <div>
-                            <span style="line-height:250%;"><span style="font-size:18px;"><span style="color: rgb(68, 68, 68); widows: 1;">&nbsp;&nbsp;公司下设厦门迈科思工业设计有限公司（设计中心）和深圳华尔达科技有限公司（研发中心），坚持以市场为导向，以客户为中心，以管理为重点，以科技创新为驱动，以信息化为载体，以核心竞争力为基础，力创一流企业，争当行业先锋。致力于成为最具竞争力的卫浴产品制造服务供应商</span></span></span>
-                        </div>
-                    
+                        <h2 class="customer-h2">@currentData.TypeName</h2>
+                        @Html.Raw(currentData.Content)    
+
                 </div>
             </div>
         </div>
     </div>
 </section>
 <script>
-
     $(function () {
 
-    })
+        //当前访问路径
+        var url = window.location;
+        var element = $('.aboutTabs a').filter(function () {
+            return this.href == url || url.href.indexOf(this.href) == 0;
+        }).parent().addClass('active');
+
+        //$(".sidebar-menu a").click(function () {
+        //    event.preventDefault();
+        //    if(this.pathname !="void(0)")
+        //    {
+        //        alert(this.pathname);
+
+        //    }
+        //});
+    });
 </script>
 
 

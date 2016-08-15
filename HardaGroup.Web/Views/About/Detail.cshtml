@@ -1,0 +1,62 @@
+﻿@{
+    Layout = null;
+    var about = (M_About)ViewData["about"];
+}
+@using HardaGroup.Models;
+
+
+<div class="close-modal" data-dismiss="modal">
+    <i class="fa fa-3x fa-close"></i>
+</div>
+<div class="container">
+
+    <h3 class="customer-h3 text-center curd-title">详 细</h3>
+    <hr />
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">类别代码：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@about.TypeCode</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">类别名称：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@about.TypeName</label>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">顺 序：</label>
+            </div>
+            <div class="col-md-10">
+                <span class="customer-content-sm">@about.Sequence</span>
+            </div>
+        </div>
+        
+
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">内 容：</label>
+            </div>
+            <div class="col-md-10">
+                @Html.Raw(about.Content)
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-lg btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+</div>
+
+

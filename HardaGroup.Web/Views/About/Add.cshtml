@@ -1,5 +1,7 @@
-﻿@{
+﻿@using HardaGroup.Utility;
+@{
     Layout = null;
+    string currentCultureCode = GlobalizationHelp.GetCurrentThreadCultureCode();
 }
 <div class="close-modal" data-dismiss="modal">
     <i class="fa fa-3x fa-close"></i>
@@ -33,6 +35,16 @@
                 <input class="input-large" id="tbSequence" placeholder="顺 序" />
             </div>
         </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">内 容：</label>
+            </div>
+            <div class="col-md-10">
+                <textarea id="taContent" name="content"></textarea>
+
+            </div>
+        </div>
+        
     </div>
 
 </div>
@@ -45,3 +57,61 @@
         保 存
     </button>
 </div>
+
+<script type="text/javascript">
+    var editor = KindEditor.create('textarea[name="content"]',kindeditorConfig);
+
+    //修改或新增保存
+    function SaveAdd() {
+
+        $("body").showLoading();
+        var saveObj = ConstructSaveObj();
+        var jsonParam = JSON.stringify(saveObj);
+        $.ajax({
+            type: "POST",
+            url: "/About/SaveAdd",
+            dataType: "json",
+            data: jsonParam,
+            async: false,   //同步
+            success: function (message) {
+
+                if (message.Success) {
+
+                    //刷新表格
+                    CloseAddScreen();
+                    //刷新
+                    RefreshTable();
+                    $("body").hideLoading();
+
+
+                } else {
+                    $("body").hideLoading();
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                    return;
+                }
+            }
+        });
+    }
+
+
+    //构造保存对象
+    function ConstructSaveObj() {
+
+        var obj = {
+            TypeCode: $("#tbTypeCode").val(),
+            TypeName: $("#tbTypeName").val(),
+            Sequence: $("#tbSequence").val(),
+            Content: editor.html(),
+            Culture:'@currentCultureCode'
+
+        };
+        return obj;
+    }
+
+</script>
+
+

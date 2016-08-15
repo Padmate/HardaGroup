@@ -37,7 +37,8 @@ namespace HardaGroup.Service
         {
             About searchModel = new About()
             {
-                TypeName = about.TypeName
+                TypeName = about.TypeName,
+                Culture =about.Culture
             };
 
             var offset = about.offset;
@@ -58,11 +59,31 @@ namespace HardaGroup.Service
         {
             About searchModel = new About()
             {
-                TypeName = about.TypeName
+                TypeName = about.TypeName,
+                Culture = about.Culture
             };
 
             var totalCount = _dAbout.GetPageDataTotalCount(searchModel);
             return totalCount;
+        }
+
+        /// <summary>
+        /// 根据条件过滤数据
+        /// </summary>
+        /// <param name="about"></param>
+        /// <returns></returns>
+        public List<M_About> GetByMulitCond(M_About about)
+        {
+            About searchModel = new About()
+            {
+                TypeCode =about.TypeCode,
+                TypeName = about.TypeName,
+                Culture = about.Culture
+                
+            };
+            var abouts = _dAbout.GetByMulitCondition(searchModel);
+            var result = abouts.Select(a => ConverEntityToModel(a)).ToList();
+            return result;
         }
 
         private M_About ConverEntityToModel(About about)

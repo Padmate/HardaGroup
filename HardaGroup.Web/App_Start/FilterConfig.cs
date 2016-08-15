@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using HardaGroup.Web.Attributes;
+using System.Web;
 using System.Web.Mvc;
 
 namespace HardaGroup.Web
@@ -7,8 +8,8 @@ namespace HardaGroup.Web
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
-
+            //filters.Add(new HandleErrorAttribute());
+            filters.Add(new ApplicationHandleErrorAttribute());
         }
     }
 }

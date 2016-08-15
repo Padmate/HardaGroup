@@ -1,13 +1,17 @@
-﻿@{
+﻿@using HardaGroup.Utility;
+@{
     Layout = "~/Views/Shared/_Admin.cshtml";
     ViewBag.Title = "关于华尔达";
+
+    string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
+    string currentCultureCode = GlobalizationHelp.GetCurrentThreadCultureCode();
+    
 }
 
 <section class="content">
     <!-- Small boxes (Stat box) -->
     <div class="row">
         <div class="col-xs-12 col-is-12 col-sm-12 col-md-12">
-
             <div id="toolbar">
                 <button id="btnAdd" class="btn btn-primary">
                     <i class="glyphicon glyphicon-plus"></i>Add
@@ -28,7 +32,7 @@
 </section>
 
 <!--#region新增-->
-<div class="curd-model modal fade" id="aboutadd" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="curd-model modal fade" id="aboutadd" role="dialog" aria-hidden="true">
     <div class="modal-content">
         <div class="container">
 
@@ -40,11 +44,22 @@
 </div>
 <!--#endregion 修改-->
 <!--#region修改-->
-<div class="curd-model modal fade" id="aboutedit" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="curd-model modal fade" id="aboutedit" role="dialog" aria-hidden="true">
     <div class="modal-content">
         <div class="container">
 
             <div id="divEditContainer"></div>
+
+
+        </div>
+    </div>
+</div>
+<!--#region详细-->
+<div class="curd-model modal fade" id="aboutdetail" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div id="divAboutContainer"></div>
 
 
         </div>
@@ -101,16 +116,19 @@
             {
                 field: 'Content',
                 title: '内容',
-                sortable: true
+                formatter: function (value, row, index) {
+                    var result = '<a href="javaScript:void(0)" onclick="Detail(&apos;' + row.Id + '&apos;)">点击查看</a>';
+                    return result;
+                }
 
             },
-            {
-                field: 'Culture',
-                title: '国际化代码',
-                sortable: true,
-                width: '10%'
+            //{
+            //    field: 'Culture',
+            //    title: '国际化代码',
+            //    sortable: true,
+            //    width: '10%'
 
-            },
+            //},
             {
                 field: 'Sequence',
                 title: 'Sequence',
@@ -126,7 +144,8 @@
             limit: param.limit, //页面大小
             offset:param.offset,//偏移数量
             page: param.offset / param.limit, //页码
-            TypeName:param.search
+            TypeName: param.search,
+            Culture: '@currentCultureCode' //根据当前国际化代码过滤数据
         };
         return params;
     }
@@ -150,7 +169,17 @@
             // 关闭事件
             $("#divEditContainer").html("");
 
-        })
+        });
+        $('#aboutdetail').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#aboutdetail').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divAboutContainer").html("");
+
+        });
+
     }
 
     function CloseAddScreen() {
@@ -167,7 +196,7 @@
 
         $("#btnAdd").click(function(){
             $('#aboutadd').modal('show');
-            $("#divAddContainer").load("/About/Add");
+            $("#divAddContainer").load("@cultureUri/About/Add");
         });
 
         $("#btnEdit").click(function () {
@@ -192,7 +221,7 @@
 
             var id = selections[0].Id;
             $('#aboutedit').modal('show');
-            $("#divEditContainer").load("/About/Edit?id=" + id);
+            $("#divEditContainer").load("@cultureUri/About/Edit?id=" + id);
 
         });
 
@@ -238,9 +267,15 @@
         });
     }
 
+    function Detail(id) {
+        $('#aboutdetail').modal('show');
+        $("#divAboutContainer").load("/About/Detail?id=" + id);
+    }
+
     function RefreshTable()
     {
         $('#table').bootstrapTable('refresh');
 
     }
-</script>  
+</script>
+ 

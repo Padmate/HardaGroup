@@ -25,7 +25,8 @@ namespace HardaGroup.DataAccess
             #region　条件过滤
             if (!string.IsNullOrEmpty(about.TypeName))
                 query = query.Where(a => a.TypeName.Contains(about.TypeName));
-
+            if (!string.IsNullOrEmpty(about.Culture))
+                query = query.Where(a => a.Culture == about.Culture);
             #endregion
 
             var result = query.OrderBy(a => a.Sequence)
@@ -44,9 +45,38 @@ namespace HardaGroup.DataAccess
             if (!string.IsNullOrEmpty(about.TypeName))
                 query = query.Where(a => a.TypeName.Contains(about.TypeName));
 
+            if (!string.IsNullOrEmpty(about.Culture))
+                query = query.Where(a => a.Culture == about.Culture);
             #endregion
 
             var result = query.ToList().Count();
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// 通过查询条件过滤数据
+        /// </summary>
+        /// <param name="about"></param>
+        /// <param name="skip"></param>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public List<About> GetByMulitCondition(About about)
+        {
+            var query = _dbContext.Abouts.Where(a => 1 == 1);
+
+            #region　条件过滤
+            if (!string.IsNullOrEmpty(about.TypeCode))
+                query = query.Where(a => a.TypeCode == about.TypeCode);
+            if (!string.IsNullOrEmpty(about.TypeName))
+                query = query.Where(a => a.TypeName == about.TypeName);
+            if (!string.IsNullOrEmpty(about.Culture))
+                query = query.Where(a => a.Culture == about.Culture);
+            #endregion
+
+            var result = query.OrderBy(a => a.Sequence)
+            .ToList();
 
             return result;
         }
