@@ -116,6 +116,16 @@ namespace HardaGroup.Service
 
             try
             {
+                //在当前国际化语言中只能有唯一的TypeCode
+                var search = new About() { TypeCode = model.TypeCode,Culture = model.Culture};
+                var data = _dAbout.GetByMulitCondition(search);
+                if(data.Count >0)
+                {
+                    message.Success = false;
+                    message.Content = "系统中已存在代码为'" + model.TypeCode + "'的数据,不能重复添加。";
+                    return message;
+
+                }
                 //新增
                 var about = new About()
                 {
@@ -150,6 +160,17 @@ namespace HardaGroup.Service
 
             try
             {
+                //在当前国际化语言中只能有唯一的TypeCode
+                var search = new About() { TypeCode = model.TypeCode, Culture = model.Culture };
+                var data = _dAbout.GetByMulitCondition(search);
+                if (data.Where(a => a.Id != System.Convert.ToInt32(model.Id)).Count() >0)
+                {
+                    message.Success = false;
+                    message.Content = "系统中已存在代码为'" + model.TypeCode + "'的数据,不能重复添加。";
+                    return message;
+
+                }
+
                 var about = new About()
                 {
                     TypeName = model.TypeName,
