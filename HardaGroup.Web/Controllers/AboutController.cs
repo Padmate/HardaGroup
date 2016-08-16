@@ -46,7 +46,6 @@ namespace HardaGroup.Web.Controllers
 
                 }
             }
-
             if (mAbout == null) throw new HttpException(404,"");
             ViewData["allDatas"] = allDatas;
             ViewData["currentData"] = mAbout;
