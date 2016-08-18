@@ -1,0 +1,52 @@
+﻿@using System.Configuration;
+@using HardaGroup.Models;
+@using HardaGroup.Utility
+@{
+    var news = (M_News)ViewData["news"];
+    var newsScopes = (List<M_NewsScope>)ViewData["NewsScope"];
+
+    //当前所属模块
+    var scopeName = newsScopes.Where(s => s.Id == news.NewsScopeId).Select(s => s.TypeName).FirstOrDefault();
+
+    
+    ViewBag.Title = news.SubTitle;
+    string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+}
+
+<style>
+    .detailNav{
+        padding-bottom:30px;
+    }
+</style>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 detailNav">
+                <h3>
+                    <a class="customer-content-xs" href="@cultureUri/">首页  &nbsp;>&nbsp;  </a>
+                    <a class="customer-content-xs" href="@string.Format("{0}/press/{1}{2}",cultureUri,Request["typecode"],urlRewriteExtension)">媒体资讯 &nbsp;>&nbsp;</a>
+                    <a class="customer-content-xs" href="@string.Format("{0}/press/{1}/{2}{3}",cultureUri,Request["typecode"],news.Id,urlRewriteExtension)">@news.SubTitle</a>
+
+                </h3>
+                <!-- share -->
+
+
+            </div>
+            <div class="col-md-12">
+                @Html.Raw(news.Content)
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+</section>
+
+<script>
+
+</script>
+

@@ -25,15 +25,12 @@
 
     <title>@title</title>
     <link rel="shortcut icon" href="~/images/favicon.png" />
-
-    <link rel="stylesheet" href="~/Content/bootstrap.css">
-    <link rel="stylesheet" href="~/Content/bootstrap-datetimepicker.min.css">
-    <link rel="stylesheet" href="~/Content/bootstrap-table.css">
-
     <link rel="stylesheet" href="~/Content/font-awesome.min.css">
-
+    <link rel="stylesheet" href="~/Content/bootstrap.css">
+    <link rel="stylesheet" href="~/Content/bootstrap-table.css">
+    <link rel="stylesheet" href="~/Content/customer-bootstrap-table.css">
     <!-- Custom styles for our template -->
-
+    <link rel="stylesheet" href="~/Content/bootstrap-datetimepicker.min.css">
     <link rel="stylesheet" href="~/Content/animate.css">
     <link rel="stylesheet" href="~/Content/Common.css">
     <link rel="stylesheet" href="~/fonts/font-awesome/css/font-awesome.min.css">
@@ -41,6 +38,8 @@
     <link rel="stylesheet" href="~/Content/admin.css">
     <link rel="stylesheet" href="~/Content/admin-skin.css">
     <link rel="stylesheet" href="~/Scripts/loading/showLoading.css">
+    <link rel="stylesheet" href="~/Content/tooltip.css">
+    
 
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -52,10 +51,16 @@
 
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
-    <script src="~/Scripts/bootstrap-table.js"></script>
-    <script src="~/Scripts/layer/layer.js"></script>
+    <script src="~/Scripts/bootstrap-table/bootstrap-table.js"></script>
+    <script src="~/Scripts/bootstrap-table/bootstrap-table-zh-CN.js"></script>
+    <script src="~/Scripts/bootstrap-table/customer-bootstrap-table.js"></script>
+    <script src="~/Scripts/bootstrap-paginator.js"></script>
 
+    <script src="~/Scripts/layer/layer.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="~/Scripts/bootstrap-datetimepicker/customer-datetimepicker.js"></script>
+    <script src="~/Scripts/dateformathelp.js"></script>
     <script src="~/Scripts/loading/jquery.showLoading.js"></script>
 
     <!-- AdminLTE App -->
@@ -226,7 +231,23 @@
                         </ul>
                     </li>
                     <li><a href="@string.Format("{0}/manage/about{1}",cultureUri, urlRewriteExtension)"><i class="fa fa-files-o"></i> <span>关于华尔达</span></a></li>
-
+                    <li class="treeview">
+                        <a href="javaScript:void(0)">
+                            <i class="fa fa-image"></i> <span>媒体资讯</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="@string.Format("{0}/manage/news-scope{1}",cultureUri,urlRewriteExtension)">
+                                    <i class="fa fa-info-circle text-blue"></i>模块管理
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@string.Format("{0}/manage/news{1}",cultureUri,urlRewriteExtension)">
+                                    <i class="fa fa-info text-yellow"></i>内容管理
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     
                  </ul>
             </section>

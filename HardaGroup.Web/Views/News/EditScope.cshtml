@@ -1,0 +1,115 @@
+﻿@using HardaGroup.Utility;
+@using HardaGroup.Models;
+@{
+    Layout = null;
+    string currentCultureCode = GlobalizationHelp.GetCurrentThreadCultureCode();
+    M_NewsScope newsScope = (M_NewsScope)ViewData["NewsScope"];
+}
+}
+
+<div class="modal-body">
+
+    <h3 class="customer-h3 text-center">
+        修 改
+    </h3>
+    <hr />
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-4 control-label">
+                <label class="customer-content-sm">模块代码：</label>
+            </div>
+            <div class="col-md-8">
+                <input class="input-large" id="tbTypeCode" placeholder="模块代码" value="@newsScope.TypeCode"/>
+            </div>
+        </div>
+
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-4 control-label">
+                <label class="customer-content-sm">模块名称：</label>
+            </div>
+            <div class="col-md-8">
+                <input class="input-large" id="tbTypeName" placeholder="模块名称" value="@newsScope.TypeName" />
+            </div>
+        </div>
+
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-4 control-label">
+                <label class="customer-content-sm">顺 序：</label>
+            </div>
+            <div class="col-md-8">
+                <input class="input-large" id="tbSequence" placeholder="显示顺序" value="@newsScope.Sequence" />
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+    <button type="button" class="btn btn-danger" onclick="SaveEdit()">
+        保 存
+    </button>
+</div>
+
+<script type="text/javascript">
+
+    //修改或新增保存
+    function SaveEdit() {
+
+        $("body").showLoading();
+        var saveObj = ConstructSaveObj();
+        var jsonParam = JSON.stringify(saveObj);
+        $.ajax({
+            type: "POST",
+            url: "/News/SaveEditScope",
+            dataType: "json",
+            data: jsonParam,
+            async: false,   //同步
+            success: function (message) {
+
+                if (message.Success) {
+
+                    //刷新表格
+                    CloseEditScreen();
+                    //刷新
+                    RefreshTable();
+                    $("body").hideLoading();
+
+
+                } else {
+                    $("body").hideLoading();
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                    return;
+                }
+            }
+        });
+    }
+
+
+    //构造保存对象
+    function ConstructSaveObj() {
+
+        var obj = {
+            Id:'@newsScope.Id',
+            TypeCode: $("#tbTypeCode").val(),
+            TypeName: $("#tbTypeName").val(),
+            Sequence: $("#tbSequence").val(),
+            Culture:'@currentCultureCode'
+
+        };
+        return obj;
+    }
+
+</script>

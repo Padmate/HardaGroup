@@ -58,8 +58,12 @@
   <ItemGroup>
     <Compile Include="DBConfiguration\AboutConfiguration.cs" />
     <Compile Include="DBConfiguration\ImageConfiguration.cs" />
+    <Compile Include="DBConfiguration\NewsConfiguration.cs" />
+    <Compile Include="DBConfiguration\NewsScopeConfiguration.cs" />
     <Compile Include="D_About.cs" />
     <Compile Include="D_Image.cs" />
+    <Compile Include="D_News.cs" />
+    <Compile Include="D_User.cs" />
     <Compile Include="HardaDBContext.cs" />
     <Compile Include="Migrations\201608030729067_init.cs" />
     <Compile Include="Migrations\201608030729067_init.Designer.cs">
@@ -81,7 +85,16 @@
     <Compile Include="Migrations\201608130732038_addAboutTable.Designer.cs">
       <DependentUpon>201608130732038_addAboutTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608160706142_addNewsTable.cs" />
+    <Compile Include="Migrations\201608160706142_addNewsTable.Designer.cs">
+      <DependentUpon>201608160706142_addNewsTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201608160835091_addNewsScope.cs" />
+    <Compile Include="Migrations\201608160835091_addNewsScope.Designer.cs">
+      <DependentUpon>201608160835091_addNewsScope.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="D_NewsScope.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +117,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608130732038_addAboutTable.resx">
       <DependentUpon>201608130732038_addAboutTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608160706142_addNewsTable.resx">
+      <DependentUpon>201608160706142_addNewsTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608160835091_addNewsScope.resx">
+      <DependentUpon>201608160835091_addNewsScope.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

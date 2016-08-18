@@ -178,7 +178,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
-    <Compile Include="Controllers\PressController.cs" />
+    <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\VentureSupportController.cs" />
     <Compile Include="Controllers\AdvancedManufacturingController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -209,6 +209,7 @@
     <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-table.css" />
+    <Content Include="Content\customer-bootstrap-table.css" />
     <Content Include="Content\theme\default-theme.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -223,6 +224,7 @@
     <Content Include="Content\theme\purple-theme.css" />
     <Content Include="Content\theme\theme-switcher.css" />
     <Content Include="Content\admin-skin.css" />
+    <Content Include="Content\tooltip.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\font-awesome\css\font-awesome.css" />
     <Content Include="fonts\font-awesome\css\font-awesome.min.css" />
@@ -450,9 +452,12 @@
     <Content Include="Scripts\animatedheader.js" />
     <Content Include="Scripts\bootstrap-datetimepicker\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\bootstrap-datetimepicker\customer-datetimepicker.js" />
     <Content Include="Scripts\bootstrap-datetimepicker\locales\bootstrap-datetimepicker.zh-CN.js" />
     <Content Include="Scripts\bootstrap-paginator.js" />
-    <Content Include="Scripts\bootstrap-table.js" />
+    <Content Include="Scripts\bootstrap-table\bootstrap-table-zh-CN.js" />
+    <Content Include="Scripts\bootstrap-table\bootstrap-table.js" />
+    <Content Include="Scripts\bootstrap-table\customer-bootstrap-table.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\fontawesome-webfont.eot" />
@@ -499,6 +504,7 @@
     <None Include="Properties\PublishProfiles\hardagroup.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\classie.js" />
+    <Content Include="Scripts\dateformathelp.js" />
     <Content Include="Scripts\Globalization.js" />
     <Content Include="Scripts\headroom.min.js" />
     <Content Include="Scripts\html5shiv.js" />
@@ -573,7 +579,7 @@
     <Content Include="Views\Solutions\PartsAndModules.cshtml" />
     <Content Include="Views\Solutions\ResearchAndDevelopment.cshtml" />
     <Content Include="Views\VentureSupport\Index.cshtml" />
-    <Content Include="Views\Press\Index.cshtml" />
+    <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\Home\JoinUs.cshtml" />
     <Content Include="Views\Shared\_map.cshtml" />
     <Content Include="Views\Shared\_Admin.cshtml" />
@@ -583,6 +589,14 @@
     <Content Include="Views\About\Add.cshtml" />
     <Content Include="Views\About\Edit.cshtml" />
     <Content Include="Views\About\Detail.cshtml" />
+    <Content Include="Views\Manage\News.cshtml" />
+    <Content Include="Views\Manage\NewsScope.cshtml" />
+    <Content Include="Views\News\AddScope.cshtml" />
+    <Content Include="Views\News\EditScope.cshtml" />
+    <Content Include="Views\News\Add.cshtml" />
+    <Content Include="Views\News\Edit.cshtml" />
+    <Content Include="Views\News\Detail.cshtml" />
+    <Content Include="Views\News\ShowDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

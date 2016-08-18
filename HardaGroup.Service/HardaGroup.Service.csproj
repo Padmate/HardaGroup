@@ -42,6 +42,9 @@
   <ItemGroup>
     <Compile Include="B_About.cs" />
     <Compile Include="B_Image.cs" />
+    <Compile Include="B_News.cs" />
+    <Compile Include="B_NewsScope.cs" />
+    <Compile Include="B_User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +64,9 @@
       <Project>{c2bae937-b368-4165-bd09-b23d87ee3238}</Project>
       <Name>HardaGroup.Utility</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

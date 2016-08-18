@@ -21,6 +21,8 @@ namespace HardaGroup.Utility
         public const string Image_JoinUsBG = "joinus";
         public const string Image_ContactUsBG = "contactus";
 
+        public const string News_Thumbnails = "news-picture";
+
         public static Dictionary<string, string> Dic_ImageType = new Dictionary<string, string>(){
             {Image_HomeBG,"首页背景图片"},
             {Image_AboutBG,"关于华尔达背景图片"},
@@ -30,7 +32,8 @@ namespace HardaGroup.Utility
             {Image_VentureSupportBG,"创新创业背景图片"},
             {Image_PressBG,"媒体资讯背景图片"},
             {Image_JoinUsBG,"加入华尔达背景图片"},
-            {Image_ContactUsBG,"联系我们背景图片"}
+            {Image_ContactUsBG,"联系我们背景图片"},
+            {News_Thumbnails,"新闻缩略图"}
 
         };
         #endregion

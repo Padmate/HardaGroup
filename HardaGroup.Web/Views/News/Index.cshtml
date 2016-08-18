@@ -1,0 +1,253 @@
+﻿@using HardaGroup.Utility;
+@using System.Configuration;
+@using HardaGroup.Web.Globalization;
+@using HardaGroup.Models;
+@{
+    string cultureCode = GlobalizationHelp.GetCurrentThreadCultureCode();
+    string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+    var allNewsScopes = (List<M_NewsScope>)ViewData["allNewsScope"];
+    var currentNewsScope = (M_NewsScope)ViewData["currentNewsScope"];
+
+    ViewBag.Title = currentNewsScope.TypeName + "|" + language.AboutHarda;
+
+}
+
+<style>
+   .newscontent-area{
+    }
+
+    .newscontent-area h2 {
+        color: #337ab7;
+        margin-top: 0px;
+        font-weight: bold;
+        margin-bottom:20px;
+    }
+
+    .newsScopeTabs li {
+        width: 100%;
+    }
+
+    .newsScopeTabs > li.active > a {
+        color: #cd0200;
+    }
+
+    .news-paginatorbar{
+        margin:10px auto;
+        
+    }
+    .news-paginator a{
+        cursor:pointer;
+    }
+    .news-content
+    {
+        min-height:400px;
+    }
+    .news-content-row {
+        background-color: #fff;
+        border: solid 1px lightgray;
+        -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+        -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+        box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+        margin: 20px 0px;
+        padding: 10px 0px;
+    }
+    .news-description p:hover{
+        color:#337ab7;
+    }
+
+    .news-description{
+        color:#555;
+    }
+    .pointer-cursor{
+        cursor:pointer;
+    }
+</style>
+
+<section>
+    <div class="container">
+        <div class="row">
+            
+
+            <div class="col-md-9">
+                <div class="newscontent-area">
+                    @*<h2 class="customer-h2">@currentNewsScope.TypeName</h2>*@
+                    <div class="news-content" id="news-content"></div>
+                    <div class="news-paginatorbar">
+                        <ul id="news-paginator"></ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2 col-md-offset-1">
+                <ul class="nav nav-tabs newsScopeTabs">
+                    @foreach (var scope in allNewsScopes)
+                    {
+                        <li>
+                            <a href="@string.Format("{0}/press/{1}{2}", cultureUri, scope.TypeCode, urlRewriteExtension)">
+                                <strong>@scope.TypeName</strong>
+                            </a>
+                        </li>
+                    }
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(function () {
+
+        //选中当前路径选项
+        var url = window.location;
+        var element = $('.newsScopeTabs a').filter(function () {
+            return this.href == url || url.href.indexOf(this.href) == 0;
+        }).parent().addClass('active');
+
+        InitPaging();
+    });
+
+    //初始化分页数据
+    function InitPaging() {
+        //获取总页数及第一页数据
+        var firstResult = GetPageData(1);
+        //加载第一页数据
+        RenderPageData(firstResult.data);
+
+        //重置分页条
+        ResetPaginator();
+        //超过一页才显示分页
+        if (firstResult.totalPages > 1) {
+            InitPaginator(firstResult.totalPages);
+        }
+
+    }
+    //重置分页条
+    function ResetPaginator() {
+        $("#news-paginator").html("");
+
+    }
+    //初始化分页条
+    function InitPaginator(totalPages) {
+        //重置分页条
+
+        var options = {
+            size: 'large',            //指定分页条的大小
+            bootstrapMajorVersion: 3,  //指定bootstrap版本，为v3，则容器必须为ul;如果版本为v2，则容器必须为div
+            numberOfPages: 10,         //设置可选分页按钮个数，默认5
+            currentPage: 1,          //当前页
+            totalPages: totalPages,         //总页数（从服务端获取）
+            onPageClicked: function (e, originalEvent, type, page) {
+                //获取分页数据
+                var result = GetPageData(page);
+                //渲染当前页数据
+                RenderPageData(result.data);
+            },
+            //pageUrl: function(type, page, current){
+
+            //    return "http://example.com/list/page/"+page;
+
+            //},
+            itemContainerClass: function (type, page, current) {
+                return (page === current) ? "active" : "pointer-cursor";
+            },
+            itemTexts: function (type, page, current) {
+                switch (type) {
+                    case "first":
+                        return "第一页";
+                    case "prev":
+                        return "前一页";
+                    case "next":
+                        return "下一页";
+                    case "last":
+                        return "最后一页";
+                    case "page":
+                        return page;
+                }
+            }
+        }
+
+        $("#news-paginator").bootstrapPaginator(options);
+    }
+
+    //获取分页数据
+    function GetPageData(currentPage) {
+
+        var resultData = {
+            totalPages: 0,
+            data: null
+        };
+
+        var params = {
+            //"SubTitle": $(".articleSearchInput").val(),
+            "NewsScopeId":'@currentNewsScope.Id',
+            "page": currentPage
+        };
+
+        //添加遮罩
+        $(".newscontent-area").showLoading();
+        //获取数据总页数
+        $.ajax({
+            type: "POST",
+            url: "/News/GetPageDataForBootstrapPaginator",
+            data: params,
+            dataType: "json",
+            async: false,   //同步
+            success: function (result) {
+
+                resultData.totalPages = result.totalPages;
+                resultData.data = result.pageDatas;
+                //添加遮罩
+                $(".newscontent-area").hideLoading();
+            }
+        });
+
+        return resultData;
+
+    }
+
+    //重新生成Body
+    function RenderPageData(datas) {
+        var dynamicHtml = "";
+        for (var i = 0; i < datas.length; i++) {
+
+            var pubTime = JsonDateFormat(datas[i].Pubtime);
+
+            var contentHref = '@cultureUri' + "/press/" + '@currentNewsScope.TypeCode'+"/"+ datas[i].Id + '@urlRewriteExtension';
+            var shareHref = window.location.host + contentHref;
+
+
+            dynamicHtml += '<div class="row news-content-row">';
+            dynamicHtml += '<div class="col-md-12">';
+            dynamicHtml += '<h2 class="customer-h2">' + datas[i].Title+'</h2>';
+
+            dynamicHtml += '<h3 class="customer-h3">' + datas[i].SubTitle + '</h3>';
+            dynamicHtml += '<p class="customer-content-sm text-right">' + pubTime + '</p>';
+            dynamicHtml += '</div>';
+            dynamicHtml += '<div class="col-md-4">';
+           
+            var imageVirtualPath = "";
+            if (datas[i].Image != null)
+                imageVirtualPath = datas[i].Image.VirtualPath;
+            dynamicHtml += '<img src="' + imageVirtualPath + '" class="img-responsive" alt="无图标"/>';
+            dynamicHtml += '</div>';
+            dynamicHtml += '<div class="col-md-8">';
+            dynamicHtml += '<a class="news-description" href="' + contentHref + '">';
+            dynamicHtml += '<p class="customer-content-sm">';
+            dynamicHtml += '<strong>';
+            dynamicHtml += datas[i].Description == null ? "" : datas[i].Description;
+            dynamicHtml += '</strong>';
+            dynamicHtml += '</p>';
+            dynamicHtml += '</a>';
+
+            dynamicHtml += '</div>';
+            dynamicHtml += '</div>';
+        }
+        $("#news-content").html(dynamicHtml);
+
+    }
+</script>
+
+
+

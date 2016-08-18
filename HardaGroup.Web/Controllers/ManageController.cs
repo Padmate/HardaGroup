@@ -7,6 +7,12 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HardaGroup.Web.Models;
+using System.Collections;
+using HardaGroup.Service;
+using HardaGroup.Utility;
+using HardaGroup.Models;
+using System.Collections.Generic;
+using System.Web.Script.Serialization;
 
 namespace HardaGroup.Web.Controllers
 {
@@ -73,5 +79,36 @@ namespace HardaGroup.Web.Controllers
         {
             return View();
         }
+
+        /// <summary>
+        /// 新闻模块管理
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult NewsScope()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 新闻管理
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult News()
+        {
+            //根据当前国际化代码获取资讯模块
+            var culture = GlobalizationHelp.GetCurrentThreadCultureCode();
+            B_NewsScope bNewsScope = new B_NewsScope();
+            M_NewsScope searchModel = new M_NewsScope();
+            searchModel.Culture = culture;
+            var allNewsScopes = bNewsScope.GetByMulitCond(searchModel);
+
+            ViewData["jsonlsNewsScope"] = JsonHandle.ToJson(allNewsScopes);
+            ViewData["NewsScope"] = allNewsScopes;
+
+            return View();
+        }
+
+
     }
 }
+
