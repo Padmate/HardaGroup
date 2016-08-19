@@ -129,9 +129,17 @@
     <value>BackwardManagement</value>
     <comment>后台管理</comment>
   </data>
+  <data name="ChooseLanguage" xml:space="preserve">
+    <value>Language</value>
+    <comment>语言选择</comment>
+  </data>
   <data name="ContactUs" xml:space="preserve">
     <value>ContactUs</value>
     <comment>联系我们</comment>
+  </data>
+  <data name="FirstPage" xml:space="preserve">
+    <value>FirstPage</value>
+    <comment>第一页</comment>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
@@ -141,9 +149,17 @@
     <value>JoinHarda</value>
     <comment>加入华尔达</comment>
   </data>
+  <data name="LastPage" xml:space="preserve">
+    <value>LastPage</value>
+    <comment>最后一页</comment>
+  </data>
   <data name="Login" xml:space="preserve">
     <value>Login</value>
     <comment>登录</comment>
+  </data>
+  <data name="NextPage" xml:space="preserve">
+    <value>NextPage</value>
+    <comment>下一页</comment>
   </data>
   <data name="PartsAndModules" xml:space="preserve">
     <value>Parts &amp; Modules</value>
@@ -156,6 +172,10 @@
   <data name="Press" xml:space="preserve">
     <value>Press</value>
     <comment>媒体资讯</comment>
+  </data>
+  <data name="PreviousPage" xml:space="preserve">
+    <value>PreviousPage</value>
+    <comment>前一页</comment>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>

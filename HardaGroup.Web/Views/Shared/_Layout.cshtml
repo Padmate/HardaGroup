@@ -53,8 +53,23 @@
       <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-</head>
+    <style>
+        .language-label{
+           background-color:#dd4b39 !important;
+           color:white;
+           padding:3px 3px;
+           font-weight:bold;
+           border-radius:3px;
+        }
 
+        .top-right-nav{
+            float:right;
+        }
+        .top-right-nav li{
+            float:left;
+        }
+    </style>
+</head>
 <body id="page-top" class="home">
 
     <!--右侧边栏-->
@@ -93,11 +108,27 @@
             </div>
             <div class="navbar-collapse collapse">
                 <div class="navbar-top text-right">
+                 
+                    
+                    
                     <a href="@string.Format("{0}/contact-us{1}",cultureUri,urlRewriteExtension)">@language.ContactUs |</a>
-                    <a class="language" href="/en-US">English</a>/
-                    <a class="language" href="/">中文</a>
 
-                </div>
+                    <div style="display:inline;position:relative">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="language-label">@language.ChooseLanguage<b class="caret"></b></span>
+                        </a>
+                        <ul class="dropdown-menu">
+
+                            <li><a class="language" href="/en-US">English</a></li>
+                            <li><a class="language" href="/">中文</a></li>
+                        </ul>
+                    </div>
+                    
+
+                    @*<a class="language" href="/en-US">English</a>/
+                    <a class="language" href="/">中文</a>*@
+                  
+                </div> 
                 <div class="navbar-bottom">
                      @Html.Partial("_LoginPartial")
                     <ul class="nav navbar-nav pull-right head-nav">
