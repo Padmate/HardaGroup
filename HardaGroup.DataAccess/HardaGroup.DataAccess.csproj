@@ -93,6 +93,10 @@
     <Compile Include="Migrations\201608160835091_addNewsScope.Designer.cs">
       <DependentUpon>201608160835091_addNewsScope.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608190958484_rollbackAbouttable.cs" />
+    <Compile Include="Migrations\201608190958484_rollbackAbouttable.Designer.cs">
+      <DependentUpon>201608190958484_rollbackAbouttable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="D_NewsScope.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -123,6 +127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608160835091_addNewsScope.resx">
       <DependentUpon>201608160835091_addNewsScope.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608190958484_rollbackAbouttable.resx">
+      <DependentUpon>201608190958484_rollbackAbouttable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
