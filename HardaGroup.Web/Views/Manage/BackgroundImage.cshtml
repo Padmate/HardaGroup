@@ -6,7 +6,6 @@
     string imageTypeName = !string.IsNullOrEmpty(imageType) ? Common.Dic_ImageType[imageType] : string.Empty;
     ViewBag.Title = imageTypeName;
 
-    string culture = GlobalizationHelp.GetCurrentThreadCultureCode();
 }
 <script>
     jQuery.browser = {}; (function () { jQuery.browser.msie = false; jQuery.browser.version = 0; if (navigator.userAgent.match(/MSIE ([0-9]+)./)) { jQuery.browser.msie = true; jQuery.browser.version = RegExp.$1; } })();
@@ -61,13 +60,28 @@
     .imageButtonDiv {
         position: absolute;
     }
+    .sel-culture{
+        margin-bottom:10px;
+    }
 </style>
 <section class="content">
+    <div class="row">
+        <div class="col-xs-6 col-is-6 col-sm-4 col-md-4 sel-culture">
+           <span class="customer-content-sm">国际化：</span>
+            <select class="select-mediu" id="selCulture">
+                @foreach (var key in Common.Dic_Globalization.Keys)
+                {
+                    <option value="@key">@Common.Dic_Globalization[key]</option>
+                }
+            </select>
+        </div>
+
+    </div>
     <!-- Small boxes (Stat box) -->
     <div class="row">
         <div class="col-xs-12 col-is-12 col-sm-12 col-md-12">
             <div id="homebg-image">
-
+                
                 <!--dom结构部分-->
                 <div id="uploader-demo">
                     <!--用来存放item-->
@@ -112,6 +126,9 @@
             placeHolderTemplate: "<li></li>"
         });
 
+        $("#selCulture").change(function () {
+            LoadBGImage();
+        });
 
     });
 
@@ -167,8 +184,7 @@
     function InitWebUploader() {
         var obj = {
             imageType: '@imageType',
-            culture:'@culture',
-            Sequence: 2
+            culture: $("#selCulture").val()
         };
 
         // 初始化Web Uploader
@@ -176,7 +192,6 @@
             auto: true,   // 选完文件后，是否自动上传。
             swf: '../Scripts/webuploader/Uploader.swf',
             server: '/Images/UploadBGImageByType',
-            formData: obj,  //额外参数传递
             duplicate: true, //可重复上传同一文件
             pick: '#filePicker',
             compress: false, //图片不压缩
@@ -189,6 +204,9 @@
             fileSingleSizeLimit: 1 * 1024 * 1024 // 单个文件最大不能超过1 M
         });
         uploader.on('fileQueued', function () {
+
+            uploader.options.formData.imageType = '@imageType';
+            uploader.options.formData.culture = $("#selCulture").val();
 
             //开始上传，添加遮罩
             $("body").showLoading();
@@ -239,17 +257,17 @@
 
     //加载首页背景图片
     function LoadBGImage() {
+        var culture = $("#selCulture").val();debugger
         $.ajax({
             type: "POST",
             url: "/Images/GetCurrentCltureBGImagesByType",
             dataType: "json",
-            data: { imageType: '@imageType',culture:'@culture' },
+            data: { imageType: '@imageType', culture: $("#selCulture").val() },
             async: false,   //同步
             success: function (bgImages) {
-                
+
                 var imgClass = "imageSmall";
-                if('@imageType' !='@Common.Image_HomeBG')
-                {
+                if ('@imageType' != '@Common.Image_HomeBG') {
                     imgClass = "imageSmall2";
                 }
                 $("#imageList").html("");

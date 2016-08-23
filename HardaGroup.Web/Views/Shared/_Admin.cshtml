@@ -81,7 +81,7 @@
 
         <header class="main-header">
             <!-- Logo -->
-            <a href="@cultureUri/" class="logo">
+            <a href="/" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>Har</b>da</span>
                 <!-- logo for regular state and mobile devices -->
@@ -182,55 +182,55 @@
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
-                    <li><a href="@string.Format("{0}/manage{1}",cultureUri,urlRewriteExtension)"><i class="fa fa-dashboard"></i> <span>首页</span></a></li>
+                    <li><a href="@string.Format("/manage{0}",urlRewriteExtension)"><i class="fa fa-dashboard"></i> <span>首页</span></a></li>
                     <li class="treeview">
                         <a href="javaScript:void(0)">
                             <i class="fa fa-image"></i> <span>图片管理</span> <i class="fa fa-angle-left pull-right"></i>
                         </a>
                         <ul class="treeview-menu">
                             <li>
-                                <a href="@string.Format("{0}/manage/background-{1}{2}",cultureUri,@Common.Image_HomeBG,urlRewriteExtension)">
+                                <a href="@string.Format("/manage/background-{0}{1}",@Common.Image_HomeBG,urlRewriteExtension)">
                                     <i class="fa fa-circle-o text-blue"></i>首页
                                 </a>
                             </li>
                             <li>
-                                <a href="@string.Format("{0}/manage/background-{1}{2}",cultureUri, @Common.Image_AboutBG, urlRewriteExtension)">
+                                <a href="@string.Format("/manage/background-{0}{1}", @Common.Image_AboutBG, urlRewriteExtension)">
                                     <i class="fa fa-circle-o text-yellow"></i>关于华尔达
                                 </a>
                             </li>
                             <li>
-                                <a href="@string.Format("{0}/manage/background-{1}{2}",cultureUri,@Common.Image_AdvancedManufacturingBG, urlRewriteExtension)">
+                                <a href="@string.Format("/manage/background-{0}{1}",@Common.Image_AdvancedManufacturingBG, urlRewriteExtension)">
                                     <i class="fa fa-circle-o text-red"></i>智能制造
                                 </a>
                             </li>
                             <li>
-                                <a href="@string.Format("{0}/manage/background-{1}{2}",cultureUri,@Common.Image_SolutionsBG_RD, urlRewriteExtension)">
+                                <a href="@string.Format("/manage/background-{0}{1}",@Common.Image_SolutionsBG_RD, urlRewriteExtension)">
                                     <i class="fa fa-circle-o text-red"></i>解决方案-研发
                                 </a>
                             </li>
                             <li>
-                                <a href="@string.Format("{0}/manage/background-{1}{2}",cultureUri,@Common.Image_SolutionsBG_PM, urlRewriteExtension)">
+                                <a href="@string.Format("/manage/background-{0}{1}",@Common.Image_SolutionsBG_PM, urlRewriteExtension)">
                                     <i class="fa fa-circle-o text-red"></i>解决方案-组件产品
                                 </a>
                             </li>
                             <li>
-                                <a href="@string.Format("{0}/manage/background-{1}{2}",cultureUri,@Common.Image_VentureSupportBG, urlRewriteExtension)">
+                                <a href="@string.Format("/manage/background-{0}{1}",@Common.Image_VentureSupportBG, urlRewriteExtension)">
                                     <i class="fa fa-circle-o text-red"></i>创新创业
                                 </a>
                             </li>
                             <li>
-                                <a href="@string.Format("{0}/manage/background-{1}{2}",cultureUri,@Common.Image_PressBG, urlRewriteExtension)">
+                                <a href="@string.Format("/manage/background-{0}{1}",@Common.Image_PressBG, urlRewriteExtension)">
                                     <i class="fa fa-circle-o text-red"></i>媒体资讯
                                 </a>
                             </li>
                             <li>
-                                <a href="@string.Format("{0}/manage/background-{1}{2}",cultureUri,@Common.Image_JoinUsBG, urlRewriteExtension)">
+                                <a href="@string.Format("/manage/background-{0}{1}",@Common.Image_JoinUsBG, urlRewriteExtension)">
                                     <i class="fa fa-circle-o text-red"></i>加入华尔达
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li><a href="@string.Format("{0}/manage/about{1}",cultureUri, urlRewriteExtension)"><i class="fa fa-files-o"></i> <span>关于华尔达</span></a></li>
+                    <li><a href="@string.Format("/manage/about{0}", urlRewriteExtension)"><i class="fa fa-files-o"></i> <span>关于华尔达</span></a></li>
                     <li class="treeview">
                         <a href="javaScript:void(0)">
                             <i class="fa fa-image"></i> <span>媒体资讯</span> <i class="fa fa-angle-left pull-right"></i>
@@ -258,7 +258,7 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                    @Common.Dic_Globalization[currentCulture]
+                   
                     <small>@ViewBag.Title</small>
                 </h1>
             </section>
