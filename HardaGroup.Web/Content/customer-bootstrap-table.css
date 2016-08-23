@@ -2,6 +2,11 @@
     color:white;
     background-color:#00c0ef;
 }
+
+.search-area a{
+    color:white;
+}
+
 .search-area a:hover,a:active,a:focus,
 .customer-toolbar a:hover,a:active,a:focus{
     color:white;

@@ -17,24 +17,27 @@ namespace HardaGroup.Entities
         public string TypeCode { get; set; }
 
         /// <summary>
-        /// 类型名称
-        /// </summary>
-        public string TypeName { get; set; }
-
-        /// <summary>
         /// 排列顺序
         /// </summary>
         public int Sequence { get; set; }
 
-        /// <summary>
-        /// 内容
-        /// </summary>
-        [Column("Content", TypeName = "ntext")]
-        public string Content { get; set; }
+        public virtual ICollection<AboutGlobalization> AboutGlobalizations { get; set; }
 
-        /// <summary>
-        /// 国际化代码
-        /// </summary>
+        public About()
+        {
+            AboutGlobalizations = new List<AboutGlobalization>();
+
+        }
+    }
+
+    public class AboutSearch
+    {
+        public int Id { get; set; }
+        public string TypeCode { get; set; }
+        public string TypeName { get; set; }
+
+        public int Sequence { get; set; }
         public string Culture { get; set; }
+        public string Content { get; set; }
     }
 }

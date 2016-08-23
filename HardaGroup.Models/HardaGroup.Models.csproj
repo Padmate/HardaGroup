@@ -43,6 +43,7 @@
     <Compile Include="BaseModel.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="M_About.cs" />
+    <Compile Include="M_AboutGlobalization.cs" />
     <Compile Include="M_Image.cs" />
     <Compile Include="M_Mail.cs" />
     <Compile Include="M_News.cs" />

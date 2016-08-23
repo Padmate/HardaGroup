@@ -7,8 +7,8 @@
     string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
 
-    var allDatas = (List<M_About>)ViewData["allDatas"];
-    var currentData = (M_About)ViewData["currentData"];
+    var allDatas = (List<M_AboutSearch>)ViewData["allDatas"];
+    var currentData = (M_AboutSearch)ViewData["currentData"];
 
     ViewBag.Title = currentData.TypeName+"|"+ language.AboutHarda;    
     

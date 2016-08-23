@@ -1,7 +1,6 @@
 ﻿@using HardaGroup.Utility;
 @{
     Layout = null;
-    string currentCultureCode = GlobalizationHelp.GetCurrentThreadCultureCode();
 }
 <div class="close-modal" data-dismiss="modal">
     <i class="fa fa-3x fa-close"></i>
@@ -102,13 +101,19 @@
     //构造保存对象
     function ConstructSaveObj() {
 
+        //默认新增国际化为中文 信息
+        var aboutGlobalization = {
+            TypeName: $("#tbTypeName").val(),
+            Content: editor.html(),
+            Culture:'@Common.Globalization_Chinese'
+        };
+        var arrAboutGlobalization = new Array();
+        arrAboutGlobalization.push(aboutGlobalization);
+
         var obj = {
             TypeCode: $("#tbTypeCode").val(),
-            TypeName: $("#tbTypeName").val(),
             Sequence: $("#tbSequence").val(),
-            Content: editor.html(),
-            Culture:'@currentCultureCode'
-
+            AboutGlobalizations:arrAboutGlobalization
         };
         return obj;
     }

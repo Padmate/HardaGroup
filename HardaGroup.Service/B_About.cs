@@ -33,12 +33,12 @@ namespace HardaGroup.Service
         /// </summary>
         /// <param name="about"></param>
         /// <returns></returns>
-        public List<M_About> GetPageData(M_About about)
+        public List<M_AboutSearch> GetPageData(M_AboutSearch about)
         {
-            About searchModel = new About()
+            AboutSearch searchModel = new AboutSearch()
             {
-                TypeName = about.TypeName,
-                Culture =about.Culture
+                TypeCode = about.TypeCode,
+                TypeName = about.TypeName
             };
 
             var offset = about.offset;
@@ -46,7 +46,7 @@ namespace HardaGroup.Service
 
 
             var pageResult = _dAbout.GetPageData(searchModel, offset, limit);
-            var result = pageResult.Select(a => ConverEntityToModel(a)).ToList();
+            var result = pageResult.Select(a => ConverSearchEntityToModel(a)).ToList();
 
             return result;
         }
@@ -55,12 +55,12 @@ namespace HardaGroup.Service
         /// 获取分页数据总条数
         /// </summary>
         /// <returns></returns>
-        public int GetPageDataTotalCount(M_About about)
+        public int GetPageDataTotalCount(M_AboutSearch about)
         {
-            About searchModel = new About()
+            AboutSearch searchModel = new AboutSearch()
             {
-                TypeName = about.TypeName,
-                Culture = about.Culture
+                TypeCode = about.TypeCode,
+                TypeName = about.TypeName
             };
 
             var totalCount = _dAbout.GetPageDataTotalCount(searchModel);
@@ -77,8 +77,8 @@ namespace HardaGroup.Service
             About searchModel = new About()
             {
                 TypeCode =about.TypeCode,
-                TypeName = about.TypeName,
-                Culture = about.Culture
+                //TypeName = about.TypeName,
+                //Culture = about.Culture
                 
             };
             var abouts = _dAbout.GetByMulitCondition(searchModel);
@@ -93,8 +93,28 @@ namespace HardaGroup.Service
             var model = new M_About()
             {
                 Id = about.Id.ToString(),
-                TypeName = about.TypeName,
                 TypeCode = about.TypeCode,
+                Sequence = about.Sequence.ToString(),
+                AboutGlobalizations = about.AboutGlobalizations.Select(ag => new M_AboutGlobalization() {
+                    Id= ag.Id.ToString(),
+                    TypeName = ag.TypeName,
+                    Content = ag.Content,
+                    Culture = ag.Culture,
+
+                }).ToList()
+            };
+            return model;
+        }
+
+        private M_AboutSearch ConverSearchEntityToModel(AboutSearch about)
+        {
+            if (about == null) return null;
+
+            var model = new M_AboutSearch()
+            {
+                Id = about.Id.ToString(),
+                TypeCode = about.TypeCode,
+                TypeName = about.TypeName,
                 Content = about.Content,
                 Culture = about.Culture,
                 Sequence = about.Sequence.ToString(),
@@ -116,10 +136,10 @@ namespace HardaGroup.Service
 
             try
             {
-                //在当前国际化语言中只能有唯一的TypeCode
-                var search = new About() { TypeCode = model.TypeCode,Culture = model.Culture};
+                //只能有唯一的TypeCode
+                var search = new About() { TypeCode = model.TypeCode};
                 var data = _dAbout.GetByMulitCondition(search);
-                if(data.Count >0)
+                if (data.Count > 0)
                 {
                     message.Success = false;
                     message.Content = "系统中已存在代码为'" + model.TypeCode + "'的数据,不能重复添加。";
@@ -129,14 +149,52 @@ namespace HardaGroup.Service
                 //新增
                 var about = new About()
                 {
-                    TypeName = model.TypeName,
                     TypeCode = model.TypeCode,
-                    Content = model.Content,
-                    Culture = model.Culture,
-                    Sequence = string.IsNullOrEmpty(model.Sequence) ? 0 : System.Convert.ToInt32(model.Sequence)
+                    Sequence = string.IsNullOrEmpty(model.Sequence) ? 0 : System.Convert.ToInt32(model.Sequence),
+                    AboutGlobalizations = model.AboutGlobalizations.Select(a => new AboutGlobalization() {
+                        
+                        TypeName = a.TypeName,
+                        Content = a.Content,
+                        Culture = a.Culture
+                    }).ToList()
                 };
 
                 message.ReturnId = _dAbout.AddAbout(about);
+
+            }
+            catch (Exception e)
+            {
+                message.Success = false;
+                message.Content = "新增失败，异常：" + e.Message;
+            }
+            return message;
+        }
+
+        /// <summary>
+        /// 处理国际化数据
+        /// </summary>
+        /// <param name="model"></param>
+        /// 
+        /// <returns></returns>
+        public Message DealAboutGlobalization(M_AboutGlobalization model)
+        {
+            Message message = new Message();
+            message.Success = true;
+            message.Content = "新增成功";
+
+            try
+            {
+                
+                //新增
+                var aboutGlobalization = new AboutGlobalization()
+                {
+                    AboutId = System.Convert.ToInt32(model.AboutId),
+                    TypeName = model.TypeName,
+                    Content = model.Content,
+                    Culture = model.Culture
+                };
+
+                message.ReturnId = _dAbout.AddAboutGlobalization(aboutGlobalization);
 
             }
             catch (Exception e)
@@ -160,10 +218,10 @@ namespace HardaGroup.Service
 
             try
             {
-                //在当前国际化语言中只能有唯一的TypeCode
-                var search = new About() { TypeCode = model.TypeCode, Culture = model.Culture };
+                //只能有唯一的TypeCode
+                var search = new About() { TypeCode = model.TypeCode };
                 var data = _dAbout.GetByMulitCondition(search);
-                if (data.Where(a => a.Id != System.Convert.ToInt32(model.Id)).Count() >0)
+                if (data.Where(a => a.Id != System.Convert.ToInt32(model.Id)).Count() > 0)
                 {
                     message.Success = false;
                     message.Content = "系统中已存在代码为'" + model.TypeCode + "'的数据,不能重复添加。";
@@ -171,13 +229,18 @@ namespace HardaGroup.Service
 
                 }
 
+                //
                 var about = new About()
                 {
-                    TypeName = model.TypeName,
                     TypeCode = model.TypeCode,
-                    Content = model.Content,
-                    Culture = model.Culture,
-                    Sequence = string.IsNullOrEmpty(model.Sequence) ? 0 : System.Convert.ToInt32(model.Sequence)
+                    Sequence = string.IsNullOrEmpty(model.Sequence) ? 0 : System.Convert.ToInt32(model.Sequence),
+                    AboutGlobalizations = model.AboutGlobalizations.Select(a => new AboutGlobalization()
+                    {
+                        AboutId = System.Convert.ToInt32(a.AboutId),
+                        TypeName = a.TypeName,
+                        Content = a.Content,
+                        Culture = a.Culture
+                    }).ToList()
                 };
 
                 message.ReturnId = _dAbout.EditAbout(System.Convert.ToInt32(model.Id), about);
@@ -211,5 +274,30 @@ namespace HardaGroup.Service
             return message;
         }
 
+
+        /// <summary>
+        /// 根据条件过滤数据
+        /// </summary>
+        /// <param name="about"></param>
+        /// <returns></returns>
+        public M_AboutGlobalization GetAboutGlobalizationByAboutIdAndCulture(string aboutId,string culture)
+        {
+
+            M_AboutGlobalization aboutGlobalization = null;
+            var id = System.Convert.ToInt32(aboutId);
+            var result = _dAbout.GetAboutGlobalizationByAboutIdAndCulture(id,culture);
+
+            if(result !=null)
+            {
+                aboutGlobalization = new M_AboutGlobalization();
+                aboutGlobalization.Id = result.Id.ToString();
+                aboutGlobalization.TypeName = result.TypeName;
+                aboutGlobalization.Content = result.Content;
+                aboutGlobalization.Culture = result.Culture;
+                aboutGlobalization.AboutId = result.AboutId.ToString();
+                
+            }
+            return aboutGlobalization;
+        }
     }
 }

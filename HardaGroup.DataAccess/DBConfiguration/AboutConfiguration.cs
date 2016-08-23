@@ -14,8 +14,6 @@ namespace HardaGroup.DataAccess.DBConfiguration
         {
             this.HasKey(m => m.Id);
             this.Property(m => m.TypeCode).HasMaxLength(100);
-            this.Property(m => m.TypeName).HasMaxLength(200);
-            this.Property(m => m.Culture).HasMaxLength(50);
 
         }
     }

@@ -2,8 +2,7 @@
 @using HardaGroup.Models;
 @{
     Layout = null;
-    var about = (M_About)ViewData["About"];    
-    string currentCultureCode = GlobalizationHelp.GetCurrentThreadCultureCode();
+    var aboutSearch = (M_AboutSearch)ViewData["AboutSearch"];    
 }
 <div class="close-modal" data-dismiss="modal">
     <i class="fa fa-3x fa-close"></i>
@@ -18,8 +17,8 @@
                 <label class="customer-content-sm">类别代码：</label>
             </div>
             <div class="col-md-10">
-                <input class="input-large" id="tbTypeCode" placeholder="类别代码" value="@about.TypeCode" />
-                <label class="text-red">代码将以URI格式出现在URL中</label> 
+                <input class="input-large" id="tbTypeCode" placeholder="类别代码" value="@aboutSearch.TypeCode" />
+                <label class="text-red">代码将以URI形式出现在URL中</label> 
             </div>
         </div>
         <div class="form-group">
@@ -27,7 +26,7 @@
                 <label class="customer-content-sm">类别名称：</label>
             </div>
             <div class="col-md-10">
-                <input class="input-large" id="tbTypeName" placeholder="类别名称" value="@about.TypeName"/>
+                <input class="input-large" id="tbTypeName" placeholder="类别名称" value="@aboutSearch.TypeName"/>
             </div>
         </div>
         <div class="form-group">
@@ -35,7 +34,7 @@
                 <label class="customer-content-sm">顺 序：</label>
             </div>
             <div class="col-md-10">
-                <input class="input-large" id="tbSequence" placeholder="顺 序" value="@about.Sequence"/>
+                <input class="input-large" id="tbSequence" placeholder="顺 序" value="@aboutSearch.Sequence"/>
             </div>
         </div>
         <div class="form-group">
@@ -43,7 +42,7 @@
                 <label class="customer-content-sm">内 容：</label>
             </div>
             <div class="col-md-10">
-                <textarea id="taContent" name="content">@about.Content</textarea>
+                <textarea id="taContent" name="content">@aboutSearch.Content</textarea>
 
             </div>
         </div>
@@ -104,13 +103,22 @@
     //构造保存对象
     function ConstructSaveObj() {
 
-        var obj = {
-            Id:'@about.Id',
-            TypeCode: $("#tbTypeCode").val(),
+        //默认新增国际化为中文 信息
+        var aboutGlobalization = {
+            AboutId: '@aboutSearch.Id',
             TypeName: $("#tbTypeName").val(),
-            Sequence: $("#tbSequence").val(),
             Content: editor.html(),
-            Culture:'@currentCultureCode'
+            Culture: '@aboutSearch.Culture'
+        };
+        var arrAboutGlobalization = new Array();
+        arrAboutGlobalization.push(aboutGlobalization);
+
+
+        var obj = {
+            Id:'@aboutSearch.Id',
+            TypeCode: $("#tbTypeCode").val(),
+            Sequence: $("#tbSequence").val(),
+            AboutGlobalizations: arrAboutGlobalization
 
         };
         return obj;

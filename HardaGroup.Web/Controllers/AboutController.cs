@@ -22,32 +22,49 @@ namespace HardaGroup.Web.Controllers
             List<M_Image> bgImages = bImage.GetBGImagesByType(Common.Image_AboutBG);
             ViewData["bgimages"] = bgImages;
 
+            B_About bAbout = new B_About();
+            List<M_About> allDatas = bAbout.GetAllData();
+
             //获取当前国际化代码
             var culture = GlobalizationHelp.GetCurrentThreadCultureCode();
             //根据当前国际化代码过滤数据
-            B_About bAbout = new B_About();
-            M_About searchModel = new M_About();
-            searchModel.Culture = culture;
-            List<M_About> allDatas = bAbout.GetByMulitCond(searchModel);
-
-            M_About mAbout = new M_About();
-            if (allDatas.Count > 0)
+            List<M_AboutSearch> currentList = new List<M_AboutSearch>();
+            foreach(var about in allDatas)
             {
+                //根据国际化代码过滤数据，如果没有当前国际化代码的数据，则取中文数据
+                var defaultGlobalizationData = about.AboutGlobalizations.Where(ag => ag.Culture == culture).FirstOrDefault();
+                if(defaultGlobalizationData == null)
+                {
+                    defaultGlobalizationData = about.AboutGlobalizations.Where(ag => ag.Culture == Common.Globalization_Chinese).FirstOrDefault();
+                }
+
+                M_AboutSearch cultureData = new M_AboutSearch();
+                cultureData.TypeCode = about.TypeCode;
+                cultureData.TypeName = defaultGlobalizationData.TypeName;
+                cultureData.Content = defaultGlobalizationData.Content;
+
+                currentList.Add(cultureData);
+            }
+
+
+            M_AboutSearch mAbout = null;
+            if (currentList.Count > 0)
+            {
+                mAbout = new M_AboutSearch();
                 if (string.IsNullOrEmpty(typecode))
                 {
-                    //如果类型代码为空，则去默认第一条数据
-                    mAbout = allDatas.FirstOrDefault();
+                    //如果类型代码为空，则取默认第一条数据
+                    mAbout = currentList.FirstOrDefault();
                 }
                 else
                 {
                     //根据当前typecode过滤数据
-                    mAbout = allDatas.Where(a => a.TypeCode == typecode).FirstOrDefault();
-                    
-
+                    mAbout = currentList.Where(a => a.TypeCode == typecode).FirstOrDefault();
                 }
             }
-            if (mAbout == null) throw new HttpException(404,"");
-            ViewData["allDatas"] = allDatas;
+            if (mAbout == null) throw new HttpException(404, "");
+
+            ViewData["allDatas"] = currentList;
             ViewData["currentData"] = mAbout;
             
 
@@ -60,27 +77,37 @@ namespace HardaGroup.Web.Controllers
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
             String strReqStream = srRequest.ReadToEnd();
-            M_About model = JsonHandle.UnJson<M_About>(strReqStream);
+            M_AboutSearch model = JsonHandle.UnJson<M_AboutSearch>(strReqStream);
 
             B_About bAbout = new B_About();
             var pageData = bAbout.GetPageData(model);
             var totalCount = bAbout.GetPageDataTotalCount(model);
 
-            PageResult<M_About> pageResult = new PageResult<M_About>(totalCount, pageData);
+            PageResult<M_AboutSearch> pageResult = new PageResult<M_AboutSearch>(totalCount, pageData);
             return Json(pageResult);
         }
 
         public ActionResult Detail(string id)
         {
-            M_About mAbout = new M_About();
             B_About bAbout = new B_About();
-            if(!string.IsNullOrEmpty(id))
-            {
-                var aboutId = System.Convert.ToInt32(id);
-                mAbout = bAbout.GetById(aboutId);
-            }
-            ViewData["about"] = mAbout;
 
+            Int32 aboutId = System.Convert.ToInt32(id);
+            var about = bAbout.GetById(aboutId);
+
+            var zhCNGlobalization = about.AboutGlobalizations.Where(ag => ag.Culture == Common.Globalization_Chinese).FirstOrDefault();
+
+            var aboutSearch = new M_AboutSearch()
+            {
+                Id = about.Id,
+                TypeCode = about.TypeCode,
+                Sequence = about.Sequence,
+                TypeName = zhCNGlobalization == null ? "" : zhCNGlobalization.TypeName,
+                Content = zhCNGlobalization == null ? "" : zhCNGlobalization.Content,
+                Culture = zhCNGlobalization == null ? "" : zhCNGlobalization.Culture
+            };
+
+
+            ViewData["AboutSearch"] = aboutSearch;
            
             return View();
         }
@@ -91,7 +118,10 @@ namespace HardaGroup.Web.Controllers
             return View();
         }
 
-        // POST:
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public ActionResult SaveAdd()
@@ -103,6 +133,9 @@ namespace HardaGroup.Web.Controllers
             Message message = new Message();
             //校验model
             message = model.validate();
+            if (!message.Success) return Json(message);
+            //校验
+            message = model.AboutGlobalizations.First().validate();
             if (!message.Success) return Json(message);
 
             B_About bAbout = new B_About();
@@ -119,7 +152,21 @@ namespace HardaGroup.Web.Controllers
             Int32 aboutId = System.Convert.ToInt32(id);
             var about = bAbout.GetById(aboutId);
 
-            ViewData["About"] = about;
+            //过滤国际化代码为中文的数据
+            var zhCNGlobalization = about.AboutGlobalizations
+                .Where(ag => ag.Culture == Common.Globalization_Chinese).FirstOrDefault();
+
+            var aboutSearch = new M_AboutSearch() { 
+                Id = about.Id,
+                TypeCode = about.TypeCode,
+                Sequence = about.Sequence,
+                TypeName = zhCNGlobalization == null?"":zhCNGlobalization.TypeName,
+                Content = zhCNGlobalization == null ? "" : zhCNGlobalization.Content,
+                Culture = zhCNGlobalization == null ? "" : zhCNGlobalization.Culture
+            };
+
+
+            ViewData["AboutSearch"] = aboutSearch;
 
             return View();
         }
@@ -136,6 +183,9 @@ namespace HardaGroup.Web.Controllers
             Message message = new Message();
             //校验model
             message = model.validate();
+            if (!message.Success) return Json(message);
+            //校验
+            message = model.AboutGlobalizations.First().validate();
             if (!message.Success) return Json(message);
 
             B_About bAbout = new B_About();
@@ -159,6 +209,76 @@ namespace HardaGroup.Web.Controllers
             Message message = new Message();
             B_About bAbout = new B_About();
             message = bAbout.BatchDeleteByIds(ids);
+            return Json(message);
+        }
+
+        /// <summary>
+        /// 语言国际化
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult Globalization(string id)
+        {
+            B_About bAbout = new B_About();
+
+            Int32 aboutId = System.Convert.ToInt32(id);
+            var about = bAbout.GetById(aboutId);
+            ViewData["about"] = about;
+
+            //需要进行国际化的语言
+            Dictionary<string, string> globalizationLanguage = Common.Dic_Globalization
+                                                        .Where(g=>g.Key != Common.Globalization_Chinese)
+                                                        .ToDictionary(g=>g.Key,g=>g.Value);
+
+            ViewData["globalizationLanguage"] = globalizationLanguage;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult LoadAboutGlobalizationData(string AboutId,string Culture)
+        {
+            Message message = new Message();
+            M_AboutGlobalization result = new M_AboutGlobalization();
+            if (string.IsNullOrEmpty(AboutId) || string.IsNullOrEmpty(Culture))
+            {
+                message.Success = false;
+                message.Content = "获取数据失败，请重新尝试";
+                return Json(message);
+            }
+
+            B_About bAbout = new B_About();
+            result = bAbout.GetAboutGlobalizationByAboutIdAndCulture(AboutId,Culture);
+            
+            if(result == null)
+            {
+                message.Success = false;
+                message.Content = "获取数据失败，请重新尝试";
+                return Json(message);
+            }
+            message.Success = true;
+            message.Content = JsonHandle.ToJson(result); ;
+
+            return Json(message);
+        }
+
+        // POST:
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult SaveGlobalization()
+        {
+            StreamReader srRequest = new StreamReader(Request.InputStream);
+            String strReqStream = srRequest.ReadToEnd();
+            M_AboutGlobalization model = JsonHandle.DeserializeJsonToObject<M_AboutGlobalization>(strReqStream);
+
+            Message message = new Message();
+            //校验model
+            message = model.validate();
+            if (!message.Success) return Json(message);
+
+            B_About bAbout = new B_About();
+            message = bAbout.DealAboutGlobalization(model);
+
             return Json(message);
         }
     }

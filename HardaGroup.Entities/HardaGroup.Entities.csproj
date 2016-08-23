@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="About.cs" />
+    <Compile Include="AboutGlobalization.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="News.cs" />
     <Compile Include="NewsScope.cs" />

@@ -32,6 +32,7 @@ namespace HardaGroup.DataAccess
 
         public DbSet<Image> Images { get; set; }
         public DbSet<About> Abouts { get; set; }
+        public DbSet<AboutGlobalization> AboutGlobalizations { get; set; }
         public DbSet<NewsScope> NewsScopes { get; set; }
         public DbSet<News> News { get; set; }
 
@@ -41,6 +42,7 @@ namespace HardaGroup.DataAccess
             base.OnModelCreating(modelBuilder);
             modelBuilder.Configurations.Add(new ImageConfiguration());
             modelBuilder.Configurations.Add(new AboutConfiguration());
+            modelBuilder.Configurations.Add(new AboutGlobalizationConfiguration());
             modelBuilder.Configurations.Add(new NewsScopeConfiguration());
             modelBuilder.Configurations.Add(new NewsConfiguration());
 

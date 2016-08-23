@@ -597,6 +597,7 @@
     <Content Include="Views\News\Edit.cshtml" />
     <Content Include="Views\News\Detail.cshtml" />
     <Content Include="Views\News\ShowDetail.cshtml" />
+    <Content Include="Views\About\Globalization.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

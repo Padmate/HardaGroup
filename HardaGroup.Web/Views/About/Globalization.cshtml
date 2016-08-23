@@ -1,0 +1,164 @@
+﻿@using HardaGroup.Utility;
+@using HardaGroup.Models;
+@{
+    Layout = null;
+    var about = (M_About)ViewData["about"];
+    var globalizationLanguage = (Dictionary<string, string>)ViewData["globalizationLanguage"];
+}
+<div class="close-modal" data-dismiss="modal">
+    <i class="fa fa-3x fa-close"></i>
+</div>
+<div class="container">
+
+    <h3 class="customer-h3 text-center curd-title">国际化</h3>
+    <hr />
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">Id：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm" id="lbAboutId">@about.Id</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">类别代码：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@about.TypeCode</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">国际化语言：</label>
+            </div>
+            <div class="col-md-10">
+                <select class="select-large" id="selCulture">
+                    @foreach (var key in globalizationLanguage.Keys)
+                    {
+                        <option value="@key">@globalizationLanguage[key]</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">类别名称：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="input-large" id="tbTypeName" placeholder="类别名称" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">内 容：</label>
+            </div>
+            <div class="col-md-10">
+                <textarea id="taContent" name="content"></textarea>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-lg btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+    <button type="button" class="btn btn-lg btn-danger" onclick="SaveGlobalization()">
+        保 存
+    </button>
+</div>
+
+<script type="text/javascript">
+    var editor = KindEditor.create('textarea[name="content"]', kindeditorConfig);
+
+    $(document).ready(function () {
+        LoadCultureData();
+
+        $("#selCulture").change(function () {
+            LoadCultureData();
+        });
+    });
+
+
+    //修改或新增保存
+    function SaveGlobalization() {
+
+        $("body").showLoading();
+        var saveObj = ConstructSaveObj();
+        var jsonParam = JSON.stringify(saveObj);
+        $.ajax({
+            type: "POST",
+            url: "/About/SaveGlobalization",
+            dataType: "json",
+            data: jsonParam,
+            async: false,   //同步
+            success: function (message) {
+
+                if (message.Success) {
+
+                    //刷新表格
+                    CloseGlobalizationScreen();
+                    //刷新
+                    RefreshTable();
+                    $("body").hideLoading();
+
+
+                } else {
+                    $("body").hideLoading();
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                    return;
+                }
+            }
+        });
+    }
+
+    //根据国际化语言加载数据
+    function LoadCultureData() {
+        $("body").showLoading();
+        $.ajax({
+            type: "POST",
+            url: "/About/LoadAboutGlobalizationData",
+            dataType: "json",
+            data: { AboutId: '@about.Id',Culture:$("#selCulture").val()},
+            async: false,   //同步
+            success: function (message) {
+                $("body").hideLoading();
+                if (message.Success) {
+                    
+                    //赋值
+                    var data = JSON.parse(message.Content);
+
+                    $("#tbTypeName").val(data.TypeName);
+                    editor.html(data.Content);
+                    
+
+                }
+            }
+        });
+    }
+
+    //构造保存对象
+    function ConstructSaveObj() {
+        
+        var obj = {
+            AboutId: '@about.Id',
+            TypeName: $("#tbTypeName").val(),
+            Content: editor.html(),
+            Culture: $("#selCulture").val(),
+        };
+
+        return obj;
+    }
+
+</script>
+
+

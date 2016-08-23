@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBConfiguration\AboutConfiguration.cs" />
+    <Compile Include="DBConfiguration\AboutGlobalizationConfiguration.cs" />
     <Compile Include="DBConfiguration\ImageConfiguration.cs" />
     <Compile Include="DBConfiguration\NewsConfiguration.cs" />
     <Compile Include="DBConfiguration\NewsScopeConfiguration.cs" />
@@ -97,6 +98,10 @@
     <Compile Include="Migrations\201608190958484_rollbackAbouttable.Designer.cs">
       <DependentUpon>201608190958484_rollbackAbouttable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201608220356582_refactAboutTableStruct.cs" />
+    <Compile Include="Migrations\201608220356582_refactAboutTableStruct.Designer.cs">
+      <DependentUpon>201608220356582_refactAboutTableStruct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="D_NewsScope.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -131,11 +136,18 @@
     <EmbeddedResource Include="Migrations\201608190958484_rollbackAbouttable.resx">
       <DependentUpon>201608190958484_rollbackAbouttable.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201608220356582_refactAboutTableStruct.resx">
+      <DependentUpon>201608220356582_refactAboutTableStruct.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HardaGroup.Entities\HardaGroup.Entities.csproj">
       <Project>{791c5414-503e-46f4-bca1-2c7645298c3b}</Project>
       <Name>HardaGroup.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HardaGroup.Utility\HardaGroup.Utility.csproj">
+      <Project>{c2bae937-b368-4165-bd09-b23d87ee3238}</Project>
+      <Name>HardaGroup.Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
