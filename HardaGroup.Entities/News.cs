@@ -12,8 +12,7 @@ namespace HardaGroup.Entities
     /// </summary>
     public class News
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// 新闻标题
@@ -69,7 +68,7 @@ namespace HardaGroup.Entities
         public DateTime Pubtime { get; set; }
 
 
-        public Guid NewsScopeId { get; set; }
+        public int NewsScopeId { get; set; }
 
         public virtual NewsScope NewsScope { get; set; }
 

@@ -5,7 +5,6 @@
 
 @{
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
-    string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
         
 }
 @if (Request.IsAuthenticated)
@@ -24,7 +23,7 @@
                 @if (User.IsInRole("Admin"))
                 {
                 <li>
-                    <a href="@string.Format("{0}/manage{1}", cultureUri, urlRewriteExtension)">@language.BackwardManagement</a>
+                    <a href="@string.Format("/manage{0}", urlRewriteExtension)">@language.BackwardManagement</a>
                 </li>
                 }
 
@@ -44,7 +43,7 @@ else
             var text = HardaGroup.Web.Globalization.language.Login + " / " + @HardaGroup.Web.Globalization.language.Register;
         }
         <li>
-            <a class="btn" id="loginLink" href="@string.Format("{0}/Account/login?ReturnUrl={1}", cultureUri,Request.Url.PathAndQuery)">
+            <a class="btn" id="loginLink" href="@string.Format("/Account/login?ReturnUrl={0}",Request.Url.PathAndQuery)">
                 @text
             </a>
             @*@Html.ActionLink(text, "Login", "Account", new { area = "", ReturnUrl = Request.Url.PathAndQuery }, htmlAttributes: new { id = "loginLink", @class = "btn" })*@

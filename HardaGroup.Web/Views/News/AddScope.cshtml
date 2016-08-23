@@ -99,11 +99,17 @@
     //构造保存对象
     function ConstructSaveObj() {
 
+        var newsScopeGlobalization = {
+            TypeName: $("#tbTypeName").val(),
+            Culture: '@Common.Globalization_Chinese'
+        };
+        var arrNewsScopeGlobalization = new Array();
+        arrNewsScopeGlobalization.push(newsScopeGlobalization);
+
         var obj = {
             TypeCode: $("#tbTypeCode").val(),
-            TypeName: $("#tbTypeName").val(),
             Sequence: $("#tbSequence").val(),
-            Culture:'@currentCultureCode'
+            NewsScopeGlobalizations: arrNewsScopeGlobalization
 
         };
         return obj;

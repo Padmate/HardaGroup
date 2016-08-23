@@ -7,8 +7,8 @@
     string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
 
-    var allNewsScopes = (List<M_NewsScope>)ViewData["allNewsScope"];
-    var currentNewsScope = (M_NewsScope)ViewData["currentNewsScope"];
+    var allNewsScopes = (List<M_NewsScopeSearch>)ViewData["allNewsScope"];
+    var currentNewsScope = (M_NewsScopeSearch)ViewData["currentNewsScope"];
 
     ViewBag.Title = currentNewsScope.TypeName + "|" + language.AboutHarda;
 

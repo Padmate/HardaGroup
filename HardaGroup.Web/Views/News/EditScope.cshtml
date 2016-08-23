@@ -2,8 +2,7 @@
 @using HardaGroup.Models;
 @{
     Layout = null;
-    string currentCultureCode = GlobalizationHelp.GetCurrentThreadCultureCode();
-    M_NewsScope newsScope = (M_NewsScope)ViewData["NewsScope"];
+    M_NewsScopeSearch newsScope = (M_NewsScopeSearch)ViewData["NewsScopeSearch"];
 }
 }
 
@@ -101,15 +100,23 @@
     //构造保存对象
     function ConstructSaveObj() {
 
-        var obj = {
-            Id:'@newsScope.Id',
-            TypeCode: $("#tbTypeCode").val(),
+        var newsScopeGlobalization = {
+            NewsScopeId: '@newsScope.Id',
             TypeName: $("#tbTypeName").val(),
+            Culture: '@newsScope.Culture'
+        };
+        var arrNewsScopeGlobalization = new Array();
+        arrNewsScopeGlobalization.push(newsScopeGlobalization);
+
+        var obj = {
+            Id: '@newsScope.Id',
+            TypeCode: $("#tbTypeCode").val(),
             Sequence: $("#tbSequence").val(),
-            Culture:'@currentCultureCode'
+            NewsScopeGlobalizations: arrNewsScopeGlobalization
 
         };
         return obj;
+
     }
 
 </script>

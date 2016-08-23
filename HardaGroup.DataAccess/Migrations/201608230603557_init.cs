@@ -8,6 +8,90 @@ namespace HardaGroup.DataAccess.Migrations
         public override void Up()
         {
             CreateTable(
+                "dbo.AboutGlobalizations",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        TypeName = c.String(maxLength: 200),
+                        Content = c.String(storeType: "ntext"),
+                        Culture = c.String(maxLength: 50),
+                        AboutId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Abouts", t => t.AboutId, cascadeDelete: true)
+                .Index(t => t.AboutId);
+            
+            CreateTable(
+                "dbo.Abouts",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        TypeCode = c.String(maxLength: 100),
+                        Sequence = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Images",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        VirtualPath = c.String(),
+                        PhysicalPath = c.String(),
+                        Name = c.String(),
+                        SaveName = c.String(),
+                        Extension = c.String(maxLength: 10),
+                        Sequence = c.Int(nullable: false),
+                        Type = c.String(maxLength: 50),
+                        Culture = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.News",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Title = c.String(),
+                        SubTitle = c.String(),
+                        Description = c.String(maxLength: 200),
+                        Content = c.String(storeType: "ntext"),
+                        ImageId = c.Int(),
+                        Creator = c.String(),
+                        CreateDate = c.DateTime(nullable: false),
+                        Modifier = c.String(),
+                        ModifiedDate = c.DateTime(),
+                        Pubtime = c.DateTime(nullable: false),
+                        NewsScopeId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.NewsScopes", t => t.NewsScopeId, cascadeDelete: true)
+                .Index(t => t.NewsScopeId);
+            
+            CreateTable(
+                "dbo.NewsScopes",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        TypeCode = c.String(maxLength: 100),
+                        Sequence = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.NewsScopeGlobalizations",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        TypeName = c.String(maxLength: 200),
+                        Culture = c.String(maxLength: 50),
+                        NewsScopeId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.NewsScopes", t => t.NewsScopeId, cascadeDelete: true)
+                .Index(t => t.NewsScopeId);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
@@ -83,17 +167,29 @@ namespace HardaGroup.DataAccess.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.News", "NewsScopeId", "dbo.NewsScopes");
+            DropForeignKey("dbo.NewsScopeGlobalizations", "NewsScopeId", "dbo.NewsScopes");
+            DropForeignKey("dbo.AboutGlobalizations", "AboutId", "dbo.Abouts");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.NewsScopeGlobalizations", new[] { "NewsScopeId" });
+            DropIndex("dbo.News", new[] { "NewsScopeId" });
+            DropIndex("dbo.AboutGlobalizations", new[] { "AboutId" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.NewsScopeGlobalizations");
+            DropTable("dbo.NewsScopes");
+            DropTable("dbo.News");
+            DropTable("dbo.Images");
+            DropTable("dbo.Abouts");
+            DropTable("dbo.AboutGlobalizations");
         }
     }
 }

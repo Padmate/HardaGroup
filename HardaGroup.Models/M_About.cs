@@ -16,7 +16,7 @@ namespace HardaGroup.Models
         /// </summary>
         [Required(ErrorMessage="类别代码不能为空")]
         [MaxLength(100,ErrorMessage = "类别代码长度不能超过100个字符")]
-        [RegularExpression(@"[A-Za-z0-9-]+", ErrorMessage = "类别代码只能是字母、数字或 - ")]
+        [RegularExpression(@"[A-Za-z-]+", ErrorMessage = "类别代码只能是字母或 - ")]
         public string TypeCode { get; set; }
 
         /// <summary>

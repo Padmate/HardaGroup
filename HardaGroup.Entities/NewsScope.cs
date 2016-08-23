@@ -9,8 +9,7 @@ namespace HardaGroup.Entities
 {
     public class NewsScope
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         /// <summary>
         /// 类型代码
@@ -18,25 +17,28 @@ namespace HardaGroup.Entities
         public string TypeCode { get; set; }
 
         /// <summary>
-        /// 类型名称
-        /// </summary>
-        public string TypeName { get; set; }
-
-        /// <summary>
         /// 顺序
         /// </summary>
         public int Sequence {get;set;}
 
-        /// <summary>
-        /// 国际化代码
-        /// </summary>
-        public string Culture { get; set; }
+        public virtual ICollection<NewsScopeGlobalization> NewsScopeGlobalizations { get; set; }
 
         public virtual ICollection<News> News { get; set; }
 
         public NewsScope()
         {
+            NewsScopeGlobalizations = new List<NewsScopeGlobalization>();
             News = new List<News>();
         }
+    }
+
+    public class NewsScopeSearch
+    {
+        public int Id {get;set;}
+
+        public string TypeCode { get; set; }
+        public string TypeName { get; set; }
+        public string Culture { get; set; }
+        public int Sequence { get; set; }
     }
 }

@@ -14,16 +14,10 @@ namespace HardaGroup.Models
         /// <summary>
         /// 类型代码
         /// </summary>
-        [Required(ErrorMessage = "类型代码不能为空")]
-        [MaxLength(100, ErrorMessage = "类型代码长度不能超过100个字符")]
+        [Required(ErrorMessage = "模块代码不能为空")]
+        [MaxLength(100, ErrorMessage = "模块代码长度不能超过100个字符")]
+        [RegularExpression(@"[A-Za-z-]+", ErrorMessage = "模块代码只能是字母或 - ")]
         public string TypeCode { get; set; }
-
-        /// <summary>
-        /// 类型名称
-        /// </summary>
-        [Required(ErrorMessage = "类型名称不能为空")]
-        [MaxLength(200, ErrorMessage = "类型名称长度不能超过200个字符")]
-        public string TypeName { get; set; }
 
         /// <summary>
         /// 顺序
@@ -31,12 +25,16 @@ namespace HardaGroup.Models
         [RegularExpression(@"^[1-9]\d*|0$", ErrorMessage = "顺序只能是0或正整数")]
         public string Sequence { get; set; }
 
+        public List<M_NewsScopeGlobalization> NewsScopeGlobalizations { get; set; }
+    }
 
-        /// <summary>
-        /// 国际化代码
-        /// </summary>
-        [Required(ErrorMessage = "国际化代码不能为空")]
-        [MaxLength(50, ErrorMessage = "国际化代码长度不能超过50个字符")]
+    public class M_NewsScopeSearch:BaseModel
+    {
+        public string Id { get; set; }
+
+        public string TypeCode { get; set; }
+        public string TypeName { get; set; }
         public string Culture { get; set; }
+        public string Sequence { get; set; }
     }
 }

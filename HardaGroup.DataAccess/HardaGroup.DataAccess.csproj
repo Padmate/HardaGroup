@@ -61,84 +61,23 @@
     <Compile Include="DBConfiguration\ImageConfiguration.cs" />
     <Compile Include="DBConfiguration\NewsConfiguration.cs" />
     <Compile Include="DBConfiguration\NewsScopeConfiguration.cs" />
+    <Compile Include="DBConfiguration\NewsScopeGlobalizationConfiguration.cs" />
     <Compile Include="D_About.cs" />
     <Compile Include="D_Image.cs" />
     <Compile Include="D_News.cs" />
     <Compile Include="D_User.cs" />
     <Compile Include="HardaDBContext.cs" />
-    <Compile Include="Migrations\201608030729067_init.cs" />
-    <Compile Include="Migrations\201608030729067_init.Designer.cs">
-      <DependentUpon>201608030729067_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608120941263_addImageTable.cs" />
-    <Compile Include="Migrations\201608120941263_addImageTable.Designer.cs">
-      <DependentUpon>201608120941263_addImageTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608130224175_addImageCltureCloumn.cs" />
-    <Compile Include="Migrations\201608130224175_addImageCltureCloumn.Designer.cs">
-      <DependentUpon>201608130224175_addImageCltureCloumn.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608130310173_updateImageCultureColumn.cs" />
-    <Compile Include="Migrations\201608130310173_updateImageCultureColumn.Designer.cs">
-      <DependentUpon>201608130310173_updateImageCultureColumn.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608130732038_addAboutTable.cs" />
-    <Compile Include="Migrations\201608130732038_addAboutTable.Designer.cs">
-      <DependentUpon>201608130732038_addAboutTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608160706142_addNewsTable.cs" />
-    <Compile Include="Migrations\201608160706142_addNewsTable.Designer.cs">
-      <DependentUpon>201608160706142_addNewsTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608160835091_addNewsScope.cs" />
-    <Compile Include="Migrations\201608160835091_addNewsScope.Designer.cs">
-      <DependentUpon>201608160835091_addNewsScope.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608190958484_rollbackAbouttable.cs" />
-    <Compile Include="Migrations\201608190958484_rollbackAbouttable.Designer.cs">
-      <DependentUpon>201608190958484_rollbackAbouttable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608220356582_refactAboutTableStruct.cs" />
-    <Compile Include="Migrations\201608220356582_refactAboutTableStruct.Designer.cs">
-      <DependentUpon>201608220356582_refactAboutTableStruct.cs</DependentUpon>
+    <Compile Include="D_NewsScope.cs" />
+    <Compile Include="Migrations\201608230603557_init.cs" />
+    <Compile Include="Migrations\201608230603557_init.Designer.cs">
+      <DependentUpon>201608230603557_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="D_NewsScope.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201608030729067_init.resx">
-      <DependentUpon>201608030729067_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608120941263_addImageTable.resx">
-      <DependentUpon>201608120941263_addImageTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608130224175_addImageCltureCloumn.resx">
-      <DependentUpon>201608130224175_addImageCltureCloumn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608130310173_updateImageCultureColumn.resx">
-      <DependentUpon>201608130310173_updateImageCultureColumn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608130732038_addAboutTable.resx">
-      <DependentUpon>201608130732038_addAboutTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608160706142_addNewsTable.resx">
-      <DependentUpon>201608160706142_addNewsTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608160835091_addNewsScope.resx">
-      <DependentUpon>201608160835091_addNewsScope.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608190958484_rollbackAbouttable.resx">
-      <DependentUpon>201608190958484_rollbackAbouttable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608220356582_refactAboutTableStruct.resx">
-      <DependentUpon>201608220356582_refactAboutTableStruct.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HardaGroup.Entities\HardaGroup.Entities.csproj">
@@ -149,6 +88,11 @@
       <Project>{c2bae937-b368-4165-bd09-b23d87ee3238}</Project>
       <Name>HardaGroup.Utility</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201608230603557_init.resx">
+      <DependentUpon>201608230603557_init.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

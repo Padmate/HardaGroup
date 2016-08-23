@@ -1,0 +1,149 @@
+﻿@using HardaGroup.Utility;
+@using HardaGroup.Models;
+@{
+    Layout = null;
+    M_NewsScope newsScope = (M_NewsScope)ViewData["newsScope"];
+    var globalizationLanguage = (Dictionary<string, string>)ViewData["globalizationLanguage"];
+    
+}
+}
+
+<div class="modal-body">
+
+    <h3 class="customer-h3 text-center">
+        国际化
+    </h3>
+    <hr />
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-4 text-right">
+                <label class="customer-content-sm">模块代码：</label>
+            </div>
+            <div class="col-md-8">
+                <label class="customer-content-sm">@newsScope.TypeCode</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-4 control-label">
+                <label class="customer-content-sm">国际化语言：</label>
+            </div>
+            <div class="col-md-8">
+                <select class="select-large" id="selCulture">
+                    @foreach (var key in globalizationLanguage.Keys)
+                    {
+                        <option value="@key">@globalizationLanguage[key]</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-4 control-label">
+                    <label class="customer-content-sm">模块名称：</label>
+                </div>
+                <div class="col-md-8">
+                    <input class="input-large" id="tbTypeName" placeholder="模块名称" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+    <button type="button" class="btn btn-danger" onclick="SaveGlobalization()">
+        保 存
+    </button>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        LoadCultureData();
+
+        $("#selCulture").change(function () {
+            LoadCultureData();
+        });
+    });
+
+    //根据国际化语言加载数据
+    function LoadCultureData() {
+        $("body").showLoading();
+        $.ajax({
+            type: "POST",
+            url: "/News/LoadNewsScopeGlobalizationData",
+            dataType: "json",
+            data: { NewsScopeId: '@newsScope.Id', Culture: $("#selCulture").val() },
+            async: false,   //同步
+            success: function (message) {
+                $("body").hideLoading();
+                //先清空
+                $("#tbTypeName").val("");
+                if (message.Success) {
+
+                    //赋值
+                    var data = JSON.parse(message.Content);
+                    
+                    $("#tbTypeName").val(data.TypeName);
+
+
+                }
+            }
+        });
+    }
+
+    //修改或新增保存
+    function SaveGlobalization() {
+
+        $("body").showLoading();
+        var saveObj = ConstructSaveObj();
+        var jsonParam = JSON.stringify(saveObj);
+        $.ajax({
+            type: "POST",
+            url: "/News/SaveGlobalization",
+            dataType: "json",
+            data: jsonParam,
+            async: false,   //同步
+            success: function (message) {
+
+                if (message.Success) {
+
+                    //刷新表格
+                    CloseGlobalizationScreen();
+                    //刷新
+                    RefreshTable();
+                    $("body").hideLoading();
+
+
+                } else {
+                    $("body").hideLoading();
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                    return;
+                }
+            }
+        });
+    }
+
+
+    //构造保存对象
+    function ConstructSaveObj() {
+
+        var newsScopeGlobalization = {
+            NewsScopeId: '@newsScope.Id',
+            TypeName: $("#tbTypeName").val(),
+            Culture: $("#selCulture").val()
+        };
+
+        return newsScopeGlobalization;
+
+    }
+
+</script>

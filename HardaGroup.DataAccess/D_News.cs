@@ -65,9 +65,9 @@ namespace HardaGroup.DataAccess
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public News GetNewsById(string id)
+        public News GetNewsById(int id)
         {
-            var news = _dbContext.News.Include("NewsScope").FirstOrDefault(a => a.Id.ToString() == id);
+            var news = _dbContext.News.Include("NewsScope").FirstOrDefault(a => a.Id == id);
             return news;
         }
 
@@ -92,9 +92,9 @@ namespace HardaGroup.DataAccess
             return news.Id.ToString();
         }
 
-        public string EditNews(string id, News model)
+        public string EditNews(int id, News model)
         {
-            var news = _dbContext.News.FirstOrDefault(a => a.Id.ToString() == id);
+            var news = _dbContext.News.FirstOrDefault(a => a.Id == id);
 
             news.NewsScopeId = model.NewsScopeId;
             news.Title = model.Title;
@@ -115,9 +115,9 @@ namespace HardaGroup.DataAccess
         /// <param name="id"></param>
         /// <param name="imageId"></param>
         /// <returns></returns>
-        public string EditImageId(string id, int imageId)
+        public string EditImageId(int id, int imageId)
         {
-            var news = _dbContext.News.FirstOrDefault(a => a.Id.ToString() == id);
+            var news = _dbContext.News.FirstOrDefault(a => a.Id == id);
 
             news.ImageId = imageId;
 
@@ -125,9 +125,9 @@ namespace HardaGroup.DataAccess
             return news.Id.ToString();
         }
 
-        public void DeleteNews(string id)
+        public void DeleteNews(int id)
         {
-            var news = _dbContext.News.Where(i => i.Id.ToString() == id).FirstOrDefault();
+            var news = _dbContext.News.Where(i => i.Id == id).FirstOrDefault();
             if (news != null)
             {
                 _dbContext.News.Remove(news);
@@ -135,9 +135,9 @@ namespace HardaGroup.DataAccess
             }
         }
 
-        public void BatchDeleteNews(List<string> ids)
+        public void BatchDeleteNews(List<int> ids)
         {
-            var newss = _dbContext.News.Where(i => ids.Contains(i.Id.ToString())).ToList();
+            var newss = _dbContext.News.Where(i => ids.Contains(i.Id)).ToList();
             if (newss.Count > 0)
             {
                 _dbContext.News.RemoveRange(newss);

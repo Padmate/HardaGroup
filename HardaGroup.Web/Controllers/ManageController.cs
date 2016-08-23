@@ -95,12 +95,8 @@ namespace HardaGroup.Web.Controllers
         /// <returns></returns>
         public ActionResult News()
         {
-            //根据当前国际化代码获取资讯模块
-            var culture = GlobalizationHelp.GetCurrentThreadCultureCode();
             B_NewsScope bNewsScope = new B_NewsScope();
-            M_NewsScope searchModel = new M_NewsScope();
-            searchModel.Culture = culture;
-            var allNewsScopes = bNewsScope.GetByMulitCond(searchModel);
+            var allNewsScopes = bNewsScope.GetAllZHCNData();
 
             ViewData["jsonlsNewsScope"] = JsonHandle.ToJson(allNewsScopes);
             ViewData["NewsScope"] = allNewsScopes;

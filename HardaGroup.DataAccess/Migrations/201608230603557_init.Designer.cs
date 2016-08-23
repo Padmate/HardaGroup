@@ -7,13 +7,13 @@ namespace HardaGroup.DataAccess.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class rollbackAbouttable : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(rollbackAbouttable));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201608190958484_rollbackAbouttable"; }
+            get { return "201608230603557_init"; }
         }
         
         string IMigrationMetadata.Source

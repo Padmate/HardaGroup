@@ -8,8 +8,6 @@
     {
         title = ViewBag.Title + "|" + title;
     }
-    string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
-    string currentCulture = GlobalizationHelp.GetCurrentThreadCultureCode();
     
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
     
@@ -237,12 +235,12 @@
                         </a>
                         <ul class="treeview-menu">
                             <li>
-                                <a href="@string.Format("{0}/manage/news-scope{1}",cultureUri,urlRewriteExtension)">
+                                <a href="@string.Format("/manage/news-scope{0}",urlRewriteExtension)">
                                     <i class="fa fa-info-circle text-blue"></i>模块管理
                                 </a>
                             </li>
                             <li>
-                                <a href="@string.Format("{0}/manage/news{1}",cultureUri,urlRewriteExtension)">
+                                <a href="@string.Format("/manage/news{0}",urlRewriteExtension)">
                                     <i class="fa fa-info text-yellow"></i>内容管理
                                 </a>
                             </li>

@@ -1,6 +1,7 @@
 ﻿using HardaGroup.DataAccess;
 using HardaGroup.Entities;
 using HardaGroup.Models;
+using HardaGroup.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,9 @@ namespace HardaGroup.Service
 
         public M_NewsScope GetById(string id)
         {
-            var newsScope = _dNewsScope.GetNewsScopeById(id);
+            var newsScopeId = System.Convert.ToInt32(id);
+
+            var newsScope = _dNewsScope.GetNewsScopeById(newsScopeId);
             var result = ConverEntityToModel(newsScope);
             return result;
         }
@@ -29,9 +32,7 @@ namespace HardaGroup.Service
         {
             var searchModel = new NewsScope()
             {
-                TypeCode = newsScope.TypeCode,
-                TypeName = newsScope.TypeName,
-                Culture = newsScope.Culture
+                TypeCode = newsScope.TypeCode
 
             };
             var abouts = _dNewsScope.GetByMulitCondition(searchModel);
@@ -47,19 +48,42 @@ namespace HardaGroup.Service
             return result;
         }
 
+        /// <summary>
+        /// 获取所有的中文信息列表
+        /// </summary>
+        /// <returns></returns>
+        public List<M_NewsScopeSearch> GetAllZHCNData()
+        {
+            var newsScopes = _dNewsScope.GetAll();
 
-        
+            List<M_NewsScopeSearch> result = new List<M_NewsScopeSearch>();
+            foreach(var scope in newsScopes)
+            {
+                M_NewsScopeSearch newsScopeSearch = new M_NewsScopeSearch();
+                var zhcnData = scope.NewsScopeGlobalizations
+                    .Where(ag => ag.Culture == Common.Globalization_Chinese)
+                    .FirstOrDefault();
+
+                newsScopeSearch.Id = scope.Id.ToString();
+                newsScopeSearch.TypeCode = scope.TypeCode;
+                newsScopeSearch.TypeName = zhcnData == null ? "" : zhcnData.TypeName;
+
+                result.Add(newsScopeSearch);
+            }
+            return result;
+        }
+
         /// <summary>
         /// 获取分页数据
         /// </summary>
         /// <param name="newsScope"></param>
         /// <returns></returns>
-        public List<M_NewsScope> GetPageData(M_NewsScope newsScope)
+        public List<M_NewsScopeSearch> GetPageData(M_NewsScopeSearch newsScope)
         {
-            NewsScope searchModel = new NewsScope()
+            NewsScopeSearch searchModel = new NewsScopeSearch()
             {
                 TypeCode = newsScope.TypeCode,
-                Culture = newsScope.Culture
+                TypeName = newsScope.TypeName
             };
 
             var offset = newsScope.offset;
@@ -67,7 +91,7 @@ namespace HardaGroup.Service
 
 
             var pageResult = _dNewsScope.GetPageData(searchModel, offset, limit);
-            var result = pageResult.Select(a => ConverEntityToModel(a)).ToList();
+            var result = pageResult.Select(a => ConverSearchEntityToModel(a)).ToList();
 
             return result;
         }
@@ -76,12 +100,12 @@ namespace HardaGroup.Service
         /// 获取分页数据总条数
         /// </summary>
         /// <returns></returns>
-        public int GetPageDataTotalCount(M_NewsScope newsScope)
+        public int GetPageDataTotalCount(M_NewsScopeSearch newsScope)
         {
-            NewsScope searchModel = new NewsScope()
+            NewsScopeSearch searchModel = new NewsScopeSearch()
             {
                 TypeCode = newsScope.TypeCode,
-                Culture = newsScope.Culture
+                TypeName = newsScope.TypeName
             };
 
             var totalCount = _dNewsScope.GetPageDataTotalCount(searchModel);
@@ -93,6 +117,27 @@ namespace HardaGroup.Service
             if (newsScope == null) return null;
 
             var model = new M_NewsScope()
+            {
+                Id = newsScope.Id.ToString(),
+                TypeCode = newsScope.TypeCode,
+                Sequence = newsScope.Sequence.ToString(),
+                NewsScopeGlobalizations = newsScope.NewsScopeGlobalizations
+                                    .Select(nsg => new M_NewsScopeGlobalization() { 
+                                        Id = nsg.Id.ToString(),
+                                        TypeName = nsg.TypeName,
+                                        Culture = nsg.Culture,
+                                       
+                                    }).ToList()
+
+            };
+            return model;
+        }
+
+        private M_NewsScopeSearch ConverSearchEntityToModel(NewsScopeSearch newsScope)
+        {
+            if (newsScope == null) return null;
+
+            var model = new M_NewsScopeSearch()
             {
                 Id = newsScope.Id.ToString(),
                 TypeCode = newsScope.TypeCode,
@@ -117,8 +162,8 @@ namespace HardaGroup.Service
 
             try
             {
-                //在当前国际化语言中只能有唯一的TypeCode
-                var search = new NewsScope() { TypeCode = model.TypeCode, Culture = model.Culture };
+                //只能有唯一的TypeCode
+                var search = new NewsScope() { TypeCode = model.TypeCode };
                 var data = _dNewsScope.GetByMulitCondition(search);
                 if (data.Count > 0)
                 {
@@ -132,12 +177,17 @@ namespace HardaGroup.Service
                 var newsScope = new NewsScope()
                 {
                     TypeCode = model.TypeCode,
-                    TypeName = model.TypeName,
-                    Culture = model.Culture,
                     Sequence = string.IsNullOrEmpty(model.Sequence) ? 0 : System.Convert.ToInt32(model.Sequence),
+                    NewsScopeGlobalizations = model.NewsScopeGlobalizations
+                                    .Select(nsg => new NewsScopeGlobalization()
+                                    {
+                                        TypeName = nsg.TypeName,
+                                        Culture = nsg.Culture,
+
+                                    }).ToList()
                 };
 
-                message.ReturnStrId = _dNewsScope.AddNewsScope(newsScope);
+                message.ReturnId = _dNewsScope.AddNewsScope(newsScope);
 
             }
             catch (Exception e)
@@ -161,8 +211,8 @@ namespace HardaGroup.Service
 
             try
             {
-                //在当前国际化语言中只能有唯一的TypeCode
-                var search = new NewsScope() { TypeCode = model.TypeCode, Culture = model.Culture };
+                //只能有唯一的TypeCode
+                var search = new NewsScope() { TypeCode = model.TypeCode};
                 var data = _dNewsScope.GetByMulitCondition(search);
                 if (data.Where(a => a.Id.ToString() != model.Id).Count() > 0)
                 {
@@ -175,12 +225,18 @@ namespace HardaGroup.Service
                 var newsScope = new NewsScope()
                 {
                     TypeCode = model.TypeCode,
-                    TypeName = model.TypeName,
-                    Culture = model.Culture,
                     Sequence = string.IsNullOrEmpty(model.Sequence) ? 0 : System.Convert.ToInt32(model.Sequence),
+                    NewsScopeGlobalizations = model.NewsScopeGlobalizations
+                                    .Select(nsg => new NewsScopeGlobalization()
+                                    {
+                                        NewsScopeId = System.Convert.ToInt32(nsg.NewsScopeId),
+                                        TypeName = nsg.TypeName,
+                                        Culture = nsg.Culture,
+
+                                    }).ToList()
                 };
 
-                message.ReturnStrId = _dNewsScope.EditNewsScope(model.Id, newsScope);
+                message.ReturnId = _dNewsScope.EditNewsScope(System.Convert.ToInt32(model.Id), newsScope);
 
             }
             catch (Exception e)
@@ -191,7 +247,7 @@ namespace HardaGroup.Service
             return message;
         }
 
-        public Message BatchDeleteByIds(List<string> ids)
+        public Message BatchDeleteByIds(List<int> ids)
         {
             Message message = new Message();
             message.Success = true;
@@ -208,6 +264,64 @@ namespace HardaGroup.Service
                 message.Content = "模块删除失败：" + e.Message;
             }
 
+            return message;
+        }
+
+        /// <summary>
+        /// 根据条件过滤数据
+        /// </summary>
+        /// <param name="about"></param>
+        /// <returns></returns>
+        public M_NewsScopeGlobalization GetNewsScopeGlobalizationByNewsScopeIdAndCulture(string newsScopeId, string culture)
+        {
+
+            M_NewsScopeGlobalization newsScopeGlobalization = null;
+            var id = System.Convert.ToInt32(newsScopeId);
+            var result = _dNewsScope.GetNewsScopeGlobalizationByNewsScopeIdAndCulture(id, culture);
+
+            if (result != null)
+            {
+                newsScopeGlobalization = new M_NewsScopeGlobalization();
+                newsScopeGlobalization.Id = result.Id.ToString();
+                newsScopeGlobalization.TypeName = result.TypeName;
+                newsScopeGlobalization.Culture = result.Culture;
+                newsScopeGlobalization.NewsScopeId = result.NewsScopeId.ToString();
+
+            }
+            return newsScopeGlobalization;
+        }
+
+        /// <summary>
+        /// 处理国际化数据
+        /// </summary>
+        /// <param name="model"></param>
+        /// 
+        /// <returns></returns>
+        public Message DealAboutGlobalization(M_NewsScopeGlobalization model)
+        {
+            Message message = new Message();
+            message.Success = true;
+            message.Content = "新增成功";
+
+            try
+            {
+
+                //新增
+                var newsScopeGlobalization = new NewsScopeGlobalization()
+                {
+                    NewsScopeId = System.Convert.ToInt32(model.NewsScopeId),
+                    TypeName = model.TypeName,
+                    Culture = model.Culture
+                };
+
+                message.ReturnId = _dNewsScope.AddNewsScopeGlobalization(newsScopeGlobalization);
+
+            }
+            catch (Exception e)
+            {
+                message.Success = false;
+                message.Content = "新增失败，异常：" + e.Message;
+            }
             return message;
         }
     }

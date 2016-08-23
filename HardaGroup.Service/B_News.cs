@@ -46,7 +46,7 @@ namespace HardaGroup.Service
 
                 Title = news.Title,
                 SubTitle = news.SubTitle,
-                NewsScopeId = string.IsNullOrEmpty(news.NewsScopeId)?new Guid():new Guid(news.NewsScopeId)
+                NewsScopeId = System.Convert.ToInt32(news.NewsScopeId)
             };
 
             var offset = news.offset;
@@ -72,7 +72,7 @@ namespace HardaGroup.Service
             {
                 Title = news.Title,
                 SubTitle = news.SubTitle,
-                NewsScopeId = string.IsNullOrEmpty(news.NewsScopeId) ? new Guid() : new Guid(news.NewsScopeId)
+                NewsScopeId = System.Convert.ToInt32(news.NewsScopeId)
             };
 
             var currentPage = news.page;
@@ -99,7 +99,7 @@ namespace HardaGroup.Service
             {
                 Title = news.Title,
                 SubTitle = news.SubTitle,
-                NewsScopeId = string.IsNullOrEmpty(news.NewsScopeId) ? new Guid() : new Guid(news.NewsScopeId)
+                NewsScopeId = System.Convert.ToInt32(news.NewsScopeId)
             };
 
             var totalCount = _dNews.GetPageDataTotalCount(searchModel);
@@ -107,10 +107,11 @@ namespace HardaGroup.Service
         }
 
 
-        public M_News GetNewsById(string id)
+        public M_News GetNewsById(string newsId)
         {
             B_Image bImage = new B_Image();
 
+            int id = System.Convert.ToInt32(newsId);
             var news = _dNews.GetNewsById(id);
             var result = ConverEntityToModel(news);
             return result;
@@ -140,7 +141,7 @@ namespace HardaGroup.Service
                     CreateDate = DateTime.Now,
                     Creator = _currentUser.UserName,
                     Pubtime = model.Pubtime,
-                    NewsScopeId = new Guid(model.NewsScopeId)
+                    NewsScopeId = System.Convert.ToInt32(model.NewsScopeId)
                     
                 };
 
@@ -177,10 +178,10 @@ namespace HardaGroup.Service
                     ModifiedDate = DateTime.Now,
                     Modifier = _currentUser.UserName,
                     Pubtime = model.Pubtime,
-                    NewsScopeId = new Guid(model.NewsScopeId)
+                    NewsScopeId = System.Convert.ToInt32(model.NewsScopeId)
                 };
 
-                message.ReturnStrId = _dNews.EditNews(model.Id, news);
+                message.ReturnStrId = _dNews.EditNews(System.Convert.ToInt32(model.Id), news);
 
             }
             catch (Exception e)
@@ -197,13 +198,14 @@ namespace HardaGroup.Service
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public Message UpdateImageId(string id, int imageId)
+        public Message UpdateImageId(string newsId, int imageId)
         {
             Message message = new Message();
             message.Success = true;
             message.Content = "图片更新成功";
             try
             {
+                var id = System.Convert.ToInt32(newsId);
                 message.ReturnStrId = _dNews.EditImageId(id, imageId);
 
             }
@@ -221,13 +223,14 @@ namespace HardaGroup.Service
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Message DeleteNews(string id)
+        public Message DeleteNews(string newsId)
         {
             Message message = new Message();
             message.Success = true;
             message.Content = "删除成功";
             try
             {
+                var id = System.Convert.ToInt32(newsId);
                 B_Image bImage = new B_Image();
                 //删除图标
                 var news = _dNews.GetNewsById(id);
@@ -250,7 +253,7 @@ namespace HardaGroup.Service
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public Message BatchDeleteByIds(List<string> ids)
+        public Message BatchDeleteByIds(List<Int32> ids)
         {
             Message message = new Message();
             message.Success = true;

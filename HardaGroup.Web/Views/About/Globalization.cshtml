@@ -132,6 +132,9 @@
             async: false,   //同步
             success: function (message) {
                 $("body").hideLoading();
+                //先清空
+                $("#tbTypeName").val("");
+                editor.html("");
                 if (message.Success) {
                     
                     //赋值
