@@ -2,8 +2,8 @@
 @using HardaGroup.Models;
 @{
     Layout = null;
-    var news = (M_News)ViewData["news"];
-    var newsScopes = (List<M_NewsScope>)ViewData["NewsScope"];
+    var news = (M_NewsSearch)ViewData["NewsSearch"];
+    var newsScopes = (List<M_NewsScopeSearch>)ViewData["NewsScope"];
     
     //当前所属模块
     var scopeName = newsScopes.Where(s=>s.Id == news.NewsScopeId).Select(s =>s.TypeName).FirstOrDefault();
@@ -24,7 +24,14 @@
                 <label class="customer-content-sm">@scopeName</label>
             </div>
         </div>
-
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">唯一标识：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@news.NewsURLId</label>
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-md-2 text-right">
                 <label class="customer-content-sm">标题：</label>

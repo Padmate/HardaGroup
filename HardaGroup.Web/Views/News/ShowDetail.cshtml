@@ -3,8 +3,8 @@
 @using HardaGroup.Utility
 @using HardaGroup.Web.Globalization;
 @{
-    var news = (M_News)ViewData["news"];
-    var newsScopes = (List<M_NewsScope>)ViewData["NewsScope"];
+    var news = (M_NewsSearch)ViewData["news"];
+    var newsScopes = (List<M_NewsScopeSearch>)ViewData["NewsScope"];
 
     //当前所属模块
     var scopeName = newsScopes.Where(s => s.Id == news.NewsScopeId).Select(s => s.TypeName).FirstOrDefault();
@@ -28,7 +28,7 @@
                 <h3>
                     <a class="customer-content-xs" href="@cultureUri/">@language.Home  &nbsp;>&nbsp;  </a>
                     <a class="customer-content-xs" href="@string.Format("{0}/press/{1}{2}",cultureUri,Request["typecode"],urlRewriteExtension)">@language.Press &nbsp;>&nbsp;</a>
-                    <a class="customer-content-xs" href="@string.Format("{0}/press/{1}/{2}{3}",cultureUri,Request["typecode"],news.Id,urlRewriteExtension)">@news.SubTitle</a>
+                    <a class="customer-content-xs" href="@string.Format("{0}/press/{1}/{2}{3}",cultureUri,Request["typecode"],news.NewsURLId,urlRewriteExtension)">@news.SubTitle</a>
 
                 </h3>
                 <!-- share -->

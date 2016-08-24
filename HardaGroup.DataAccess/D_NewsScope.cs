@@ -29,13 +29,7 @@ namespace HardaGroup.DataAccess
         /// <returns></returns>
         public List<NewsScopeSearch> GetPageData(NewsScopeSearch newsScopeSearch, int skip, int limit)
         {
-            /********************************************************* 
             
-            select a.*,ab.* from dbo.Abouts a 
-            left join dbo.AboutGlobalizations ab 
-            on a.Id = ab.AboutId AND ab.Culture ='zh-cn'
-            
-            **********************************************************/
             var query = from ns in _dbContext.NewsScopes
                         join nsg in _dbContext.NewsScopeGlobalizations
                         on new { newsScopeId = ns.Id, culture = Common.Globalization_Chinese }
@@ -73,13 +67,7 @@ namespace HardaGroup.DataAccess
 
         public int GetPageDataTotalCount(NewsScopeSearch newsScopeSearch)
         {
-            /********************************************************* 
-            
-            select a.*,ab.* from dbo.Abouts a 
-            left join dbo.AboutGlobalizations ab 
-            on a.Id = ab.AboutId AND ab.Culture ='zh-cn'
-            
-            **********************************************************/
+           
             var query = from ns in _dbContext.NewsScopes
                         join nsg in _dbContext.NewsScopeGlobalizations
                         on new { newsScopeId = ns.Id, culture = Common.Globalization_Chinese }

@@ -104,7 +104,7 @@
         var jsonParam = JSON.stringify(saveObj);
         $.ajax({
             type: "POST",
-            url: "/News/SaveGlobalization",
+            url: "/News/SaveNewsScopeGlobalization",
             dataType: "json",
             data: jsonParam,
             async: false,   //同步

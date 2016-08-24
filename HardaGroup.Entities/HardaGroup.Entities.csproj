@@ -44,6 +44,7 @@
     <Compile Include="AboutGlobalization.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="News.cs" />
+    <Compile Include="NewsGlobalization.cs" />
     <Compile Include="NewsScope.cs" />
     <Compile Include="NewsScopeGlobalization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

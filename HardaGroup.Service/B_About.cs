@@ -1,6 +1,7 @@
 ﻿using HardaGroup.DataAccess;
 using HardaGroup.Entities;
 using HardaGroup.Models;
+using HardaGroup.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +66,35 @@ namespace HardaGroup.Service
 
             var totalCount = _dAbout.GetPageDataTotalCount(searchModel);
             return totalCount;
+        }
+
+        /// <summary>
+        /// 获取culture下的所数据
+        /// </summary>
+        /// <param name="culture"></param>
+        /// <returns></returns>
+        public List<M_AboutSearch> GetAllCultureData(string culture)
+        {
+            var allDatas = this.GetAllData();
+            //根据当前国际化代码过滤数据
+            List<M_AboutSearch> cultureDatas = new List<M_AboutSearch>();
+            foreach (var about in allDatas)
+            {
+                //根据国际化代码过滤数据，如果没有当前国际化代码的数据，则取中文数据
+                var defaultGlobalizationData = about.AboutGlobalizations.Where(ag => ag.Culture == culture).FirstOrDefault();
+                if (defaultGlobalizationData == null)
+                {
+                    defaultGlobalizationData = about.AboutGlobalizations.Where(ag => ag.Culture == Common.Globalization_Chinese).FirstOrDefault();
+                }
+
+                M_AboutSearch cultureData = new M_AboutSearch();
+                cultureData.TypeCode = about.TypeCode;
+                cultureData.TypeName = defaultGlobalizationData.TypeName;
+                cultureData.Content = defaultGlobalizationData.Content;
+
+                cultureDatas.Add(cultureData);
+            }
+            return cultureDatas;
         }
 
         /// <summary>

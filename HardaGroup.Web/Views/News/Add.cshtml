@@ -2,7 +2,6 @@
 @using HardaGroup.Models;
 @{
     Layout = null;
-    string currentCultureCode = GlobalizationHelp.GetCurrentThreadCultureCode();
     var newsScopes = (List<M_NewsScopeSearch>)ViewData["NewsScope"];
 }
 <div class="close-modal" data-dismiss="modal">
@@ -27,7 +26,15 @@
                 </select>
             </div>
         </div>
-
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">资讯标识：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="input-large" id="tbNewsUrlId" style="width:40%" placeholder="只能是字母、数字或 - 组成" />
+                <input class="btn btn-default" id="btnGenerateNewUrlId" type="button" style="width:9%" value="自动生成"/>
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-md-2 control-label">
                 <label class="customer-content-sm">标题：</label>
@@ -115,7 +122,10 @@
     $(function () {
         InitDatetimepicker(".form_datetime");
         InitWebUploader();
+        InitGenerateNewsUrlIdEvent();
+        
     });
+
 
     var uploader;
     function InitWebUploader() {
@@ -205,10 +215,10 @@
         });
     }
 
-    function UploadImage(newsId) {
+    function UploadImage(newsGlobalizationId,culture) {
 
-        uploader.options.formData.newsId = newsId;
-        uploader.options.formData.culture = '@currentCultureCode';
+        uploader.options.formData.newsGlobalizationId = newsGlobalizationId;
+        uploader.options.formData.culture = culture;
 
         uploader.upload();
     }
@@ -217,7 +227,7 @@
     function SaveAdd() {
 
         $("body").showLoading();
-        var saveObj = ConstructSaveObj();debugger
+        var saveObj = ConstructSaveObj();
         var jsonParam = JSON.stringify(saveObj);
         $.ajax({
             type: "POST",
@@ -228,8 +238,12 @@
             success: function (message) {
 
                 if (message.Success) {
+
+                    var newsGlobalization = JSON.parse(message.Content);
                     //上传图片
-                    UploadImage(message.ReturnStrId);
+                    var newsGlobalizationId = newsGlobalization.Id;
+                    var culture = newsGlobalization.Culture;
+                    UploadImage(newsGlobalizationId,culture);
 
                 } else {
                     $("body").hideLoading();
@@ -248,17 +262,51 @@
     //构造保存对象
     function ConstructSaveObj() {
 
-        var obj = {
+        var newsGlobalization = {
+
             Title: $("#tbTitle").val(),
             SubTitle: $("#tbSubTitle").val(),
             Description: $("#taDescription").val(),
+            Content: editor.html(),
+            Culture: '@Common.Globalization_Chinese'
+        };
+        var arrNewsGlobalization = new Array();
+        arrNewsGlobalization.push(newsGlobalization);
+
+        var obj = {
+            NewsUrlId: $("#tbNewsUrlId").val(),
             PubTime: $("#tbPubTime").val(),
             NewsScopeId:$("#selNewsScopeId").val(),
-            Content: editor.html(),
-            Culture:'@currentCultureCode'
+            NewsGlobalizations: arrNewsGlobalization
 
         };
         return obj;
+    }
+
+    function InitGenerateNewsUrlIdEvent() {
+        $("#btnGenerateNewUrlId").click(function () {
+
+            $.ajax({
+                type: "POST",
+                url: "/News/GenerateNewURLId",
+                dataType: "json",
+                async: false,   //同步
+                success: function (message) {
+
+                    if (message.Success) {
+
+                        $("#tbNewsUrlId").val(message.ReturnStrId);
+
+                    } else {
+                        layer.alert(message.Content, {
+                            skin: 'layui-layer-molv' //样式类名
+                          , closeBtn: 0
+                        });
+                        return;
+                    }
+                }
+            });
+        });
     }
 
 </script>

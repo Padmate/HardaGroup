@@ -6,8 +6,6 @@
     ViewBag.Title = "媒体资讯";
 
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
-    string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
-    string currentCultureCode = GlobalizationHelp.GetCurrentThreadCultureCode();
     var allNewsScope = (List<M_NewsScopeSearch>)ViewData["NewsScope"];
     
 }
@@ -40,7 +38,8 @@
                             <div class="col-xs-4 col-is-4 col-sm-4 col-md-4">
                                 <label class="customer-content-xs">所属模块</label>
                                 <select id="selSearchNewsScope" class="customer-content-xs select-mediu">
-                                    @foreach (var scope in allNewsScope)
+                                    <option value="">请选择</option>
+                                     @foreach (var scope in allNewsScope)
                                     {
                                         <option value="@scope.Id">@scope.TypeName</option>
                                     }
@@ -68,6 +67,9 @@
                     </a>
                     <a id="btnDelete">
                         <i class="glyphicon glyphicon-remove"></i> 删 除
+                    </a>
+                    <a id="btnGlobalization">
+                        <i class="glyphicon glyphicon-transfer"></i> 国际化
                     </a>
                     <a id="btnRefresh" class="searcharea-btn">
                         <i class="glyphicon fa-spin glyphicon-refresh"></i> 查 询
@@ -121,6 +123,17 @@
         </div>
     </div>
 </div>
+<!--#region国际化-->
+<div class="curd-model modal fade" id="newsGlobalization" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div id="divGlobalizationContainer"></div>
+
+
+        </div>
+    </div>
+</div>
 
 <!--Script要放在HTML标签后，才能将值绑定到标签-->
 <script type="text/javascript">
@@ -143,7 +156,7 @@
             layer.confirm('请先在"模块管理"中添加模块数据', {
                 btn: ['现在就去', '稍后再说'] //按钮
             }, function () {
-                location.href = '@string.Format("{0}/manage/news-scope{1}",cultureUri,urlRewriteExtension)';
+                location.href = '@string.Format("/manage/news-scope{0}",urlRewriteExtension)';
             }, function () {
 
             });
@@ -297,7 +310,15 @@
             $("#divNewsContainer").html("");
 
         });
+        $('#newsGlobalization').on('show.bs.modal', function () {
+            //打开事件
+        });
 
+        $('#newsGlobalization').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divGlobalizationContainer").html("");
+
+        });
     }
 
     function CloseAddScreen() {
@@ -306,6 +327,10 @@
     }
     function CloseEditScreen() {
         $('#newsedit').modal('hide');
+
+    }
+    function CloseGlobalizationScreen() {
+        $('#newsGlobalization').modal('hide');
 
     }
 
@@ -327,7 +352,7 @@
 
         $("#btnAdd").click(function(){
             $('#newsadd').modal('show');
-            $("#divAddContainer").load("@cultureUri/News/Add");
+            $("#divAddContainer").load("/News/Add");
         });
 
         $("#btnEdit").click(function () {
@@ -352,7 +377,33 @@
 
             var id = selections[0].Id;
             $('#newsedit').modal('show');
-            $("#divEditContainer").load("@cultureUri/News/Edit?newsId=" + id);
+            $("#divEditContainer").load("/News/Edit?newsId=" + id);
+
+        });
+
+        $("#btnGlobalization").click(function () {
+
+            var selections = $('#table').bootstrapTable('getSelections');
+            if (selections.length == 0) {
+                layer.alert("请选择要将要国际化的数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            } else if (selections.length != 1)
+            {
+                layer.alert("只能选择一条数据进行国际化操作", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+
+            var id = selections[0].Id;
+            $('#newsGlobalization').modal('show');
+            $("#divGlobalizationContainer").load("/News/Globalization?newsId=" + id);
 
         });
 
@@ -400,7 +451,7 @@
 
     function Detail(id) {
         $('#newsdetail').modal('show');
-        $("#divNewsContainer").load("@cultureUri/News/Detail?newsId=" + id);
+        $("#divNewsContainer").load("/News/Detail?newsId=" + id);
     }
 
     function RefreshTable()

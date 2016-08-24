@@ -24,27 +24,11 @@ namespace HardaGroup.Web.Controllers
             B_NewsScope bNewScope = new B_NewsScope();
             List<M_NewsScope> allNewsScope = bNewScope.GetAllData();
 
-            List<M_NewsScopeSearch> currentList = new List<M_NewsScopeSearch>();
             //获取当前国际化代码
             var culture = GlobalizationHelp.GetCurrentThreadCultureCode();
-            foreach(var newsScope in allNewsScope)
-            {
-                //根据国际化代码过滤数据，如果没有当前国际化代码的数据，则取中文数据
-                var defaultGlobalizationData = newsScope.NewsScopeGlobalizations.Where(ag => ag.Culture == culture).FirstOrDefault();
-                if (defaultGlobalizationData == null)
-                {
-                    defaultGlobalizationData = newsScope.NewsScopeGlobalizations.Where(ag => ag.Culture == Common.Globalization_Chinese).FirstOrDefault();
-                }
+            List<M_NewsScopeSearch> currentList = bNewScope.GetAllCultureData(culture);
 
-                M_NewsScopeSearch currentData = new M_NewsScopeSearch();
-                currentData.Id = newsScope.Id;
-                currentData.TypeCode = newsScope.TypeCode;
-                currentData.TypeName = defaultGlobalizationData.TypeName;
-
-                currentList.Add(currentData);
-            }
-
-            M_NewsScopeSearch mNewsScope = new M_NewsScopeSearch();
+            M_NewsScopeSearch mNewsScope = null;
             if (currentList.Count > 0)
             {
                 if (string.IsNullOrEmpty(typecode))
@@ -56,8 +40,6 @@ namespace HardaGroup.Web.Controllers
                 {
                     //根据当前typecode过滤数据
                     mNewsScope = currentList.Where(a => a.TypeCode == typecode).FirstOrDefault();
-
-
                 }
             }
             if (mNewsScope == null) throw new HttpException(404, "");
@@ -243,7 +225,7 @@ namespace HardaGroup.Web.Controllers
         // POST:
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult SaveGlobalization()
+        public ActionResult SaveNewsScopeGlobalization()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
             String strReqStream = srRequest.ReadToEnd();
@@ -255,7 +237,7 @@ namespace HardaGroup.Web.Controllers
             if (!message.Success) return Json(message);
 
             B_NewsScope bNewsScope = new B_NewsScope();
-            message = bNewsScope.DealAboutGlobalization(model);
+            message = bNewsScope.DealNewsScopeGlobalization(model);
 
             return Json(message);
         }
@@ -272,13 +254,13 @@ namespace HardaGroup.Web.Controllers
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
             String strReqStream = srRequest.ReadToEnd();
-            M_News model = JsonHandle.UnJson<M_News>(strReqStream);
+            M_NewsSearch model = JsonHandle.UnJson<M_NewsSearch>(strReqStream);
 
             B_News bNews = new B_News();
             var pageData = bNews.GetPageDataForBootstrapTable(model);
             var totalCount = bNews.GetPageDataTotalCount(model);
 
-            PageResult<M_News> pageResult = new PageResult<M_News>(totalCount, pageData);
+            PageResult<M_NewsSearch> pageResult = new PageResult<M_NewsSearch>(totalCount, pageData);
             return Json(pageResult);
         }
 
@@ -289,11 +271,12 @@ namespace HardaGroup.Web.Controllers
         /// <param name="page">当前所在页数</param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult GetPageDataForBootstrapPaginator(M_News searchModel)
+        public ActionResult GetPageDataForBootstrapPaginator(M_NewsSearch searchModel)
         {
             //每页显示数据条数
             int limit = 5;
             searchModel.limit = limit;
+            
 
             B_News bNews = new B_News();
             var pageData = bNews.GetPageDataForBootstrapPaginator(searchModel);
@@ -301,7 +284,7 @@ namespace HardaGroup.Web.Controllers
             //总页数
             var totalPages = System.Convert.ToInt32(Math.Ceiling((double)totalCount / limit));
 
-            PageResult<M_News> result = new PageResult<M_News>(totalCount, totalPages, pageData);
+            PageResult<M_NewsSearch> result = new PageResult<M_NewsSearch>(totalCount, totalPages, pageData);
             return Json(result);
         }
 
@@ -324,7 +307,7 @@ namespace HardaGroup.Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult UploadThumbnailsImage(string newsId,string culture ,HttpPostedFileBase file)
+        public ActionResult UploadThumbnailsImage(string newsGlobalizationId,string culture ,HttpPostedFileBase file)
         {
             Message message = new Message();
             message.Success = true;
@@ -335,12 +318,12 @@ namespace HardaGroup.Web.Controllers
             {
                 B_News bNews = new B_News();
                 B_Image bImage = new B_Image();
-                var news = bNews.GetNewsById(newsId);
+                var newsGlobalization = bNews.GetNewsGlobalizationById(newsGlobalizationId);
 
-                if (news.Image != null)
+                if (newsGlobalization.Image != null)
                 {
                     //删除原来的图片
-                    message = bImage.DeleteImage(System.Convert.ToInt32(news.Image.Id));
+                    message = bImage.DeleteImage(System.Convert.ToInt32(newsGlobalization.Image.Id));
                     if (!message.Success) return Json(message);
                 }
                 //上传新图标
@@ -348,7 +331,7 @@ namespace HardaGroup.Web.Controllers
                 if (!message.Success) return Json(message);
                 int imageId = System.Convert.ToInt32(message.ReturnId);
                 //更新新图标id到数据库
-                message = bNews.UpdateImageId(newsId, imageId);
+                message = bNews.UpdateImageId(newsGlobalizationId, imageId);
 
             }
 
@@ -381,9 +364,22 @@ namespace HardaGroup.Web.Controllers
             message = ValideData(model);
             if (!message.Success) return Json(message);
 
+            message = model.NewsGlobalizations.First().validate();
+            if (!message.Success) return Json(message);
+
             var currentUser = this.GetCurrentUser();
             B_News bNews = new B_News(currentUser);
             message = bNews.AddNews(model);
+            if (message.Success)
+            {
+                var newsId = message.ReturnId.ToString();
+                var culture = model.NewsGlobalizations.First().Culture;
+                //根据newsId,查找刚插入的数据
+                var newsGlobalization = bNews.GetNewsGlobalizationByIdAndCulture(newsId, culture);
+
+                //返回NewsGlobalization对象
+                message.Content = JsonHandle.ToJson(newsGlobalization);
+            }
 
             return Json(message);
         }
@@ -393,9 +389,30 @@ namespace HardaGroup.Web.Controllers
 
             B_News bNews = new B_News();
             var news = bNews.GetNewsById(newsId);
-            ViewData["news"] = news;
 
-            //取资讯模块
+            //过滤国际化代码为中文的数据
+            var zhCNGlobalization = news.NewsGlobalizations
+                .Where(ag => ag.Culture == Common.Globalization_Chinese).FirstOrDefault();
+
+            var newsSearch = new M_NewsSearch()
+            {
+                Id = news.Id,
+                NewsURLId = news.NewsURLId,
+                Pubtime = news.Pubtime,
+                NewsScopeId = news.NewsScopeId,
+                Title = zhCNGlobalization == null ? "":zhCNGlobalization.Title,
+                SubTitle = zhCNGlobalization == null ? "" : zhCNGlobalization.SubTitle,
+                Description = zhCNGlobalization == null ? "" : zhCNGlobalization.Description,
+                Content = zhCNGlobalization == null ? "" : zhCNGlobalization.Content,
+                Culture = zhCNGlobalization == null ? "" : zhCNGlobalization.Culture,
+                Image = zhCNGlobalization == null? null:zhCNGlobalization.Image
+            };
+
+
+            ViewData["NewsSearch"] = newsSearch;
+
+
+            //获取资讯模块
             B_NewsScope bNewsScope = new B_NewsScope();
             var allNewsScopes = bNewsScope.GetAllZHCNData();
 
@@ -405,45 +422,6 @@ namespace HardaGroup.Web.Controllers
             return View();
         }
 
-        public ActionResult ShowDetail(string newsId)
-        {
-
-            B_News bNews = new B_News();
-            var news = bNews.GetNewsById(newsId);
-            ViewData["news"] = news;
-
-            //根据当前国际化代码获取资讯模块
-            var culture = GlobalizationHelp.GetCurrentThreadCultureCode();
-            B_NewsScope bNewsScope = new B_NewsScope();
-            M_NewsScope searchModel = new M_NewsScope();
-            //searchModel.Culture = culture;
-            var allNewsScopes = bNewsScope.GetByMulitCond(searchModel);
-
-            ViewData["NewsScope"] = allNewsScopes;
-
-
-            return View();
-        }
-
-        public ActionResult Detail(string newsId)
-        {
-
-            B_News bNews = new B_News();
-            var news = bNews.GetNewsById(newsId);
-            ViewData["news"] = news;
-
-            //根据当前国际化代码获取资讯模块
-            var culture = GlobalizationHelp.GetCurrentThreadCultureCode();
-            B_NewsScope bNewsScope = new B_NewsScope();
-            M_NewsScope searchModel = new M_NewsScope();
-            //searchModel.Culture = culture;
-            var allNewsScopes = bNewsScope.GetByMulitCond(searchModel);
-
-            ViewData["NewsScope"] = allNewsScopes;
-
-
-            return View();
-        }
         // POST:
         [HttpPost]
         [ValidateInput(false)]
@@ -459,14 +437,86 @@ namespace HardaGroup.Web.Controllers
             message = ValideData(model);
             if (!message.Success) return Json(message);
 
+            message = model.NewsGlobalizations.First().validate();
+            if (!message.Success) return Json(message);
+
             var currentUser = this.GetCurrentUser();
             B_News bNews = new B_News(currentUser);
             message = bNews.EditNews(model);
+
+            if (message.Success)
+            {
+                var newsId = message.ReturnId.ToString();
+                var culture = model.NewsGlobalizations.First().Culture;
+                //根据newsId,查找刚插入的数据
+                var newsGlobalization = bNews.GetNewsGlobalizationByIdAndCulture(newsId, culture);
+
+                //返回NewsGlobalization对象
+                message.Content = JsonHandle.ToJson(newsGlobalization);
+            }
 
             return Json(message);
 
         }
 
+        public ActionResult ShowDetail(string newsUrlId)
+        {
+
+            B_News bNews = new B_News();
+            //获取当前culture
+            var culture = GlobalizationHelp.GetCurrentThreadCultureCode();
+            var news = bNews.GetNewsByNewsUrlIdAndCullture(newsUrlId,culture);
+            ViewData["news"] = news;
+
+            if (news == null) throw new HttpException(404, "");
+
+            //获取资讯模块
+            B_NewsScope bNewsScope = new B_NewsScope();
+            var allNewsScopes = bNewsScope.GetAllZHCNData();
+
+            ViewData["NewsScope"] = allNewsScopes;
+
+
+            return View();
+        }
+
+        public ActionResult Detail(string newsId)
+        {
+
+            B_News bNews = new B_News();
+            var news = bNews.GetNewsById(newsId);
+
+            //过滤国际化代码为中文的数据
+            var zhCNGlobalization = news.NewsGlobalizations
+                .Where(ag => ag.Culture == Common.Globalization_Chinese).FirstOrDefault();
+
+            var newsSearch = new M_NewsSearch()
+            {
+                Id = news.Id,
+                NewsURLId = news.NewsURLId,
+                Pubtime = news.Pubtime,
+                NewsScopeId = news.NewsScopeId,
+                Title = zhCNGlobalization == null ? "" : zhCNGlobalization.Title,
+                SubTitle = zhCNGlobalization == null ? "" : zhCNGlobalization.SubTitle,
+                Description = zhCNGlobalization == null ? "" : zhCNGlobalization.Description,
+                Content = zhCNGlobalization == null ? "" : zhCNGlobalization.Content,
+                Culture = zhCNGlobalization == null ? "" : zhCNGlobalization.Culture,
+                Image = zhCNGlobalization == null ? null : zhCNGlobalization.Image
+            };
+
+
+            ViewData["NewsSearch"] = newsSearch;
+
+
+            //获取资讯模块
+            B_NewsScope bNewsScope = new B_NewsScope();
+            var allNewsScopes = bNewsScope.GetAllZHCNData();
+
+            ViewData["NewsScope"] = allNewsScopes;
+
+
+            return View();
+        }
 
         private Message ValideData(M_News model)
         {
@@ -509,6 +559,116 @@ namespace HardaGroup.Web.Controllers
             return Json(message);
         }
 
+        /// <summary>
+        /// News国际化
+        /// </summary>
+        /// <param name="newsId"></param>
+        /// <returns></returns>
+        public ActionResult Globalization(string newsId)
+        {
+
+            B_News bNews = new B_News();
+            var news = bNews.GetNewsById(newsId);
+
+
+            ViewData["News"] = news;
+
+
+            //获取资讯模块
+            B_NewsScope bNewsScope = new B_NewsScope();
+            var allNewsScopes = bNewsScope.GetAllZHCNData();
+
+            ViewData["NewsScope"] = allNewsScopes;
+
+            //需要进行国际化的语言
+            Dictionary<string, string> globalizationLanguage = Common.Dic_Globalization
+                                                        .Where(g => g.Key != Common.Globalization_Chinese)
+                                                        .ToDictionary(g => g.Key, g => g.Value);
+
+            ViewData["globalizationLanguage"] = globalizationLanguage;
+
+            return View();
+        }
+
+        /// <summary>
+        /// 根据NewsId和culture，查找数据
+        /// </summary>
+        /// <param name="NewsScopeId"></param>
+        /// <param name="Culture"></param>
+        /// <returns></returns>
+        public ActionResult LoadNewsGlobalizationData(string NewsId, string Culture)
+        {
+            Message message = new Message();
+            M_NewsGlobalization result = new M_NewsGlobalization();
+            if (string.IsNullOrEmpty(NewsId) || string.IsNullOrEmpty(Culture))
+            {
+                message.Success = false;
+                message.Content = "获取数据失败，请重新尝试";
+                return Json(message);
+            }
+
+            B_News bNewsScope = new B_News();
+            result = bNewsScope.GetNewsGlobalizationByNewsIdAndCulture(NewsId, Culture);
+
+            if (result == null)
+            {
+                message.Success = false;
+                message.Content = "获取数据失败，请重新尝试";
+                return Json(message);
+            }
+            message.Success = true;
+            message.Content = JsonHandle.ToJson(result); ;
+
+            return Json(message);
+        }
+
+
+        // POST:
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult SaveNewsGlobalization()
+        {
+            StreamReader srRequest = new StreamReader(Request.InputStream);
+            String strReqStream = srRequest.ReadToEnd();
+            M_NewsGlobalization model = JsonHandle.DeserializeJsonToObject<M_NewsGlobalization>(strReqStream);
+
+            Message message = new Message();
+            //校验model
+            message = model.validate();
+            if (!message.Success) return Json(message);
+
+            B_News bNews = new B_News();
+            message = bNews.DealNewsGlobalization(model);
+
+            if(message.Success)
+            {
+                var newsGlobalizationId = message.ReturnId.ToString();
+                var newsGlobalization = bNews.GetNewsGlobalizationById(newsGlobalizationId);
+                message.Content = JsonHandle.ToJson(newsGlobalization);
+            }
+
+            return Json(message);
+        }
+
+
+        public ActionResult GenerateNewURLId()
+        {
+            Message message = new Message();
+            message.Success = true;
+
+            try
+            {
+                message.ReturnStrId = Guid.NewGuid().ToString();
+                
+
+            }catch(Exception e)
+            {
+                message.Success = false;
+                message.Content = "生成唯一标识失败："+e.Message ;
+            }
+
+            return Json(message);
+        }
         #endregion
     }
 }

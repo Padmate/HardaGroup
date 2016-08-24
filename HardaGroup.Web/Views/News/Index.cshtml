@@ -180,8 +180,9 @@
         };
 
         var params = {
-            //"SubTitle": $(".articleSearchInput").val(),
-            "NewsScopeId":'@currentNewsScope.Id',
+            
+            "NewsScopeId": '@currentNewsScope.Id',
+            "Culture":'@cultureCode',
             "page": currentPage
         };
 
@@ -214,7 +215,7 @@
             
             var pubTime = JsonDateFormat2(datas[i].Pubtime);
 
-            var contentHref = '@cultureUri' + "/press/" + '@currentNewsScope.TypeCode'+"/"+ datas[i].Id + '@urlRewriteExtension';
+            var contentHref = '@cultureUri' + "/press/" + '@currentNewsScope.TypeCode'+"/"+ datas[i].NewsURLId + '@urlRewriteExtension';
             var shareHref = window.location.host + contentHref;
 
 

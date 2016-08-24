@@ -2,47 +2,57 @@
 @using HardaGroup.Models;
 @{
     Layout = null;
-    var news = (M_NewsSearch)ViewData["NewsSearch"];
+    var news = (M_News)ViewData["News"];
     var newsScopes = (List<M_NewsScopeSearch>)ViewData["NewsScope"];
+    var globalizationLanguage = (Dictionary<string, string>)ViewData["globalizationLanguage"];
+    
+    //所属模块
+    var currentNewsScope = newsScopes.Where(s => s.Id == news.NewsScopeId).FirstOrDefault();
+    var currentNewsScopeName = currentNewsScope == null ? "" : currentNewsScope.TypeName;
 }
 <div class="close-modal" data-dismiss="modal">
     <i class="fa fa-3x fa-close"></i>
 </div>
 <div class="container">
 
-    <h3 class="customer-h3 text-center curd-title">修 改</h3>
+    <h3 class="customer-h3 text-center curd-title">国际化</h3>
     <hr />
     <div class="form-horizontal">
         <div class="form-group">
-            <div class="col-md-2 control-label">
+            <div class="col-md-2 text-right">
                 <label class="customer-content-sm">资讯模块：</label>
             </div>
             <div class="col-md-10">
-                <select class="select-large" id="selNewsScopeId">
-                    <option value="">请选择资讯模块</option>
-                    @foreach (var scope in newsScopes)
-                    {
-                        if (news.NewsScopeId == scope.Id)
-                        {
-                            <option selected="selected" value="@scope.Id">@scope.TypeName</option>
-
-                        }
-                        else
-                        {
-                            <option value="@scope.Id">@scope.TypeName</option>
-
-                        }
-                    }
-                </select>
+                <label class="customer-content-sm">@currentNewsScopeName</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">唯一标识：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@news.NewsURLId</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">发布时间：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@news.Pubtime</label>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-2 control-label">
-                <label class="customer-content-sm">唯一标识：</label>
+                <label class="customer-content-sm">国际化语言：</label>
             </div>
             <div class="col-md-10">
-                <input class="input-large" id="tbNewsUrlId" style="width:40%" placeholder="只能是字母、数字或 - 组成" value="@news.NewsURLId" />
-                <input class="btn btn-default" id="btnGenerateNewUrlId" type="button" style="width:9%" value="自动生成" />
+                <select class="select-large" id="selCulture">
+                    @foreach (var key in globalizationLanguage.Keys)
+                    {
+                        <option value="@key">@globalizationLanguage[key]</option>
+                    }
+                </select>
             </div>
         </div>
         <div class="form-group">
@@ -50,7 +60,7 @@
                 <label class="customer-content-sm">标题：</label>
             </div>
             <div class="col-md-10">
-                <input class="input-large" id="tbTitle" placeholder="标题" value="@news.Title"/>
+                <input class="input-large" id="tbTitle" placeholder="标题"/>
             </div>
         </div>
         <div class="form-group">
@@ -58,7 +68,7 @@
                 <label class="customer-content-sm">二级标题：</label>
             </div>
             <div class="col-md-10">
-                <input class="input-large" id="tbSubTitle" placeholder="二级标题" value="@news.SubTitle" />
+                <input class="input-large" id="tbSubTitle" placeholder="二级标题" />
             </div>
         </div>
         <div class="form-group">
@@ -66,7 +76,7 @@
                 <label class="customer-content-sm">内容简介：</label>
             </div>
             <div class="col-md-10">
-                <textarea class="textarea-large" id="taDescription">@news.Description</textarea>
+                <textarea class="textarea-large" id="taDescription"></textarea>
             </div>
         </div>
         <div class="form-group">
@@ -78,44 +88,19 @@
                 <span class="customer-content-sm" id="status"></span>
             </div>
             <div class="col-lg-4 col-md-6 col-md-offset-2" style="margin-top:10px;">
-                @if (news.Image != null && !string.IsNullOrEmpty(news.Image.VirtualPath))
-                {
-                    <img class="img-responsive" id="showUploadImage" src="@news.Image.VirtualPath" alt="无图标" />
-
-                }
-                else
-                {
-                    <img class="img-responsive" id="showUploadImage" src="~/images/small_model.jpg" alt="无图标" />
-
-                }
+               <img class="img-responsive" id="showUploadImage" src="~/images/small_model.jpg" alt="无图标" />
 
             </div>
 
         </div>
-        <div class="form-group">
-            <div class="col-md-2 control-label">
-                <label class="customer-content-sm">发布时间：</label>
-            </div>
-            <div class="col-md-3">
-                <!--yyyy-mm-dd hh:ii:ss 中hh表示24小时制-->
-                <div class="input-group date form_datetime" data-date=""
-                     data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="tbPubTime">
-                    <!--yyyy-MM-dd HH:mm:ss 中 HH表示24小时制-->
-                    <input class="form-control" size="16" type="text" value="@news.Pubtime.ToString("yyyy-MM-dd HH:mm:ss")" readonly>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
-                </div>
-                <input type="hidden" id="tbPubTime" name="PubTime" value="@news.Pubtime.ToString("yyyy-MM-dd HH:mm:ss")" /><br />
-            </div>
-
-
-        </div>
+        
 
         <div class="form-group">
             <div class="col-md-2 control-label">
                 <label class="customer-content-sm">内 容：</label>
             </div>
             <div class="col-md-10">
-                <textarea id="taContent" name="content">@news.Content</textarea>
+                <textarea id="taContent" name="content"></textarea>
 
             </div>
         </div>
@@ -143,8 +128,52 @@
     $(function () {
         InitDatetimepicker(".form_datetime");
         InitWebUploader();
-        InitGenerateNewsUrlIdEvent();
+
+        LoadCultureData();
+
+        $("#selCulture").change(function () {
+            LoadCultureData();
+        });
+
     });
+
+
+    //根据国际化语言加载数据
+    function LoadCultureData() {
+        $("body").showLoading();
+        $.ajax({
+            type: "POST",
+            url: "/News/LoadNewsGlobalizationData",
+            dataType: "json",
+            data: { NewsId: '@news.Id', Culture: $("#selCulture").val() },
+            async: false,   //同步
+            success: function (message) {
+                $("body").hideLoading();
+                //先清空
+                $("#tbTitle").val("");
+                $("#tbSubTitle").val("");
+                $("#taDescription").val("");
+                $("#showUploadImage").attr("src", "/images/small_model.jpg");
+                editor.html("");
+
+                if (message.Success) {
+                    
+                    //赋值
+                    var data = JSON.parse(message.Content);
+
+                    var imageUrl = data.Image != null ? data.Image.VirtualPath : "";
+                    $("#tbTitle").val(data.Title);
+                    $("#tbSubTitle").val(data.SubTitle);
+                    $("#taDescription").val(data.Description);
+                    $("#showUploadImage").attr("src", imageUrl);
+                    editor.html(data.Content);
+
+                }
+            }
+        });
+    }
+
+
 
     var uploader;
     function InitWebUploader() {
@@ -192,7 +221,7 @@
         uploader.on('uploadFinished', function () {
 
             //图片上传成功后关闭对话框，刷新表格
-            CloseEditScreen();
+            CloseGlobalizationScreen();
             //刷新表格
             RefreshTable();
             $("body").hideLoading();
@@ -250,7 +279,7 @@
         var jsonParam = JSON.stringify(saveObj);
         $.ajax({
             type: "POST",
-            url: "/News/SaveEdit",
+            url: "/News/SaveNewsGlobalization",
             dataType: "json",
             data: jsonParam,
             async: false,   //同步
@@ -287,49 +316,12 @@
             SubTitle: $("#tbSubTitle").val(),
             Description: $("#taDescription").val(),
             Content: editor.html(),
-            Culture: '@news.Culture'
-        };
-        var arrNewsGlobalization = new Array();
-        arrNewsGlobalization.push(newsGlobalization);
-
-        var obj = {
-            Id: '@news.Id',
-            NewsUrlId: $("#tbNewsUrlId").val(),
-            PubTime: $("#tbPubTime").val(),
-            NewsScopeId: $("#selNewsScopeId").val(),
-            NewsGlobalizations: arrNewsGlobalization
-
+            Culture: $("#selCulture").val()
         };
 
-        return obj;
+
+        return newsGlobalization;
     }
-
-    function InitGenerateNewsUrlIdEvent() {
-        $("#btnGenerateNewUrlId").click(function () {
-
-            $.ajax({
-                type: "POST",
-                url: "/News/GenerateNewURLId",
-                dataType: "json",
-                async: false,   //同步
-                success: function (message) {
-
-                    if (message.Success) {
-
-                        $("#tbNewsUrlId").val(message.ReturnStrId);
-
-                    } else {
-                        layer.alert(message.Content, {
-                            skin: 'layui-layer-molv' //样式类名
-                          , closeBtn: 0
-                        });
-                        return;
-                    }
-                }
-            });
-        });
-    }
-
 
 </script>
 

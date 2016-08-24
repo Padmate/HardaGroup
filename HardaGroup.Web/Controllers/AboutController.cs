@@ -23,48 +23,30 @@ namespace HardaGroup.Web.Controllers
             ViewData["bgimages"] = bgImages;
 
             B_About bAbout = new B_About();
-            List<M_About> allDatas = bAbout.GetAllData();
 
             //获取当前国际化代码
             var culture = GlobalizationHelp.GetCurrentThreadCultureCode();
             //根据当前国际化代码过滤数据
-            List<M_AboutSearch> currentList = new List<M_AboutSearch>();
-            foreach(var about in allDatas)
-            {
-                //根据国际化代码过滤数据，如果没有当前国际化代码的数据，则取中文数据
-                var defaultGlobalizationData = about.AboutGlobalizations.Where(ag => ag.Culture == culture).FirstOrDefault();
-                if(defaultGlobalizationData == null)
-                {
-                    defaultGlobalizationData = about.AboutGlobalizations.Where(ag => ag.Culture == Common.Globalization_Chinese).FirstOrDefault();
-                }
-
-                M_AboutSearch cultureData = new M_AboutSearch();
-                cultureData.TypeCode = about.TypeCode;
-                cultureData.TypeName = defaultGlobalizationData.TypeName;
-                cultureData.Content = defaultGlobalizationData.Content;
-
-                currentList.Add(cultureData);
-            }
-
-
+            List<M_AboutSearch> cultureDatas = bAbout.GetAllCultureData(culture);
+            
             M_AboutSearch mAbout = null;
-            if (currentList.Count > 0)
+            if (cultureDatas.Count > 0)
             {
                 mAbout = new M_AboutSearch();
                 if (string.IsNullOrEmpty(typecode))
                 {
                     //如果类型代码为空，则取默认第一条数据
-                    mAbout = currentList.FirstOrDefault();
+                    mAbout = cultureDatas.FirstOrDefault();
                 }
                 else
                 {
                     //根据当前typecode过滤数据
-                    mAbout = currentList.Where(a => a.TypeCode == typecode).FirstOrDefault();
+                    mAbout = cultureDatas.Where(a => a.TypeCode == typecode).FirstOrDefault();
                 }
             }
             if (mAbout == null) throw new HttpException(404, "");
 
-            ViewData["allDatas"] = currentList;
+            ViewData["allDatas"] = cultureDatas;
             ViewData["currentData"] = mAbout;
             
 

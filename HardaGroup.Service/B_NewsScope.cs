@@ -67,10 +67,39 @@ namespace HardaGroup.Service
                 newsScopeSearch.Id = scope.Id.ToString();
                 newsScopeSearch.TypeCode = scope.TypeCode;
                 newsScopeSearch.TypeName = zhcnData == null ? "" : zhcnData.TypeName;
+                newsScopeSearch.Culture = zhcnData == null ? Common.Globalization_Chinese : zhcnData.Culture;
 
                 result.Add(newsScopeSearch);
             }
             return result;
+        }
+
+        /// <summary>
+        /// 根据culture获取所有数据
+        /// </summary>
+        /// <returns></returns>
+        public List<M_NewsScopeSearch> GetAllCultureData(string culture)
+        {
+            var allDatas = this.GetAllData();
+            List<M_NewsScopeSearch> cultureDatas = new List<M_NewsScopeSearch>();
+            foreach (var newsScope in allDatas)
+            {
+                //根据国际化代码过滤数据，如果没有当前国际化代码的数据，则取中文数据
+                var defaultGlobalizationData = newsScope.NewsScopeGlobalizations.Where(ag => ag.Culture == culture).FirstOrDefault();
+                if (defaultGlobalizationData == null)
+                {
+                    defaultGlobalizationData = newsScope.NewsScopeGlobalizations.Where(ag => ag.Culture == Common.Globalization_Chinese).FirstOrDefault();
+                }
+
+                M_NewsScopeSearch currentData = new M_NewsScopeSearch();
+                currentData.Id = newsScope.Id;
+                currentData.TypeCode = newsScope.TypeCode;
+                currentData.TypeName = defaultGlobalizationData.TypeName;
+
+                cultureDatas.Add(currentData);
+            }
+
+            return cultureDatas;
         }
 
         /// <summary>
@@ -297,7 +326,7 @@ namespace HardaGroup.Service
         /// <param name="model"></param>
         /// 
         /// <returns></returns>
-        public Message DealAboutGlobalization(M_NewsScopeGlobalization model)
+        public Message DealNewsScopeGlobalization(M_NewsScopeGlobalization model)
         {
             Message message = new Message();
             message.Success = true;
