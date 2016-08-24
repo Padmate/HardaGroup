@@ -20,15 +20,33 @@ $(function () {
 
     //过滤一级导航菜单是否与点击的链接匹配
     var element = $('.head-nav>li.checkmenu>a').filter(function () {
-
-        return this.href == clickedUrl || clickedUrl.href.indexOf(this.href) == 0;
+        
+        var thisPathName = this.pathname.toLowerCase();
+        var clickPathName = clickedUrl.pathname.toLowerCase();
+        //URL后缀分割，获取导航URL 如：/about.html
+        var arrHeadUrl = this.pathname.split('.');
+        var headUrl = arrHeadUrl[0].toLowerCase();
+        
+        var urlRegexp = headUrl;
+        //如果当前点击的URL中能够匹配导航URL
+        if (clickPathName.match(urlRegexp))
+        {
+            return thisPathName.indexOf(headUrl) == 0;
+        }
+        
+        var currentHref = this.href.toLowerCase();
+        var clickHref = clickedUrl.href.toLowerCase();
+        return currentHref == clickHref || clickHref.indexOf(currentHref) == 0;
     });
     //如果一级没有匹配，则说明当前点击的是二级菜单
     if (element.length == 0) {
         //匹配二级菜单
         var secondNavelement = $('.head-nav>li>ul a').filter(function () {
 
-            return this.href == clickedUrl || clickedUrl.href.indexOf(this.href) == 0;
+            var currentHref = this.href.toLowerCase();
+            var clickHref = clickedUrl.href.toLowerCase();
+
+            return currentHref == clickHref || clickHref.indexOf(currentHref) == 0;
         });
         //选中二级菜单，及对应的一级菜单
         secondNavelement.parent().addClass('active').parent().parent().addClass("active");
