@@ -62,8 +62,16 @@ $(function () {
     }, function () {
         $(this).find("ul").hide();
 
-    })
-    
+    });
+
+    //ÓïÑÔÑ¡Ôñ
+    $(".language-toggle").hover(function () {
+        $(".language-toggle .dropdown-toggle").dropdown('toggle');
+    }, function () {
+        $(".language-toggle .dropdown-toggle").dropdown('toggle');
+
+    });
+
     /*·µ»Ø¶¥²¿*/
     $(window).scroll(function () {
         if ($(document).scrollTop() >= 600) {

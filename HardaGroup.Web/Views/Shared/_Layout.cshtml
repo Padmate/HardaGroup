@@ -113,11 +113,11 @@
                     
                     <a href="@string.Format("{0}/contact-us{1}",cultureUri,urlRewriteExtension)">@language.ContactUs |</a>
 
-                    <div style="display:inline;position:relative">
+                    <div class="language-toggle" style="display:inline;position:relative">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="language-label">@language.ChooseLanguage<b class="caret"></b></span>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" style="margin-top: 1px;">
 
                             <li><a class="language" href="/en-US">English</a></li>
                             <li><a class="language" href="/">中文</a></li>
@@ -130,7 +130,7 @@
                   
                 </div> 
                 <div class="navbar-bottom">
-                     @Html.Partial("_LoginPartial")
+                    @Html.Partial("_LoginPartial")
                     <ul class="nav navbar-nav pull-right head-nav">
                         @if (ViewBag.From != "Default")
                         {
@@ -291,6 +291,7 @@
                     <div class="col-md-4 widget">
                         <h3 class="widget-title">关注我们</h3>
                         <div class="widget-body">
+                           
                             <p class="follow-me-icons">
                                 <a href=""><i class="fa fa-twitter fa-2"></i></a>
                                 <a href=""><i class="fa fa-dribbble fa-2"></i></a>
@@ -302,7 +303,8 @@
 
 
 
-                </div> <!-- /row of widgets -->
+                </div>
+
             </div>
         </div>
 
@@ -311,6 +313,8 @@
                 <div class="row">
 
                     <div class="col-md-6 widget">
+
+
                     </div>
 
                     <div class="col-md-6 widget">
