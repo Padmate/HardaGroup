@@ -12,6 +12,8 @@
 
     ViewBag.Title = currentNewsScope.TypeName + "|" + language.AboutHarda;
 
+    var typecode = Request["typecode"];
+    typecode = string.IsNullOrEmpty(typecode) ? allNewsScopes.First().TypeCode : typecode;
 }
 
 <style>
@@ -97,22 +99,36 @@
     </div>
 </section>
 <script>
+
+    var currentPage = '@Request["page"]';
+    var _currentPage = currentPage != null && currentPage != "" ? currentPage : 1;
+
+
     $(function () {
 
         //选中当前路径选项
         var url = window.location;
         var element = $('.newsScopeTabs a').filter(function () {
             return this.href == url || url.href.indexOf(this.href) == 0;
-        }).parent().addClass('active');
+        });
+        
+        if(element.length ==0)
+        {
+            $('.newsScopeTabs a').first().parent().addClass('active');
+
+        } else {
+            element.parent().addClass('active');
+
+        }
 
         InitPaging();
     });
 
     //初始化分页数据
     function InitPaging() {
-        //获取总页数及第一页数据
-        var firstResult = GetPageData(1);
-        //加载第一页数据
+        //获取总页数及当前页数据
+        var firstResult = GetPageData(_currentPage);
+        //加载当前页数据
         RenderPageData(firstResult.data);
 
         //重置分页条
@@ -136,19 +152,24 @@
             size: 'large',            //指定分页条的大小
             bootstrapMajorVersion: 3,  //指定bootstrap版本，为v3，则容器必须为ul;如果版本为v2，则容器必须为div
             numberOfPages: 10,         //设置可选分页按钮个数，默认5
-            currentPage: 1,          //当前页
+            currentPage: _currentPage,          //当前页
             totalPages: totalPages,         //总页数（从服务端获取）
-            onPageClicked: function (e, originalEvent, type, page) {
-                //获取分页数据
-                var result = GetPageData(page);
-                //渲染当前页数据
-                RenderPageData(result.data);
-            },
-            //pageUrl: function(type, page, current){
-
-            //    return "http://example.com/list/page/"+page;
-
+            //onPageClicked: function (e, originalEvent, type, page) {
+            //    //获取分页数据
+            //    var result = GetPageData(page);
+            //    //渲染当前页数据
+            //    RenderPageData(result.data);
             //},
+            pageUrl: function (type, page, current) {
+
+                var url = '@string.Format("/press/{0}{1}",typecode,urlRewriteExtension)';
+                if (page != 1) {
+                    url = url + "?page=" + page;
+                }
+
+                return url;
+
+            },
             itemContainerClass: function (type, page, current) {
                 return (page === current) ? "active" : "pointer-cursor";
             },

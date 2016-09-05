@@ -69,8 +69,15 @@
         var url = window.location;
         var element = $('.aboutTabs a').filter(function () {
             return this.href == url || url.href.indexOf(this.href) == 0;
-        }).parent().addClass('active');
+        });
+        
+        if (element.length == 0) {
+            $('.aboutTabs a').first().parent().addClass('active');
 
+        } else {
+            element.parent().addClass('active');
+
+        }
     });
 </script>
 

@@ -24,7 +24,7 @@ header{
 
 .navbar-inverse *:focus { outline: 0; }
 @media (max-width: 767px) {
-	.navbar-inverse {  background:rgba(0,0,0,.9); }
+	.navbar-inverse {  background:white; }
 }
 
 .navbar-inverse .navbar-nav > li > a,

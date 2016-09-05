@@ -142,13 +142,86 @@ namespace HardaGroup.Service
             return result;
         }
 
+        /// <summary>
+        /// 根据当前id获取上一条数据的id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public M_NewsSearch GetPreviousIdByNewsUrlIdAndCulture(string newsUrlId,string culture)
+        {
+            B_Image bImage = new B_Image();
 
+            var news = _dNews.GetPreviousDataByNewsURLId(newsUrlId);
+
+            if (news == null) return null;
+            M_NewsSearch cultureData = new M_NewsSearch();
+
+            //根据国际化代码过滤数据，如果没有当前国际化代码的数据，则取中文数据
+            var defaultGlobalizationData = news.NewsGlobalizations.Where(ag => ag.Culture == culture).FirstOrDefault();
+            if (defaultGlobalizationData == null)
+            {
+                defaultGlobalizationData = news.NewsGlobalizations.Where(ag => ag.Culture == Common.Globalization_Chinese).FirstOrDefault();
+            }
+
+            cultureData.Id = news.Id.ToString();
+            cultureData.NewsURLId = news.NewsURLId;
+            cultureData.Title = defaultGlobalizationData.Title;
+            cultureData.SubTitle = defaultGlobalizationData.SubTitle;
+            cultureData.Description = defaultGlobalizationData.Description;
+            cultureData.Content = defaultGlobalizationData.Content;
+            cultureData.Image = defaultGlobalizationData.ImageId == null ? null : bImage.GetImageById(System.Convert.ToInt32(defaultGlobalizationData.ImageId));
+            cultureData.CreateDate = news.CreateDate;
+            cultureData.Creator = news.Creator;
+            cultureData.ModifiedDate = news.ModifiedDate;
+            cultureData.Modifier = news.Modifier;
+            cultureData.Pubtime = news.Pubtime;
+            cultureData.NewsScopeId = news.NewsScopeId.ToString();
+
+            return cultureData;
+        }
+
+        /// <summary>
+        /// 根据当前id获取下一条数据的id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public M_NewsSearch GetNextIdByCurrentNewsUrlIdAndCulture(string newsUrlId,string culture)
+        {
+            B_Image bImage = new B_Image();
+
+            var news = _dNews.GetNextDataByNewsURLId(newsUrlId);
+            if (news == null) return null;
+            M_NewsSearch cultureData = new M_NewsSearch();
+
+            //根据国际化代码过滤数据，如果没有当前国际化代码的数据，则取中文数据
+            var defaultGlobalizationData = news.NewsGlobalizations.Where(ag => ag.Culture == culture).FirstOrDefault();
+            if (defaultGlobalizationData == null)
+            {
+                defaultGlobalizationData = news.NewsGlobalizations.Where(ag => ag.Culture == Common.Globalization_Chinese).FirstOrDefault();
+            }
+
+            cultureData.Id = news.Id.ToString();
+            cultureData.NewsURLId = news.NewsURLId;
+            cultureData.Title = defaultGlobalizationData.Title;
+            cultureData.SubTitle = defaultGlobalizationData.SubTitle;
+            cultureData.Description = defaultGlobalizationData.Description;
+            cultureData.Content = defaultGlobalizationData.Content;
+            cultureData.Image = defaultGlobalizationData.ImageId == null ? null : bImage.GetImageById(System.Convert.ToInt32(defaultGlobalizationData.ImageId));
+            cultureData.CreateDate = news.CreateDate;
+            cultureData.Creator = news.Creator;
+            cultureData.ModifiedDate = news.ModifiedDate;
+            cultureData.Modifier = news.Modifier;
+            cultureData.Pubtime = news.Pubtime;
+            cultureData.NewsScopeId = news.NewsScopeId.ToString();
+
+            return cultureData;
+        }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public M_NewsSearch GetNewsByNewsUrlIdAndCullture(string newsUrlId,string culture)
+        public M_NewsSearch GetNewsByNewsUrlIdAndCulture(string newsUrlId,string culture)
         {
             B_Image bImage = new B_Image();
             var news = _dNews.GetNewsByNewsUrlId(newsUrlId);

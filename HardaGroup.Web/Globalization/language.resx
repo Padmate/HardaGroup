@@ -147,6 +147,9 @@
   <data name="Login" xml:space="preserve">
     <value>登录</value>
   </data>
+  <data name="Next" xml:space="preserve">
+    <value>下一篇</value>
+  </data>
   <data name="NextPage" xml:space="preserve">
     <value>下一页</value>
   </data>
@@ -158,6 +161,9 @@
   </data>
   <data name="Press" xml:space="preserve">
     <value>媒体资讯</value>
+  </data>
+  <data name="Previous" xml:space="preserve">
+    <value>上一篇</value>
   </data>
   <data name="PreviousPage" xml:space="preserve">
     <value>前一页</value>

@@ -456,7 +456,7 @@ namespace HardaGroup.Web.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return Redirect("/manage.html");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

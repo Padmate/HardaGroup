@@ -151,6 +151,15 @@ namespace HardaGroup.Web.Globalization {
         }
         
         /// <summary>
+        ///   查找类似 下一篇 的本地化字符串。
+        /// </summary>
+        public static string Next {
+            get {
+                return ResourceManager.GetString("Next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 下一页 的本地化字符串。
         /// </summary>
         public static string NextPage {
@@ -183,6 +192,15 @@ namespace HardaGroup.Web.Globalization {
         public static string Press {
             get {
                 return ResourceManager.GetString("Press", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 上一篇 的本地化字符串。
+        /// </summary>
+        public static string Previous {
+            get {
+                return ResourceManager.GetString("Previous", resourceCulture);
             }
         }
         

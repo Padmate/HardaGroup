@@ -5,7 +5,9 @@
 @{
     var news = (M_NewsSearch)ViewData["news"];
     var newsScopes = (List<M_NewsScopeSearch>)ViewData["NewsScope"];
-
+    var previousData = (M_NewsSearch)ViewData["PreviousData"];
+    var nextData = (M_NewsSearch)ViewData["NextData"];
+    
     //当前所属模块
     var scopeName = newsScopes.Where(s => s.Id == news.NewsScopeId).Select(s => s.TypeName).FirstOrDefault();
 
@@ -14,6 +16,7 @@
     string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
 
+    var typecode = Request["typecode"];
 }
 
 <style>
@@ -27,8 +30,8 @@
             <div class="col-md-12 detailNav">
                 <h3>
                     <a class="customer-content-xs" href="@cultureUri/">@language.Home  &nbsp;>&nbsp;  </a>
-                    <a class="customer-content-xs" href="@string.Format("{0}/press/{1}{2}",cultureUri,Request["typecode"],urlRewriteExtension)">@language.Press &nbsp;>&nbsp;</a>
-                    <a class="customer-content-xs" href="@string.Format("{0}/press/{1}/{2}{3}",cultureUri,Request["typecode"],news.NewsURLId,urlRewriteExtension)">@news.SubTitle</a>
+                    <a class="customer-content-xs" href="@string.Format("{0}/press/{1}{2}", cultureUri, typecode, urlRewriteExtension)">@language.Press &nbsp;>&nbsp;</a>
+                    <a class="customer-content-xs" href="@string.Format("{0}/press/{1}/{2}{3}", cultureUri, typecode, news.NewsURLId, urlRewriteExtension)">@news.SubTitle</a>
 
                 </h3>
                 <!-- share -->
@@ -42,7 +45,25 @@
             </div>
 
         </div>
+        <div style="padding:50px 0px;">
+            @if (previousData != null)
+            {
+                <div>
+                    @language.Previous：
+                    <a class="customer-content-xs" href="@string.Format("{0}/press/{1}/{2}{3}", cultureUri, typecode, previousData.NewsURLId, urlRewriteExtension)">@previousData.SubTitle</a>
+                </div>
 
+            }
+
+            @if (nextData != null)
+            {
+                <div>
+                    @language.Next：
+                    <a class="customer-content-xs" href="@string.Format("{0}/press/{1}/{2}{3}", cultureUri, typecode, nextData.NewsURLId, urlRewriteExtension)">@nextData.SubTitle</a>
+                </div>
+
+            }
+        </div>
 
     </div>
 </section>

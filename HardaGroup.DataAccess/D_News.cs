@@ -130,6 +130,38 @@ namespace HardaGroup.DataAccess
             return news;
         }
 
+        /// <summary>
+        /// 根据id找找上一条数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public News GetPreviousDataByNewsURLId(string newsUrlId)
+        {
+            var currentData = _dbContext.News.Include("NewsGlobalizations").FirstOrDefault(a => a.NewsURLId == newsUrlId);
+            var previousData = _dbContext.News
+                .Where(a => a.NewsScopeId == currentData.NewsScopeId && a.Pubtime > currentData.Pubtime)
+                .OrderBy(a => a.Pubtime)
+                .FirstOrDefault();
+
+            return previousData;
+        }
+
+        /// <summary>
+        /// 根据id查找下一条数据
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public News GetNextDataByNewsURLId(string newsUrlId)
+        {
+            var currentData = _dbContext.News.Include("NewsGlobalizations").FirstOrDefault(a => a.NewsURLId == newsUrlId);
+            var nextData = _dbContext.News
+                .Where(a => a.NewsScopeId == currentData.NewsScopeId && a.Pubtime < currentData.Pubtime)
+                .OrderByDescending(a => a.Pubtime)
+                .FirstOrDefault();
+
+            return nextData;
+        }
+
         public News GetNewsByNewsUrlId(string newsUrlId)
         {
             var news = _dbContext.News.Include("NewsScope")

@@ -465,7 +465,7 @@ namespace HardaGroup.Web.Controllers
             B_News bNews = new B_News();
             //获取当前culture
             var culture = GlobalizationHelp.GetCurrentThreadCultureCode();
-            var news = bNews.GetNewsByNewsUrlIdAndCullture(newsUrlId,culture);
+            var news = bNews.GetNewsByNewsUrlIdAndCulture(newsUrlId,culture);
             ViewData["news"] = news;
 
             if (news == null) throw new HttpException(404, "");
@@ -475,7 +475,11 @@ namespace HardaGroup.Web.Controllers
             var allNewsScopes = bNewsScope.GetAllZHCNData();
 
             ViewData["NewsScope"] = allNewsScopes;
-
+            //根据id查找上一篇，下一篇记录
+            M_NewsSearch previousData = bNews.GetPreviousIdByNewsUrlIdAndCulture(newsUrlId,culture);
+            M_NewsSearch nextData = bNews.GetNextIdByCurrentNewsUrlIdAndCulture(newsUrlId,culture);
+            ViewData["PreviousData"] = previousData;
+            ViewData["NextData"] = nextData;
 
             return View();
         }
