@@ -46,6 +46,8 @@
     <Compile Include="M_AboutGlobalization.cs" />
     <Compile Include="M_Image.cs" />
     <Compile Include="M_Mail.cs" />
+    <Compile Include="M_Module.cs" />
+    <Compile Include="M_ModuleGlobalization.cs" />
     <Compile Include="M_News.cs" />
     <Compile Include="M_NewsGlobalization.cs" />
     <Compile Include="M_NewsScope.cs" />

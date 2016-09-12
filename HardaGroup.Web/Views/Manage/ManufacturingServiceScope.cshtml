@@ -1,0 +1,426 @@
+﻿@using HardaGroup.Utility;
+@using HardaGroup.Models;
+@using System.Configuration;
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    ViewBag.Title = "智能制造-服务范围";
+
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+}
+
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12 col-is-12 col-sm-12 col-md-12">
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-is-12 col-sm-12 col-md-12">
+
+            <div class="panel-group search-area" id="accordion">
+                <div class="panel search-panel">
+                    <div class="panel-heading">
+                        <span class="customer-content-sm whitefont search-title">
+                            <i class="fa fa-search"></i>检索条件
+                        </span>
+                        <a class="search-collapse searcharea-btn whitefont" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch">
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="collapseSearch" class="panel-collapse collapse in">
+                        <div class="panel-body">
+
+                            <div class="col-xs-4 col-is-4 col-sm-4 col-md-4">
+                                <label class="customer-content-xs">标 题</label>
+                                <input class="input-mediu" id="tbSearchTitle" />
+                            </div>
+                            <div class="col-xs-4 col-is-4 col-sm-4 col-md-4">
+                                <label class="customer-content-xs">二级标题</label>
+                                <input class="input-mediu" id="tbSearchSubTitle" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-area">
+                <div class="customer-toolbar">
+                    <a id="btnAdd">
+                        <i class="glyphicon glyphicon-plus"></i> 新 增
+                    </a>
+                    <a id="btnEdit">
+                        <i class="glyphicon glyphicon-edit"></i> 修 改
+                    </a>
+                    <a id="btnDelete">
+                        <i class="glyphicon glyphicon-remove"></i> 删 除
+                    </a>
+                    <a id="btnGlobalization">
+                        <i class="glyphicon glyphicon-transfer"></i> 国际化
+                    </a>
+                    <a id="btnRefresh" class="searcharea-btn">
+                        <i class="glyphicon fa-spin glyphicon-refresh"></i> 查 询
+                    </a>
+
+                </div>
+                <div class="customer-table">
+                    <table id="table"></table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!--#region新增-->
+<div class="curd-model modal fade" id="moduleadd" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div id="divAddContainer"></div>
+
+
+        </div>
+    </div>
+</div>
+<!--#endregion 修改-->
+<!--#region修改-->
+<div class="curd-model modal fade" id="moduleedit" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div id="divEditContainer"></div>
+
+
+        </div>
+    </div>
+</div>
+<!--#region详细-->
+<div class="curd-model modal fade" id="moduledetail" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div id="divModuleContainer"></div>
+
+
+        </div>
+    </div>
+</div>
+<!--#region国际化-->
+<div class="curd-model modal fade" id="moduleGlobalization" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div id="divGlobalizationContainer"></div>
+
+
+        </div>
+    </div>
+</div>
+
+<!--Script要放在HTML标签后，才能将值绑定到标签-->
+<script type="text/javascript">
+
+    //服务特色
+    var _type = '@Common.ModuleType_Manufacturing_ServiceScope';
+
+    $(document).ready(function () {
+        InitTable();
+        InitToolBarButton();
+        InitModalEvent();
+
+
+    });
+    function InitTable()
+    {
+        $('#table').bootstrapTable({
+            height:800,
+            method: 'post',                 //The method type to request remote data.
+            url: '/Module/GetPageData',
+            dataType: "json",               //The type of data that you are expecting back from the server.
+            contentType:'application/json',
+            pagination: true,               //True to show a pagination toolbar on table bottom.
+            pageSize: 10,                   //初始化每页显示几条
+            pageNumber:1,                   //初始化在第几页
+            pageList: [10,25,50,100,200,'All'],
+            sidePagination: "server",       //服务端请求
+            idField:'Id',
+            //toolbar:'#toolbar',
+            showRefresh:false,
+            search:false,
+            paginationVAlign:'top',  //分页条显示在顶部
+            //searchOnEnterKey:true,  //回车查询
+            clickToSelect:true,     //单击行选中数据
+            queryParams: ConstructQueryParams,
+            //queryParamsType: "limit",
+            locale:'zh-CN',
+            columns: [{
+                checkbox: true
+            },
+            {
+                field: 'Id',
+                title: 'Id',
+                visible:false,
+            },
+            {
+                field: 'Image',
+                title: '图 标',
+                formatter: function (value, row, index) {
+
+                    var image = row.Image;
+                    if (image != null) {
+
+                        var imgHtml = "<img class='img-responsive' src=" + image.VirtualPath + "></img>";
+                        return imgHtml;
+                    }
+                },
+                width: '20%'
+
+            },
+            {
+                field: 'Title',
+                title: '标题',
+                formatter: function (value, row, index) {
+
+                    var result = value;
+                    if (result.length > 20) {
+                        result = '<a class="custooltip" href="#">' + result.substr(0, 20) + '......<span class="classic">' + value + '</span></a>';
+
+                    }
+                    return result;
+                }
+
+            },
+            {
+                field: 'SubTitle',
+                title: '二级标题',
+                formatter: function (value, row, index) {
+
+                    var result = value;
+                    if (result.length > 20) {
+                        result = '<a class="custooltip" href="#">' + result.substr(0, 20) + '......<span class="classic">' + value + '</span></a>';
+
+                    }
+                    return result;
+                }
+
+            },
+            {
+                field: 'Content',
+                title: '内容',
+                formatter: function (value, row, index) {
+                    var result = '<a href="javaScript:void(0)" onclick="Detail(&apos;' + row.Id + '&apos;)">点击查看</a>';
+                    return result;
+                }
+
+            },
+            {
+                field: 'Sequence',
+                title: '顺序'
+            }
+            ]
+        });
+    }
+
+
+    function ConstructQueryParams(param)
+    {
+        var params = {
+            limit: param.limit, //页面大小
+            offset:param.offset,//偏移数量
+            page: param.offset / param.limit, //页码
+            Title:$("#tbSearchTitle").val(),
+            SubTitle: $("#tbSearchSubTitle").val(),
+            Type: _type
+        };
+        return params;
+    }
+
+    function InitModalEvent() {
+        $('#moduleadd').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#moduleadd').on('hide.bs.modal', function () {
+
+            // 关闭事件
+            $("#divAddContainer").html("");
+
+        })
+
+        $('#moduleedit').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#moduleedit').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divEditContainer").html("");
+
+        });
+        $('#moduledetail').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#moduledetail').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divModuleContainer").html("");
+
+        });
+        $('#moduleGlobalization').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#moduleGlobalization').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divGlobalizationContainer").html("");
+
+        });
+    }
+
+    function CloseAddScreen() {
+        $('#moduleadd').modal('hide');
+
+    }
+    function CloseEditScreen() {
+        $('#moduleedit').modal('hide');
+
+    }
+    function CloseGlobalizationScreen() {
+        $('#moduleGlobalization').modal('hide');
+
+    }
+
+    function InitToolBarButton()
+    {
+        $("#btnRefresh").click(function(){
+            RefreshTable();
+        });
+
+        document.onkeydown = function(e){
+            var ev = document.all ? window.event : e;
+            if(ev.keyCode==13) {
+
+                RefreshTable();
+            }
+        };
+
+
+
+        $("#btnAdd").click(function(){
+            $('#moduleadd').modal('show');
+            $("#divAddContainer").load("/Module/Add?type="+_type);
+        });
+
+        $("#btnEdit").click(function () {
+
+            var selections = $('#table').bootstrapTable('getSelections');
+            if (selections.length == 0) {
+                layer.alert("请选择要将要修改的数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            } else if (selections.length != 1)
+            {
+                layer.alert("只能选择一条数据进行修改", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+
+            var id = selections[0].Id;
+            $('#moduleedit').modal('show');
+            $("#divEditContainer").load("/Module/Edit?moduleId=" + id);
+
+        });
+
+        $("#btnGlobalization").click(function () {
+
+            var selections = $('#table').bootstrapTable('getSelections');
+            if (selections.length == 0) {
+                layer.alert("请选择要将要国际化的数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            } else if (selections.length != 1)
+            {
+                layer.alert("只能选择一条数据进行国际化操作", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+
+            var id = selections[0].Id;
+            $('#moduleGlobalization').modal('show');
+            $("#divGlobalizationContainer").load("/Module/Globalization?moduleId=" + id);
+
+        });
+
+        $("#btnDelete").click(function(){
+            var selections = $('#table').bootstrapTable('getSelections');
+            if(selections.length == 0)
+            {
+                layer.alert("请选择要将要删除的数据", {
+                    skin: 'layui-layer-molv'
+                            ,closeBtn: 0
+                            ,shift: 5 //动画类型
+                });
+                return ;
+            }
+            var moduleIds =[];
+            for(var i=0;i<selections.length;i++)
+            {
+                var id = selections[i].Id;
+                moduleIds.push(id);
+            }
+            //delete records
+            var jsonContactId = JSON.stringify(moduleIds);
+            $.ajax({
+                type: "post",//使用get方法访问后台
+                dataType: "json",//返回json格式的数据
+                url: "/Module/BachDeleteById",
+                data: jsonContactId,
+                async:false,
+                success: function(message){
+                    if(message.Success)
+                    {
+                        RefreshTable();
+                    }else{
+                        layer.alert(message.Content, {
+                            skin: 'layui-layer-molv'
+                            ,closeBtn: 0
+                            ,shift: 5 //动画类型
+                        });
+                    }
+
+                }
+            });
+        });
+    }
+
+    function Detail(id) {
+        $('#moduledetail').modal('show');
+        $("#divModuleContainer").load("/Module/Detail?moduleId=" + id);
+    }
+
+    function RefreshTable()
+    {
+        $('#table').bootstrapTable('refresh');
+
+    }
+
+</script>

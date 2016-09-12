@@ -1,109 +1,61 @@
-﻿@{
+﻿@using HardaGroup.Web.Globalization;
+@using HardaGroup.Models;
+@{
     ViewBag.Title = "智能制造";
+    M_ModuleSearch introduction = (M_ModuleSearch)ViewData["introduction"];
+    List<M_ModuleSearch> serviceScopes = (List<M_ModuleSearch>)ViewData["serviceScope"];
+    List<M_ModuleSearch> serviceFeatures = (List<M_ModuleSearch>)ViewData["serviceFeatures"];
+    
 }
 <section>
     <div class="container">
-        <h2 class="customer-h2 text-center">智能制造简介</h2>
+        <h2 class="customer-h2 text-center">@language.AboutTheManufacturing</h2>
 
         <div class="row">
-            <div class="col-md-5">
-                <img class="img-responsive" src="~/images/medium_model.jpg"/>
-            </div>
-            <div class="col-md-7">
-                <p class="customer-content-sm">华尔达扎根EMS电子制造10多年，已发展成为一家效率驱动型的一站式智能制造方案提供商，致力于精密模具、制造、采购、物流以及自动化等一系列服务。华尔达在深圳、天津设置了两个工业园，汇集了一批深谙高科技产品、精密制造的高素质员工，他们中超过90%具有丰富的专业技能和多年行业背景，能结合华尔达多年制造工程工艺技术的积累，使每批产品质量都能和设计预期保持稳定一致。
-       华尔达推行“质量是研发出来的”质量核心价值观，也坚信“质量一致性”是制造出来的，并将全员的质量意识带入制造品质的每个流程，从分立物料到产品集成乃至物流的每一个细节都建立了严格的质量标准，并得到有效执行。华尔达科技的制造能力以先进的设施和管理为后盾，运用领先的柔性生产模式，能够精确匹配不同</p>
-            </div>
+            @if(introduction !=null)
+            {
+                @Html.Raw(introduction.Content)
+            }
         </div>
     </div>
 </section>
 <section class="jumbotron text-center">
     <div class="container">
 
-        <h2 class="customer-h2 text-center">制造服务范围</h2>
+        <h2 class="customer-h2 text-center">@language.ManufacturingServiceScope</h2>
 
         <div class="row">
+        @foreach (var scope in serviceScopes)
+        {
+            var imageUrl = scope.Image !=null?scope.Image.VirtualPath:"/images/small_model.jpg";
             <div class="col-md-3 col-sm-6 highlight">
                 <div class="service-box">
                     <a href="" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
+                        <img class="img-responsive" src="@imageUrl" />
                         @*<div class="information-box-caption">
-                            <div class="information-box-caption-content">
-                                div文字居中
-                                <div class="divmiddle-box">
-                                    <div class="divmiddle-box-content">
-                                        <p class="customer-content-md whitefont">阅读全文</p>
+                                <div class="information-box-caption-content">
+                                    div文字居中
+                                    <div class="divmiddle-box">
+                                        <div class="divmiddle-box-content">
+                                            <p class="customer-content-md whitefont">阅读全文</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>*@
+                            </div>*@
                     </a>
                     <div class="service-information-caption">
                         <h4 class="customer-h4">
-                            Fat-free
+                            @scope.SubTitle
                         </h4>
                         <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
-
+                           @scope.Description
                         </span>
                     </div>
 
                 </div>
             </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="service-box">
-                    <a href="" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                    </a>
-                    <div class="service-information-caption">
-                        <h4 class="customer-h4">
-                            Fat-free
-                        </h4>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
+        }
 
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="service-box">
-                    <a href="" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                    </a>
-                    <div class="service-information-caption">
-                        <h4 class="customer-h4">
-                            Fat-free
-                        </h4>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
-
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="service-box">
-                    <a href="" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                    </a>
-                    <div class="service-information-caption">
-                        <h4 class="customer-h4">
-                            Fat-free
-                        </h4>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
-
-                        </span>
-                    </div>
-
-                </div>
-            </div>
         </div> <!-- /row  -->
 
     </div>

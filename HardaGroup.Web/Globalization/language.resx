@@ -120,6 +120,9 @@
   <data name="AboutHarda" xml:space="preserve">
     <value>关于华尔达</value>
   </data>
+  <data name="AboutTheManufacturing" xml:space="preserve">
+    <value>智能制造简介</value>
+  </data>
   <data name="AdvancedManufacturing" xml:space="preserve">
     <value>智能制造</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="Login" xml:space="preserve">
     <value>登录</value>
+  </data>
+  <data name="ManufacturingServiceScope" xml:space="preserve">
+    <value>制造服务范围</value>
   </data>
   <data name="Next" xml:space="preserve">
     <value>下一篇</value>

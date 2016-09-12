@@ -178,6 +178,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
+    <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\VentureSupportController.cs" />
     <Compile Include="Controllers\AdvancedManufacturingController.cs" />
@@ -600,6 +601,14 @@
     <Content Include="Views\About\Globalization.cshtml" />
     <Content Include="Views\News\GlobalizationNewsScope.cshtml" />
     <Content Include="Views\News\Globalization.cshtml" />
+    <Content Include="Views\Manage\ManufacturingIntroduction.cshtml" />
+    <Content Include="Views\Manage\ManufacturingServiceScope.cshtml" />
+    <Content Include="Views\Manage\ManufacturingServiceFeatures.cshtml" />
+    <Content Include="Views\Module\Add.cshtml" />
+    <Content Include="Views\Module\Edit.cshtml" />
+    <Content Include="Views\Module\Detail.cshtml" />
+    <Content Include="Views\Module\Globalization.cshtml" />
+    <Content Include="Views\Module\ShowDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

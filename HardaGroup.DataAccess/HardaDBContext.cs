@@ -39,6 +39,8 @@ namespace HardaGroup.DataAccess
         public DbSet<News> News { get; set; }
         public DbSet<NewsGlobalization> NewsGlobalizations { get; set; }
 
+        public DbSet<Module> Modules { get; set; }
+        public DbSet<ModuleGlobalization> ModuleGlobalizations { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -50,7 +52,8 @@ namespace HardaGroup.DataAccess
             modelBuilder.Configurations.Add(new NewsScopeGlobalizationConfiguration());
             modelBuilder.Configurations.Add(new NewsConfiguration());
             modelBuilder.Configurations.Add(new NewsGlobalizationConfiguration());
-
+            modelBuilder.Configurations.Add(new ModuleConfiguration());
+            modelBuilder.Configurations.Add(new ModuleGlobalizationConfiguration());
 
         }
 

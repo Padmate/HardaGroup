@@ -22,6 +22,7 @@ namespace HardaGroup.Utility
         public const string Image_ContactUsBG = "contactus";
 
         public const string News_Thumbnails = "news-picture";
+        public const string Module_Thumbnails = "module-picture";
 
         public static Dictionary<string, string> Dic_ImageType = new Dictionary<string, string>(){
             {Image_HomeBG,"首页背景图片"},
@@ -33,7 +34,8 @@ namespace HardaGroup.Utility
             {Image_PressBG,"媒体资讯背景图片"},
             {Image_JoinUsBG,"加入华尔达背景图片"},
             {Image_ContactUsBG,"联系我们背景图片"},
-            {News_Thumbnails,"新闻缩略图"}
+            {News_Thumbnails,"新闻缩略图"},
+            {Module_Thumbnails,"模块缩略图"}
 
         };
         #endregion
@@ -48,6 +50,25 @@ namespace HardaGroup.Utility
             {Globalization_English,"英文"}
 
         };
+        #endregion
+
+        #region ModuleType 模块类型
+        /// <summary>
+        /// 智能制造简介
+        /// </summary>
+        public const string ModuleType_Manufacturing_Introduction = "AdvancedManfacturingIntroduction";
+
+        /// <summary>
+        /// 智能制造服务范围
+        /// </summary>
+        public const string ModuleType_Manufacturing_ServiceScope = "AdvancedManfacturingServiceScope";
+
+        /// <summary>
+        /// 智能制造服务特色
+        /// </summary>
+        public const string ModuleType_Manufacturing_ServiceFeatures = "AdvancedManfacturingServiceFeatures";
+
+
         #endregion
 
     }

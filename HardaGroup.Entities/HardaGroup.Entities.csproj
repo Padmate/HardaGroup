@@ -43,6 +43,8 @@
     <Compile Include="About.cs" />
     <Compile Include="AboutGlobalization.cs" />
     <Compile Include="Image.cs" />
+    <Compile Include="Module.cs" />
+    <Compile Include="ModuleGlobalization.cs" />
     <Compile Include="News.cs" />
     <Compile Include="NewsGlobalization.cs" />
     <Compile Include="NewsScope.cs" />

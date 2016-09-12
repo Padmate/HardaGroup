@@ -532,6 +532,9 @@ namespace HardaGroup.Service
 
             try
             {
+                var newsId = System.Convert.ToInt32(model.NewsId);
+                //根据modulesId和culture，查找已存在的数据
+                var oldData = _dNews.GetNewsGlobalizationByNewsIdAndCulture(newsId, model.Culture);
 
                 //新增
                 var newsGlobalization = new NewsGlobalization()
@@ -541,7 +544,8 @@ namespace HardaGroup.Service
                     SubTitle = model.SubTitle,
                     Description = model.Description,
                     Content = model.Content,
-                    Culture = model.Culture
+                    Culture = model.Culture,
+                    ImageId = oldData ==null?null:oldData.ImageId
                 };
 
                 message.ReturnId = _dNews.AddNewsGlobalization(newsGlobalization);

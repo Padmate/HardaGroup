@@ -1,0 +1,107 @@
+﻿@using HardaGroup.Utility;
+@using HardaGroup.Models;
+@{
+    Layout = null;
+    var module = (M_ModuleSearch)ViewData["ModuleSearch"];
+    
+}
+<div class="close-modal" data-dismiss="modal">
+    <i class="fa fa-3x fa-close"></i>
+</div>
+<div class="container">
+
+    <h3 class="customer-h3 text-center curd-title">详 细</h3>
+    <hr />
+    <div class="form-horizontal">
+       
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">URL唯一标识：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@module.ModuleURLId</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">标题：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@module.Title</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">二级标题：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@module.SubTitle</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">内容简介：</label>
+            </div>
+            <div class="col-md-10">
+                <textarea class="textarea-large" disabled="disabled">@module.Description</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">顺 序：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@module.Sequence</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">图片Class：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@module.ImageClass</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">图标：</label>
+            </div>
+            <div class="col-md-10"></div>
+            <div class="col-lg-4 col-md-6">
+                @if (module.Image != null && !string.IsNullOrEmpty(module.Image.VirtualPath))
+                {
+                    <img class="img-responsive" id="showUploadImage" src="@module.Image.VirtualPath" alt="无图标" />
+
+                }
+                else
+                {
+                    <img class="img-responsive" id="showUploadImage" src="~/images/small_model.jpg" alt="无图标" />
+
+                }
+
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">内 容：</label>
+            </div>
+            <div class="col-md-10">
+                @Html.Raw(module.Content)
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-lg btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+</div>
+
+
+

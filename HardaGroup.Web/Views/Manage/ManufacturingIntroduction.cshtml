@@ -1,0 +1,131 @@
+﻿@using HardaGroup.Utility;
+@using HardaGroup.Models;
+@using System.Configuration;
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    ViewBag.Title = "智能制造-简介";
+
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+}
+<style>
+    .sel-culture{
+        margin-bottom:10px;
+    }
+</style>
+<section class="content">
+        
+       <div class="row">
+
+            <div class="col-xs-6 col-is-6 col-sm-4 col-md-4 sel-culture">
+               <span class="customer-content-sm">国际化：</span>
+                <select class="select-mediu" id="selCulture">
+                    @foreach (var key in Common.Dic_Globalization.Keys)
+                    {
+                        <option value="@key">@Common.Dic_Globalization[key]</option>
+                    }
+                </select>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <textarea id="taContent" name="content"></textarea>
+
+            </div>
+            <div class="col-md-12 text-right" style="margin:20px 0px;">
+                <button type="button" class="btn btn-lg btn-danger" onclick="SaveAdd()">
+                    保 存
+                </button>
+            </div>
+        </div>
+        
+</section>
+<script type="text/javascript">
+    var moduleId;
+    var _type = '@Common.ModuleType_Manufacturing_Introduction';
+    var editor = KindEditor.create('textarea[name="content"]', kindeditorConfig);
+
+    $(function () {
+        LoadCultureData();
+
+        $("#selCulture").change(function () {
+            LoadCultureData();
+        });
+    });
+
+    //修改或新增保存
+    function SaveAdd() {
+
+        $("body").showLoading();
+        var saveObj = ConstructSaveObj();
+        var jsonParam = JSON.stringify(saveObj);
+        $.ajax({
+            type: "POST",
+            url: "/AdvancedManufacturing/SaveIntroduction",
+            dataType: "json",
+            data: jsonParam,
+            async: false,   //同步
+            success: function (message) {
+
+                $("body").hideLoading();
+                layer.alert(message.Content, {
+                    skin: 'layui-layer-molv' //样式类名
+                     , closeBtn: 0
+                });
+                if (message.Success) {
+                    moduleId = message.ReturnStrId;
+                }
+                
+            }
+        });
+    }
+
+
+    //构造保存对象
+    function ConstructSaveObj() {
+
+        var moduleGlobalization = {
+
+            Content: editor.html(),
+            Culture: $("#selCulture").val()
+        };
+        var arrModuleGlobalization = new Array();
+        arrModuleGlobalization.push(moduleGlobalization);
+
+        var obj = {
+            Id:moduleId,
+            Type: _type,
+            ModuleGlobalizations: arrModuleGlobalization
+
+        };
+        return obj;
+    }
+
+    //根据国际化语言加载数据
+    function LoadCultureData() {
+        $("body").showLoading();
+        $.ajax({
+            type: "POST",
+            url: "/AdvancedManufacturing/LoadIntroductionGlobalizationData",
+            dataType: "json",
+            data: {Culture: $("#selCulture").val() },
+            async: false,   //同步
+            success: function (message) {
+                $("body").hideLoading();
+                //先清空
+                editor.html("");
+                moduleId = "";
+                if (message.Success) {
+
+                    //赋值
+                    var data = JSON.parse(message.Content);
+                    moduleId = data.Id;
+                    editor.html(data.Content);
+
+                }
+            }
+        });
+    }
+
+</script>

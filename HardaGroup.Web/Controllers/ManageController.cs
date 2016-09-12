@@ -80,6 +80,37 @@ namespace HardaGroup.Web.Controllers
             return View();
         }
 
+        #region 智能制造
+        /// <summary>
+        /// 智能制造简介
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ManufacturingIntroduction()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 制造服务范围
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ManufacturingServiceScope()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 制造服务特色
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ManufacturingServiceFeatures()
+        {
+            return View();
+        }
+
+        #endregion
+        
+
         /// <summary>
         /// 新闻模块管理
         /// </summary>

@@ -59,12 +59,16 @@
     <Compile Include="DBConfiguration\AboutConfiguration.cs" />
     <Compile Include="DBConfiguration\AboutGlobalizationConfiguration.cs" />
     <Compile Include="DBConfiguration\ImageConfiguration.cs" />
+    <Compile Include="DBConfiguration\ModuleConfiguration.cs" />
+    <Compile Include="DBConfiguration\ModuleGlobalization.cs" />
+    <Compile Include="DBConfiguration\ModuleGlobalizationConfiguration.cs" />
     <Compile Include="DBConfiguration\NewsConfiguration.cs" />
     <Compile Include="DBConfiguration\NewsGlobalizationConfiguration.cs" />
     <Compile Include="DBConfiguration\NewsScopeConfiguration.cs" />
     <Compile Include="DBConfiguration\NewsScopeGlobalizationConfiguration.cs" />
     <Compile Include="D_About.cs" />
     <Compile Include="D_Image.cs" />
+    <Compile Include="D_Module.cs" />
     <Compile Include="D_News.cs" />
     <Compile Include="D_User.cs" />
     <Compile Include="HardaDBContext.cs" />
@@ -76,6 +80,10 @@
     <Compile Include="Migrations\201608231009424_rafactnewstable.cs" />
     <Compile Include="Migrations\201608231009424_rafactnewstable.Designer.cs">
       <DependentUpon>201608231009424_rafactnewstable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609120316091_addModuleAndModuleGlobalization.cs" />
+    <Compile Include="Migrations\201609120316091_addModuleAndModuleGlobalization.Designer.cs">
+      <DependentUpon>201609120316091_addModuleAndModuleGlobalization.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -100,6 +108,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608231009424_rafactnewstable.resx">
       <DependentUpon>201608231009424_rafactnewstable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609120316091_addModuleAndModuleGlobalization.resx">
+      <DependentUpon>201609120316091_addModuleAndModuleGlobalization.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

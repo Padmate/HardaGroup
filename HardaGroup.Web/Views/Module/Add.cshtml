@@ -1,0 +1,301 @@
+﻿@using HardaGroup.Utility;
+@using HardaGroup.Models;
+@{
+    Layout = null;
+}
+<div class="close-modal" data-dismiss="modal">
+    <i class="fa fa-3x fa-close"></i>
+</div>
+<div class="container">
+
+    <h3 class="customer-h3 text-center curd-title">新 增</h3>
+    <hr />
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">URL唯一标识：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="input-large" id="tbModuleUrlId" style="width:40%" placeholder="只能是字母、数字或 - 组成" />
+                <input class="btn btn-default" id="btnGenerateNewUrlId" type="button" style="width:9%" value="自动生成"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">标题：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="input-large" id="tbTitle" placeholder="标题" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">二级标题：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="input-large" id="tbSubTitle" placeholder="二级标题" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">内容简介：</label>
+            </div>
+            <div class="col-md-10">
+                <textarea class="textarea-large" id="taDescription"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">顺 序：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="input-large" id="tbSequence" placeholder="顺序" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">图片Class：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="input-large" id="tbImageClass" placeholder="图片Class" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">图标：</label>
+            </div>
+            <div class="col-md-10">
+                <div id="uploadThumbnailsImage">选择图片</div>
+                <span class="customer-content-sm" id="status"></span>
+            </div>
+            <div class="col-lg-4 col-md-6 col-md-offset-2" style="margin-top:10px;">
+               <img class="img-responsive" id="showUploadImage" src="~/images/small_model.jpg" alt="无图标" />
+                
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">内 容：</label>
+            </div>
+            <div class="col-md-10">
+                <textarea id="taContent" name="content"></textarea>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-lg btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+    <button type="button" class="btn btn-lg btn-danger" onclick="SaveAdd()">
+        保 存
+    </button>
+</div>
+
+<link rel="stylesheet" type="text/css" href="~/Scripts/webuploader/webuploader.css">
+<script src="~/Scripts/webuploader/webuploader.js"></script>
+
+
+<script type="text/javascript">
+    var _type = '@Request["type"]';
+    var editor = KindEditor.create('textarea[name="content"]',kindeditorConfig);
+
+    $(function () {
+        InitWebUploader();
+        InitGenerateModuleUrlIdEvent();
+        
+    });
+
+
+    var uploader;
+    function InitWebUploader() {
+
+
+        // 初始化Web Uploader
+        uploader = WebUploader.create({
+            auto: false,   // 选完文件后，是否自动上传。
+            swf: '../Scripts/webuploader/Uploader.swf',
+            server: '/Module/UploadThumbnailsImage',
+            duplicate: true, //可重复上传同一文件
+            pick: '#uploadThumbnailsImage',  // 选择文件的按钮。可选。内部根据当前运行是创建，可能是input元素，也可能是flash.
+            compress: false, //图片不压缩
+            accept: {           // 只允许选择图片文件。
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            },
+            multiple: false,
+            fileSingleSizeLimit: 1 * 1024 * 1024, // 单个文件最大不能超过1 M
+            thumb: {        //缩略图配置
+                // 为空的话则保留原有图片格式。
+                // 否则强制转换成指定的类型。
+                type: ''
+
+            }
+        });
+        uploader.on('fileQueued', function (file) {
+            $("#status").html("");
+            //生成预览图片
+            uploader.makeThumb(file, function (error, src) {
+                if (error) {
+                    $("#showUploadImage").attr('alt', "预览错误");
+                } else {
+                    $("#showUploadImage").attr('src', src);
+                }
+            }, 1, 1);
+        });
+
+        uploader.on('startUpload', function () {
+
+            //开始上传，添加遮罩
+            //$("body").showLoading();
+        });
+        uploader.on('uploadFinished', function () {
+
+            //图片上传成功后关闭对话框，刷新表格
+            CloseAddScreen();
+            //刷新表格
+            RefreshTable();
+            $("body").hideLoading();
+        });
+
+        uploader.on('error', function (handler) {
+
+            //隐藏遮罩
+            $("body").hideLoading();
+
+            if (handler == "Q_EXCEED_NUM_LIMIT") {
+                alert("超出最大张数");
+            }
+            if (handler == "F_DUPLICATE") {
+                alert("文件重复");
+            }
+            if (handler == "F_EXCEED_SIZE") {
+                $("#status").html("<lable style='color:red;'>图片大小不能超过1M</lable>");
+            }
+        });
+
+
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        uploader.on('uploadSuccess', function (file, response) {
+
+            if (response.Success == false || response.Success == "false") {
+
+            } else {
+
+            }
+
+        });
+
+        // 完成上传完了，成功或者失败，先删除进度条。
+        uploader.on('uploadComplete', function (file) {
+            //$('#' + file.id).find('.progress').remove();
+            //隐藏遮罩
+            //$("body").hideLoading();
+        });
+    }
+
+    function UploadImage(moduleGlobalizationId, culture) {
+
+        uploader.options.formData.moduleGlobalizationId = moduleGlobalizationId;
+        uploader.options.formData.culture = culture;
+
+        uploader.upload();
+    }
+
+    //修改或新增保存
+    function SaveAdd() {
+
+        $("body").showLoading();
+        var saveObj = ConstructSaveObj();
+        var jsonParam = JSON.stringify(saveObj);
+        $.ajax({
+            type: "POST",
+            url: "/Module/SaveAdd",
+            dataType: "json",
+            data: jsonParam,
+            async: false,   //同步
+            success: function (message) {
+
+                if (message.Success) {
+
+                    var moduleGlobalization = JSON.parse(message.Content);
+                    //上传图片
+                    var moduleGlobalizationId = moduleGlobalization.Id;
+                    var culture = moduleGlobalization.Culture;
+                    UploadImage(moduleGlobalizationId,culture);
+
+                } else {
+                    $("body").hideLoading();
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                    return;
+                }
+            }
+        });
+    }
+
+
+    //构造保存对象
+    function ConstructSaveObj() {
+
+        var moduleGlobalization = {
+
+            Title: $("#tbTitle").val(),
+            SubTitle: $("#tbSubTitle").val(),
+            Description: $("#taDescription").val(),
+            Content: editor.html(),
+            ImageClass:$("#tbImageClass").val(),
+            Culture: '@Common.Globalization_Chinese'
+        };
+        var arrModuleGlobalization = new Array();
+        arrModuleGlobalization.push(moduleGlobalization);
+
+        var obj = {
+            ModuleUrlId: $("#tbModuleUrlId").val(),
+            Sequence: $("#tbSequence").val(),
+            Type: _type,
+            ModuleGlobalizations: arrModuleGlobalization
+
+        };
+        return obj;
+    }
+
+    function InitGenerateModuleUrlIdEvent() {
+        $("#btnGenerateNewUrlId").click(function () {
+
+            $.ajax({
+                type: "POST",
+                url: "/Module/GenerateNewURLId",
+                dataType: "json",
+                async: false,   //同步
+                success: function (message) {
+
+                    if (message.Success) {
+
+                        $("#tbModuleUrlId").val(message.ReturnStrId);
+
+                    } else {
+                        layer.alert(message.Content, {
+                            skin: 'layui-layer-molv' //样式类名
+                          , closeBtn: 0
+                        });
+                        return;
+                    }
+                }
+            });
+        });
+    }
+
+</script>
+
+

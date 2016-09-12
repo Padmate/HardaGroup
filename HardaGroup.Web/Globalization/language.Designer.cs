@@ -70,6 +70,15 @@ namespace HardaGroup.Web.Globalization {
         }
         
         /// <summary>
+        ///   查找类似 智能制造简介 的本地化字符串。
+        /// </summary>
+        public static string AboutTheManufacturing {
+            get {
+                return ResourceManager.GetString("AboutTheManufacturing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 智能制造 的本地化字符串。
         /// </summary>
         public static string AdvancedManufacturing {
@@ -147,6 +156,15 @@ namespace HardaGroup.Web.Globalization {
         public static string Login {
             get {
                 return ResourceManager.GetString("Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 制造服务范围 的本地化字符串。
+        /// </summary>
+        public static string ManufacturingServiceScope {
+            get {
+                return ResourceManager.GetString("ManufacturingServiceScope", resourceCulture);
             }
         }
         
