@@ -22,7 +22,7 @@
                 <input class="btn btn-default" id="btnGenerateNewUrlId" type="button" style="width:9%" value="自动生成" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group hide">
             <div class="col-md-2 control-label">
                 <label class="customer-content-sm">标题：</label>
             </div>
@@ -32,10 +32,10 @@
         </div>
         <div class="form-group">
             <div class="col-md-2 control-label">
-                <label class="customer-content-sm">二级标题：</label>
+                <label class="customer-content-sm">标题：</label>
             </div>
             <div class="col-md-10">
-                <input class="input-large" id="tbSubTitle" placeholder="二级标题" value="@module.SubTitle" />
+                <input class="input-large" id="tbSubTitle" placeholder="标题" value="@module.SubTitle" />
             </div>
         </div>
         <div class="form-group">
@@ -94,8 +94,26 @@
 
         </div>
         
-
         <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">是否链接：</label>
+            </div>
+            <div class="col-md-10" style="padding-top:5px;">
+                <input type="radio" value="true" name="IsHref" /><label>是</label>
+                <input type="radio" value="false" checked="checked" name="IsHref" style="margin-left:50px;" /><label>否</label>
+
+            </div>
+        </div>
+        <div class="form-group" id="divHref" style="display:none;">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">链 接：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="input-large" id="tbHref" placeholder="链接" value="@module.Href" />
+            </div>
+        </div>
+
+        <div class="form-group" id="divContent">
             <div class="col-md-2 control-label">
                 <label class="customer-content-sm">内 容：</label>
             </div>
@@ -128,7 +146,36 @@
     $(function () {
         InitWebUploader();
         InitGenerateModuleUrlIdEvent();
+
+        //是否链接事件
+        $("[name='IsHref']").change(function () {
+            ChangeHrefRadio();
+        });
+
+        //如果是链接，则选中链接选项
+        var isHref = '@module.IsHref';
+        if (isHref.toLowerCase() == "true") {
+            $("input[type=radio][value=true]").attr("checked", 'checked');
+            ChangeHrefRadio();
+        }
     });
+
+    function ChangeHrefRadio() {
+        var isHref = $("input[name='IsHref']:checked").val();
+
+        if (isHref == "true") {
+            //如果是链接，则隐藏并且清空内容编辑框,显示Href输入框
+            editor.html("");
+            $("#divHref").show();
+            $("#divContent").hide();
+
+        } else {
+            //如果不是链接，则隐藏并且清空Href输入框,显示内容编辑框
+            $("#Href").val(" ");
+            $("#divHref").hide();
+            $("#divContent").show();
+        }
+    }
 
     var uploader;
     function InitWebUploader() {
@@ -270,9 +317,11 @@
             Title: $("#tbTitle").val(),
             SubTitle: $("#tbSubTitle").val(),
             Description: $("#taDescription").val(),
+            IsHref: $("input[name='IsHref']:checked").val(),
+            Href: $("#tbHref").val(),
             Content: editor.html(),
             Culture: '@module.Culture',
-            ImageClass:$("#tbImageClass").val()
+            ImageClass: $("#tbImageClass").val()
         };
         var arrModuleGlobalization = new Array();
         arrModuleGlobalization.push(moduleGlobalization);
@@ -281,7 +330,7 @@
             Id: '@module.Id',
             ModuleUrlId: $("#tbModuleUrlId").val(),
             Sequence: $("#tbSequence").val(),
-            Type:'@module.Type',
+            Type: '@module.Type',
             ModuleGlobalizations: arrModuleGlobalization
 
         };

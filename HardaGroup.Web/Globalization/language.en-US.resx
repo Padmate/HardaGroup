@@ -149,6 +149,10 @@
     <value>Home</value>
     <comment>首页</comment>
   </data>
+  <data name="InvestedFields" xml:space="preserve">
+    <value>Invested Fields</value>
+    <comment>投资领域</comment>
+  </data>
   <data name="JoinHarda" xml:space="preserve">
     <value>Join Harda</value>
     <comment>加入华尔达</comment>
@@ -176,6 +180,10 @@
   <data name="NextPage" xml:space="preserve">
     <value>Next Page</value>
     <comment>下一页</comment>
+  </data>
+  <data name="NineSupportingPlatforms" xml:space="preserve">
+    <value>Nine Supporting Platforms</value>
+    <comment>九大平台</comment>
   </data>
   <data name="PartsAndModules" xml:space="preserve">
     <value>Parts &amp; Modules</value>
@@ -216,6 +224,10 @@
   <data name="Solutions" xml:space="preserve">
     <value>Solutions</value>
     <comment>解决方案</comment>
+  </data>
+  <data name="ThreeSpaces" xml:space="preserve">
+    <value>Three Spaces</value>
+    <comment>三大空间</comment>
   </data>
   <data name="VentureSupport" xml:space="preserve">
     <value>Venture Support</value>

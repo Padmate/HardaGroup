@@ -220,18 +220,39 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="@string.Format("/manage/manufacturing/servicescope{0}", urlRewriteExtension)">
+                                <a href="@string.Format("/manage/manufacturing/{0}{1}",Common.ModuleType_Manufacturing_ServiceScope,urlRewriteExtension)">
                                     <i class="fa fa-info text-yellow"></i>服务范围
                                 </a>
                             </li>
                             <li>
-                                <a href="@string.Format("/manage/manufacturing/servicefeatures{0}", urlRewriteExtension)">
+                                <a href="@string.Format("/manage/manufacturing/{0}{1}",Common.ModuleType_Manufacturing_ServiceFeatures ,urlRewriteExtension)">
                                     <i class="fa fa-info text-yellow"></i>服务特色
                                 </a>
                             </li>
                         </ul>
                     </li>
-
+                    <li class="treeview">
+                        <a href="javaScript:void(0)">
+                            <i class="fa fa-support"></i> <span>创新创业</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="@string.Format("/manage/venture/{0}{1}",Common.ModuleType_VentureSupport_InvestedFields, urlRewriteExtension)">
+                                    <i class="fa fa-info-circle text-blue"></i>投资领域
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@string.Format("/manage/venture/{0}{1}", Common.ModuleType_VentureSupport_NineSupportingPlatforms, urlRewriteExtension)">
+                                    <i class="fa fa-info text-yellow"></i>九大平台
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@string.Format("/manage/venture/{0}{1}", Common.ModuleType_VentureSupport_ThreeSpaces, urlRewriteExtension)">
+                                    <i class="fa fa-info text-yellow"></i>三大空间
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="treeview">
                         <a href="javaScript:void(0)">
                             <i class="fa fa-image"></i> <span>媒体资讯</span> <i class="fa fa-angle-left pull-right"></i>

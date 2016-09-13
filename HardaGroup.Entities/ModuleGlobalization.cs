@@ -26,6 +26,10 @@ namespace HardaGroup.Entities
         /// </summary>
         public string Description { get; set; }
 
+        /// <summary>
+        /// 链接
+        /// </summary>
+        public string Href { get; set; }
 
         /// <summary>
         /// 内容

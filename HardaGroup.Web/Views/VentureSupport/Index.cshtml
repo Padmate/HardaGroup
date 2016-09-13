@@ -1,6 +1,18 @@
-﻿@{
+﻿@using HardaGroup.Web.Globalization;
+@using HardaGroup.Models;
+@using System.Configuration;
+@using HardaGroup.Utility;
+@{
     ViewBag.Title = "创新创业";
     var ximenipHref = "http://www.xiamenip.cn";
+
+    string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+    List<M_ModuleSearch> investedFields = (List<M_ModuleSearch>)ViewData["investedFields"];
+    List<M_ModuleSearch> ninePlatforms = (List<M_ModuleSearch>)ViewData["ninePlatforms"];
+    List<M_ModuleSearch> threeSpaces = (List<M_ModuleSearch>)ViewData["threeSpaces"];
+    
 }
 <style>
     .service-item{
@@ -15,14 +27,22 @@
 <section class="text-center">
     <div class="container">
 
-        <h2 class="customer-h2 text-center">投资领域</h2>
+        <h2 class="customer-h2 text-center">@language.InvestedFields</h2>
 
         <div class="row">
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="service-box">
-                    <a href="@ximenipHref" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                        <div class="information-box-caption">
+            @foreach (var field in investedFields)
+            {
+
+                var href = !string.IsNullOrEmpty(field.Href) ? field.Href
+                    : string.Format("{0}/venture-support/{1}/{2}{3}", cultureUri, field.Type, field.ModuleURLId,urlRewriteExtension);
+
+                var imageUrl = field.Image != null ? field.Image.VirtualPath : "/images/small_model.jpg";
+
+                <div class="col-md-3 col-sm-3 col-is-6 col-xs-12 highlight">
+                    <div class="service-box">
+                        <a href="@href" class="information-box">
+                            <img class="img-responsive" src="@imageUrl" />
+                            <div class="information-box-caption">
                                 <div class="information-box-caption-content">
                                     <div class="divmiddle-box">
                                         <div class="divmiddle-box-content">
@@ -31,103 +51,43 @@
                                     </div>
                                 </div>
                             </div>
-                    </a>
-                    <div class="service-information-caption">
-                        <h3 class="customer-h3">
-                            智能穿戴
-                        </h3>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
-
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="service-box">
-                    <a href="@ximenipHref" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                        <div class="information-box-caption">
-                            <div class="information-box-caption-content">
-                                <div class="divmiddle-box">
-                                    <div class="divmiddle-box-content">
-                                        <p class="customer-content-md whitefont">了解详情</p>
-                                    </div>
-                                </div>
-                            </div>
+                        </a>
+                        <div class="service-information-caption investedfield-section">
+                            <h3 class="customer-h3">
+                                @field.SubTitle
+                            </h3>
+                            <span class="customer-content-sm">
+                                @field.Description
+                            </span>
                         </div>
-                    </a>
-                    <div class="service-information-caption">
-                        <h3 class="customer-h3">
-                            大健康运动
-                        </h3>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
 
-                        </span>
                     </div>
-
                 </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="service-box">
-                    <a href="@ximenipHref" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                        <div class="information-box-caption">
-                            <div class="information-box-caption-content">
-                                <div class="divmiddle-box">
-                                    <div class="divmiddle-box-content">
-                                        <p class="customer-content-md whitefont">了解详情</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <div class="service-information-caption">
-                        <h3 class="customer-h3">
-                            机器人
-                        </h3>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
+                
+            }
 
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="service-box">
-                    <a href="@ximenipHref" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                        <div class="information-box-caption">
-                            <div class="information-box-caption-content">
-                                <div class="divmiddle-box">
-                                    <div class="divmiddle-box-content">
-                                        <p class="customer-content-md whitefont">了解详情</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                    <div class="service-information-caption">
-                        <h3 class="customer-h3">
-                            智能家居
-                        </h3>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
-
-                        </span>
-                    </div>
-
-                </div>
-            </div>
         </div> <!-- /row  -->
-        
+        <script>
+
+            //找出所有div最高的那个高度
+            var higestCaption = 0;
+            $(".investedfield-section").each(function () {
+
+                var sectionHight = $(this).height();
+                if (higestCaption < sectionHight) {
+                    higestCaption = sectionHight;
+                }
+            });
+            //将所有的div高度赋值为最高高度
+            $(".investedfield-section").each(function () {
+                var padding = 20;
+                $(this).css({ 'height': higestCaption + padding });
+
+
+            });
+
+        </script>
+
     </div>
 </section>
 <section id="services" class="bg-light-gray">
@@ -135,142 +95,53 @@
         <div class="row">
             <div class="col-lg-12 text-center">
                 <h2 class="customer-h2 animated tada">
-                    九大平台
+                    @language.NineSupportingPlatforms
                 </h2>
             </div>
         </div>
         <div class="row text-center">
-            <div class="col-is-6 col-sm-4 col-md-4">
-                <div class="service-item">
-                    <a href="@ximenipHref">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h3 class="customer-h3">市场平台</h3>
-                        <span class="customer-content-sm">
-                            进行市场调研、举办论坛讲座和创意创新创业大赛
-                        </span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-is-6 col-sm-4 col-md-4">
-                <div class="service-item">
-                    <a href="@ximenipHref">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x text-info"></i>
-                            <i class="fa fa-cubes fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h3 class="customer-h3">产品平台</h3>
-                        <span class="customer-content-sm">
-                            设计-方案、客户需求、产品众筹、ODM/OEM
-                        </span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-is-6 col-sm-4 col-md-4">
-                <div class="service-item">
-                    <a href="@ximenipHref">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x text-success"></i>
-                            <i class="fa fa-wordpress fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h3 class="customer-h3">工程平台</h3>
-                        <span class="customer-content-sm">
-                            样板制作、模治检量工具、试做试产、产品认证
-                        </span>
-                    </a>
-                </div>
-            </div>
+            @foreach (var platform in ninePlatforms)
+            {
+                var href = !string.IsNullOrEmpty(platform.Href) ? platform.Href
+                    : string.Format("{0}/venture-support/{1}/{2}{3}", cultureUri, platform.Type, platform.ModuleURLId, urlRewriteExtension);
 
-            <div class="col-is-6 col-sm-4 col-md-4">
-                <div class="service-item">
-                    <a href="@ximenipHref">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x text-warning"></i>
-                            <i class="fa fa-wrench fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h3 class="customer-h3">制造平台</h3>
-                        <span class="customer-content-sm">
-                            大批量生产&专业化制造
-                        </span>
-                    </a>
+                <div class="col-is-6 col-sm-4 col-md-4">
+                    <div class="service-item platform-section">
+                        <a href="@href">
+                            <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                <i class="fa fa-stack-1x fa-inverse @platform.ImageClass"></i>
+                            </span>
+                            <h3 class="customer-h3">@platform.SubTitle</h3>
+                            <span class="customer-content-sm">
+                                @platform.Description
+                            </span>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-is-6 col-sm-4 col-md-4">
-                <div class="service-item">
-                    <a href="@ximenipHref">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x text-danger"></i>
-                            <i class="fa fa-tasks fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h3 class="customer-h3">销售平台</h3>
-                        <span class="customer-content-sm">
-                            国内电商、跨境电商、B2B、B2C等进行销售
-                        </span>
-                    </a>
-                </div>
+            }
 
-            </div>
-            <div class="col-is-6 col-sm-4 col-md-4">
-                <div class="service-item">
-                    <a href="@ximenipHref">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fa fa-line-chart  fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h3 class="customer-h3">供应链管理</h3>
-                        <span class="customer-content-sm">
-                            仓储物流、分发配送、采购外发、精益管理
-                        </span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-is-6 col-sm-4 col-md-4">
-                <div class="service-item">
-                    <a href="@ximenipHref">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x text-danger"></i>
-                            <i class="fa fa-briefcase fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h3 class="customer-h3">品牌经营</h3>
-                        <span class="customer-content-sm">
-                            进行品牌策划、品牌管理、品牌开发、品牌规划等
-                        </span>
-                    </a>
-                </div>
-
-            </div>
-            <div class="col-is-6 col-sm-4 col-md-4">
-                <div class="service-item">
-                    <a href="@ximenipHref">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fa fa-users fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h3 class="customer-h3">导师平台</h3>
-                        <span class="customer-content-sm">
-                            战略规划、企业教练、顾问培训、产学研、协会、人力资源开发
-                        </span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-is-6 col-sm-4 col-md-4">
-                <div class="service-item">
-                    <a href="@ximenipHref">
-                        <span class="fa-stack fa-4x">
-                            <i class="fa fa-circle fa-stack-2x text-danger"></i>
-                            <i class="fa fa-money fa-stack-1x fa-inverse"></i>
-                        </span>
-                        <h3 class="customer-h3">资金平台</h3>
-                        <span class="customer-content-sm">
-                            发起种子基金、进行股权投资、对接股权众筹、基金、PE、VC、股权交易结构和保险、银行等金融机构
-                        </span>
-                    </a>
-                </div>
-            </div>
         </div>
+        <script>
+
+            //找出所有div最高的那个高度
+            var higestCaption = 0;
+            $(".platform-section").each(function () {
+
+                var sectionHight = $(this).height();
+                if (higestCaption < sectionHight) {
+                    higestCaption = sectionHight;
+                }
+            });
+            //将所有的div高度赋值为最高高度
+            $(".platform-section").each(function () {
+                var padding = 20;
+                $(this).css({ 'height': higestCaption + padding });
+
+
+            });
+
+        </script>
 
     </div>
 
@@ -278,68 +149,59 @@
 <section class="text-center">
     <div class="container">
 
-        <h2 class="customer-h2 text-center">三大空间</h2>
+        <h2 class="customer-h2 text-center">@language.ThreeSpaces</h2>
 
         <div class="row">
-            <div class="col-md-4 col-sm-4 highlight">
-                <div class="service-box">
-                    <a href="@ximenipHref" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                       
-                    </a>
-                    <div class="service-information-caption">
-                        <h3 class="customer-h3">
-                            派美特智能众创空间
-                        </h3>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
+            @foreach (var space in threeSpaces)
+            {
+                var href = !string.IsNullOrEmpty(space.Href) ? space.Href
+                    : string.Format("{0}/venture-support/{1}/{2}{3}", cultureUri, space.Type, space.ModuleURLId, urlRewriteExtension);
 
-                        </span>
+                var imageUrl = space.Image != null ? space.Image.VirtualPath : "/images/small_model.jpg";
+
+                <div class="col-md-4 col-sm-4 highlight">
+                    <div class="service-box">
+                        <a href="@href" class="information-box">
+                            <img class="img-responsive" src="@imageUrl" />
+
+                        </a>
+                        <div class="service-information-caption space-section">
+                            <h3 class="customer-h3">
+                                @space.SubTitle
+                            </h3>
+                            <span class="customer-content-sm">
+                                @space.Description
+
+                            </span>
+                        </div>
+
                     </div>
-
                 </div>
-            </div>
-            <div class="col-md-4 col-sm-4 highlight">
-                <div class="service-box">
-                    <a href="@ximenipHref" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                        
-                    </a>
-                    <div class="service-information-caption">
-                        <h3 class="customer-h3">
-                            派美特众创空间
-                        </h3>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
+                
+            }
 
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4 highlight">
-                <div class="service-box">
-                    <a href="@ximenipHref" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                        
-                    </a>
-                    <div class="service-information-caption">
-                        <h3 class="customer-h3">
-                            派美特-英特尔联合众创空间
-                        </h3>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
-
-                        </span>
-                    </div>
-
-                </div>
-            </div>
             
         </div> <!-- /row  -->
+        <script>
+
+            //找出所有div最高的那个高度
+            var higestCaption = 0;
+            $(".space-section").each(function () {
+
+                var sectionHight = $(this).height();
+                if (higestCaption < sectionHight) {
+                    higestCaption = sectionHight;
+                }
+            });
+            //将所有的div高度赋值为最高高度
+            $(".space-section").each(function () {
+                var padding = 20;
+                $(this).css({ 'height': higestCaption + padding });
+
+
+            });
+
+        </script>
 
     </div>
 </section>

@@ -80,6 +80,16 @@ namespace HardaGroup.Web.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 模块管理
+        /// Common.Dic_ModuleType
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Module()
+        {
+            
+            return View();
+        }
         #region 智能制造
         /// <summary>
         /// 智能制造简介
@@ -109,7 +119,14 @@ namespace HardaGroup.Web.Controllers
         }
 
         #endregion
-        
+
+        #region 创新创业
+        public ActionResult VentureSupport()
+        {
+            return View();
+        }
+
+        #endregion
 
         /// <summary>
         /// 新闻模块管理

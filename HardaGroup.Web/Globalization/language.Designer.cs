@@ -133,6 +133,15 @@ namespace HardaGroup.Web.Globalization {
         }
         
         /// <summary>
+        ///   查找类似 投资领域 的本地化字符串。
+        /// </summary>
+        public static string InvestedFields {
+            get {
+                return ResourceManager.GetString("InvestedFields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 加入华尔达 的本地化字符串。
         /// </summary>
         public static string JoinHarda {
@@ -192,6 +201,15 @@ namespace HardaGroup.Web.Globalization {
         public static string NextPage {
             get {
                 return ResourceManager.GetString("NextPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 九大平台 的本地化字符串。
+        /// </summary>
+        public static string NineSupportingPlatforms {
+            get {
+                return ResourceManager.GetString("NineSupportingPlatforms", resourceCulture);
             }
         }
         
@@ -282,6 +300,15 @@ namespace HardaGroup.Web.Globalization {
         public static string Solutions {
             get {
                 return ResourceManager.GetString("Solutions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 三大空间 的本地化字符串。
+        /// </summary>
+        public static string ThreeSpaces {
+            get {
+                return ResourceManager.GetString("ThreeSpaces", resourceCulture);
             }
         }
         

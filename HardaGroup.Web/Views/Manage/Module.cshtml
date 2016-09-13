@@ -3,7 +3,8 @@
 @using System.Configuration;
 @{
     Layout = "~/Views/Shared/_Admin.cshtml";
-    ViewBag.Title = "智能制造-服务范围";
+    var type = Request["type"];
+    ViewBag.Title = Common.Dic_ModuleType[type];
 
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
 
@@ -129,7 +130,7 @@
 <script type="text/javascript">
 
     //服务特色
-    var _type = '@Common.ModuleType_Manufacturing_ServiceScope';
+    var _type = '@Request["type"]';
 
     $(document).ready(function () {
         InitTable();

@@ -3,7 +3,7 @@
 @using System.Configuration;
 @{
     Layout = "~/Views/Shared/_Admin.cshtml";
-    ViewBag.Title = "智能制造-简介";
+    ViewBag.Title = Common.Dic_ModuleType[Common.ModuleType_Manufacturing_Introduction];
 
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
 

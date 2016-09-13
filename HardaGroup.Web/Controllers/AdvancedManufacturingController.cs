@@ -38,6 +38,7 @@ namespace HardaGroup.Web.Controllers
             return View();
         }
 
+        #region 制造简介
         /// <summary>
         /// 获取简介数据
         /// </summary>
@@ -161,6 +162,27 @@ namespace HardaGroup.Web.Controllers
                 message.Content = JsonHandle.ToJson(result);
             }
             return Json(message);
+        }
+
+        #endregion
+
+        public ActionResult ShowDetail(string type, string moduleUrlId)
+        {
+
+            if (string.IsNullOrEmpty(type) || !Common.Dic_ModuleType.ContainsKey(type.ToLower()))
+                throw new HttpException(404, "");
+
+            B_Module bModule = new B_Module();
+            //获取当前culture
+            var culture = GlobalizationHelp.GetCurrentThreadCultureCode();
+            var module = bModule.GetModuleByModuleUrlIdAndCulture(moduleUrlId, culture);
+            ViewData["module"] = module;
+
+            if (module == null) throw new HttpException(404, "");
+
+
+
+            return View();
         }
     }
 }

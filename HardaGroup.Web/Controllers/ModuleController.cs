@@ -128,8 +128,6 @@ namespace HardaGroup.Web.Controllers
             message = ValideData(model);
             if (!message.Success) return Json(message);
 
-            message = model.ModuleGlobalizations.First().validate();
-            if (!message.Success) return Json(message);
 
             var currentUser = this.GetCurrentUser();
             B_Module bModule = new B_Module(currentUser);
@@ -167,6 +165,8 @@ namespace HardaGroup.Web.Controllers
                 Title = zhCNGlobalization == null ? "" : zhCNGlobalization.Title,
                 SubTitle = zhCNGlobalization == null ? "" : zhCNGlobalization.SubTitle,
                 Description = zhCNGlobalization == null ? "" : zhCNGlobalization.Description,
+                IsHref = (zhCNGlobalization == null || string.IsNullOrEmpty(zhCNGlobalization.Href))?false :true,
+                Href = zhCNGlobalization == null ? "" : zhCNGlobalization.Href,
                 Content = zhCNGlobalization == null ? "" : zhCNGlobalization.Content,
                 Culture = zhCNGlobalization == null ? "" : zhCNGlobalization.Culture,
                 Image = zhCNGlobalization == null ? null : zhCNGlobalization.Image,
@@ -196,8 +196,6 @@ namespace HardaGroup.Web.Controllers
             message = ValideData(model);
             if (!message.Success) return Json(message);
 
-            message = model.ModuleGlobalizations.First().validate();
-            if (!message.Success) return Json(message);
 
             var currentUser = this.GetCurrentUser();
             B_Module bModule = new B_Module(currentUser);
@@ -256,6 +254,7 @@ namespace HardaGroup.Web.Controllers
                 Title = zhCNGlobalization == null ? "" : zhCNGlobalization.Title,
                 SubTitle = zhCNGlobalization == null ? "" : zhCNGlobalization.SubTitle,
                 Description = zhCNGlobalization == null ? "" : zhCNGlobalization.Description,
+                Href = zhCNGlobalization == null ? "" : zhCNGlobalization.Href,
                 Content = zhCNGlobalization == null ? "" : zhCNGlobalization.Content,
                 Culture = zhCNGlobalization == null ? "" : zhCNGlobalization.Culture,
                 Image = zhCNGlobalization == null ? null : zhCNGlobalization.Image,
@@ -275,6 +274,36 @@ namespace HardaGroup.Web.Controllers
 
             message = model.validate();
             if (!message.Success) return message;
+
+            message = model.ModuleGlobalizations.First().validate();
+            if (!message.Success) return message;
+
+            message = this.ValidateHrefContent(model.ModuleGlobalizations.First());
+
+
+            return message;
+        }
+
+        private Message ValidateHrefContent(M_ModuleGlobalization model)
+        {
+            Message message = new Message();
+            message.Success = true;
+
+            var isHref = model.IsHref;
+            var href = model.Href;
+            var content = model.Content;
+            if (isHref && string.IsNullOrEmpty(href))
+            {
+                message.Success = false;
+                message.Content = "链接不能为空";
+                return message;
+            }
+            else if (!isHref && string.IsNullOrEmpty(content))
+            {
+                message.Success = false;
+                message.Content = "内容不能为空";
+                return message;
+            }
 
             return message;
         }
@@ -379,6 +408,10 @@ namespace HardaGroup.Web.Controllers
             //校验model
             message = model.validate();
             if (!message.Success) return Json(message);
+
+            message = this.ValidateHrefContent(model);
+            if (!message.Success) return Json(message);
+
 
             B_Module bModule = new B_Module();
             message = bModule.DealModuleGlobalization(model);

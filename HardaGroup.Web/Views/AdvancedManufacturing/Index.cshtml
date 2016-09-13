@@ -33,10 +33,13 @@
         <div class="row">
         @foreach (var scope in serviceScopes)
         {
+            var href = !string.IsNullOrEmpty(scope.Href) ? scope.Href
+                : string.Format("{0}/advanced-manufacturing/{1}/{2}{3}", cultureUri, scope.Type, scope.ModuleURLId, urlRewriteExtension);
+            
             var imageUrl = scope.Image != null ? scope.Image.VirtualPath : "/images/small_model.jpg";
             <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-is-6 highlight servicescope-section">
                 <div class="service-box">
-                    <a href="@string.Format("{0}/manufacturing/{1}/{2}{3}",cultureUri,scope.Type,scope.ModuleURLId,urlRewriteExtension)" class="information-box">
+                    <a href="@href" class="information-box">
                         <img class="img-responsive" src="@imageUrl" />
                     </a>
                     <div class="service-information-caption">
@@ -86,11 +89,14 @@
             <div class="row">
                 @foreach (var feature in serviceFeatures)
                 {
+                    var href = !string.IsNullOrEmpty(feature.Href) ? feature.Href:
+                        string.Format("{0}/advanced-manufacturing/{1}/{2}{3}", cultureUri, feature.Type, feature.ModuleURLId, urlRewriteExtension);
+                    
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-is-6 text-center">
                         
                         <div class="service-box feature-section">
                             <i class="fa fa-4x wow bounceIn @feature.ImageClass"></i>
-                            <a href="@string.Format("{0}/manufacturing/{1}/{2}{3}", cultureUri, feature.Type, feature.ModuleURLId, urlRewriteExtension)">
+                            <a href="@href">
                                 <h3 class="customer-h3">@feature.SubTitle</h3>
                                 <p class="text-muted fa-cus">@feature.Description</p>
                             </a>

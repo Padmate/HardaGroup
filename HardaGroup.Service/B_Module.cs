@@ -138,6 +138,7 @@ namespace HardaGroup.Service
                 cultureData.Title = defaultGlobalizationData.Title;
                 cultureData.SubTitle = defaultGlobalizationData.SubTitle;
                 cultureData.Description = defaultGlobalizationData.Description;
+                cultureData.Href = defaultGlobalizationData.Href;
                 cultureData.Content = defaultGlobalizationData.Content;
                 cultureData.ImageClass = defaultGlobalizationData.ImageClass;
                 cultureData.Image = defaultGlobalizationData.ImageId == null ? null : bImage.GetImageById(System.Convert.ToInt32(defaultGlobalizationData.ImageId));
@@ -225,6 +226,7 @@ namespace HardaGroup.Service
             cultureData.Title = defaultGlobalizationData.Title;
             cultureData.SubTitle = defaultGlobalizationData.SubTitle;
             cultureData.Description = defaultGlobalizationData.Description;
+            cultureData.Href = defaultGlobalizationData.Href;
             cultureData.Content = defaultGlobalizationData.Content;
             cultureData.ImageClass = defaultGlobalizationData.ImageClass;
             cultureData.Image = defaultGlobalizationData.ImageId == null ? null : bImage.GetImageById(System.Convert.ToInt32(defaultGlobalizationData.ImageId));
@@ -279,6 +281,7 @@ namespace HardaGroup.Service
                         Title = ng.Title,
                         SubTitle = ng.SubTitle,
                         Description = ng.Description,
+                        Href = ng.Href,
                         Content = ng.Content,
                         Culture = ng.Culture,
                         ImageClass = ng.ImageClass
@@ -341,6 +344,7 @@ namespace HardaGroup.Service
                         Title = ng.Title,
                         SubTitle = ng.SubTitle,
                         Description = ng.Description,
+                        Href = ng.Href,
                         Content = ng.Content,
                         Culture = ng.Culture,
                         ImageId = oldData.ImageId,
@@ -448,6 +452,7 @@ namespace HardaGroup.Service
                     Title = ng.Title,
                     SubTitle = ng.SubTitle,
                     Description = ng.Description,
+                    Href = ng.Href,
                     Content = ng.Content,
                     Culture = ng.Culture,
                     ImageClass = ng.ImageClass,
@@ -470,6 +475,7 @@ namespace HardaGroup.Service
                 Title = modules.Title,
                 SubTitle = modules.SubTitle,
                 Description = modules.Description,
+                Href = modules.Href,
                 Content = modules.Content,
                 Image = modules.ImageId == null ? null : bImage.GetImageById(System.Convert.ToInt32(modules.ImageId)),
                 ImageClass = modules.ImageClass,
@@ -535,6 +541,7 @@ namespace HardaGroup.Service
                     Title = model.Title,
                     SubTitle = model.SubTitle,
                     Description = model.Description,
+                    Href = model.Href,
                     Content = model.Content,
                     Culture = model.Culture,
                     ImageId = oldData !=null?oldData.ImageId:null,
@@ -589,6 +596,8 @@ namespace HardaGroup.Service
                 Title = modulesGlobalization.Title,
                 SubTitle = modulesGlobalization.SubTitle,
                 Description = modulesGlobalization.Description,
+                IsHref = string.IsNullOrEmpty(modulesGlobalization.Href)?false :true,
+                Href = modulesGlobalization.Href,
                 Content = modulesGlobalization.Content,
                 Culture = modulesGlobalization.Culture,
                 ImageClass = modulesGlobalization.ImageClass,

@@ -78,6 +78,13 @@ namespace HardaGroup.Models
         /// </summary>
         public string Description { get; set; }
 
+        private bool isHref;
+        public bool IsHref { get; set; }
+        /// <summary>
+        /// 链接URL
+        /// </summary>
+        public string Href { get; set; }
+
         /// <summary>
         /// 内容
         /// </summary>

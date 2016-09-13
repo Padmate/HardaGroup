@@ -55,6 +55,7 @@ namespace HardaGroup.DataAccess
                             ImageClass = tt == null ? ttzhcndata.ImageClass : tt.ImageClass,
                             Title = tt == null ? ttzhcndata.Title : tt.Title,
                             SubTitle = tt == null ? ttzhcndata.SubTitle : tt.SubTitle,
+                            Href = tt == null ? ttzhcndata.Href : tt.Href,
                             Content = tt == null ? ttzhcndata.Content : tt.Content,
                             Culture = tt == null ? ttzhcndata.Culture : tt.Culture,
                             Description = tt == null ? ttzhcndata.Description : tt.Description,
@@ -70,7 +71,7 @@ namespace HardaGroup.DataAccess
                 query = query.Where(a => a.Type == moduleSearch.Type);
             #endregion
 
-            var result = query.OrderByDescending(a => a.Sequence)
+            var result = query.OrderBy(a => a.Sequence)
             .Skip(skip)
             .Take(limit)
             .ToList();
@@ -101,6 +102,7 @@ namespace HardaGroup.DataAccess
                             ImageClass = tt == null ? null : tt.ImageClass,
                             Title = tt == null ? "" : tt.Title,
                             SubTitle = tt == null ? "" : tt.SubTitle,
+                            Href = tt == null ? "" : tt.Href,
                             Content = tt == null ? "" : tt.Content,
                             Culture = tt == null ? "" : tt.Culture,
                             Description = tt == null ? "" : tt.Description,
@@ -142,6 +144,7 @@ namespace HardaGroup.DataAccess
             var modules = _dbContext.Modules
                 .Include("ModuleGlobalizations")
                 .Where(a => a.Type == type)
+                .OrderBy(v=>v.Sequence)
                 .ToList();
             return modules;
         }
@@ -188,6 +191,7 @@ namespace HardaGroup.DataAccess
                             ImageClass = tt == null ? "" : tt.ImageClass,
                             Title = tt == null ? "" : tt.Title,
                             SubTitle = tt == null ? "" : tt.SubTitle,
+                            Href = tt == null ? "" : tt.Href,
                             Content = tt == null ? "" : tt.Content,
                             Culture = tt == null ? "" : tt.Culture,
                             Description = tt == null ? "" : tt.Description,
@@ -205,7 +209,7 @@ namespace HardaGroup.DataAccess
                 query = query.Where(a => a.Culture == searchModel.Culture);
             #endregion
 
-            var result = query.OrderByDescending(a => a.Sequence).ToList();
+            var result = query.OrderBy(a => a.Sequence).ToList();
 
             return result;
         }
@@ -221,7 +225,7 @@ namespace HardaGroup.DataAccess
                 query = query.Where(a => a.Type == searchModel.Type);
             #endregion
 
-            var result = query.OrderByDescending(a => a.Sequence)
+            var result = query.OrderBy(a => a.Sequence)
             .ToList();
 
             return result;

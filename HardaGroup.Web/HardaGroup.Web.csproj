@@ -602,13 +602,14 @@
     <Content Include="Views\News\GlobalizationNewsScope.cshtml" />
     <Content Include="Views\News\Globalization.cshtml" />
     <Content Include="Views\Manage\ManufacturingIntroduction.cshtml" />
-    <Content Include="Views\Manage\ManufacturingServiceScope.cshtml" />
-    <Content Include="Views\Manage\ManufacturingServiceFeatures.cshtml" />
     <Content Include="Views\Module\Add.cshtml" />
     <Content Include="Views\Module\Edit.cshtml" />
     <Content Include="Views\Module\Detail.cshtml" />
     <Content Include="Views\Module\Globalization.cshtml" />
     <Content Include="Views\Module\ShowDetail.cshtml" />
+    <Content Include="Views\Manage\Module.cshtml" />
+    <Content Include="Views\AdvancedManufacturing\ShowDetail.cshtml" />
+    <Content Include="Views\VentureSupport\ShowDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
