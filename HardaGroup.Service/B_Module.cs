@@ -472,6 +472,7 @@ namespace HardaGroup.Service
                 Description = modules.Description,
                 Content = modules.Content,
                 Image = modules.ImageId == null ? null : bImage.GetImageById(System.Convert.ToInt32(modules.ImageId)),
+                ImageClass = modules.ImageClass,
                 CreateDate = modules.CreateDate.ToString(),
                 Creator = modules.Creator,
                 ModifiedDate = modules.ModifiedDate.ToString(),

@@ -1,7 +1,11 @@
 ﻿$(function () {
 
     $(".language").click(function () {
-        event.preventDefault();
+
+        //IE8不支持event.preventDefault()
+        //event.preventDefault();
+        (event.preventDefault) ? event.preventDefault() : event.returnValue = false;
+
 
         //获取当前页面的URL，不包括主机名
         var currentUrl = window.location.pathname.toLocaleLowerCase()

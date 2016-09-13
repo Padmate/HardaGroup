@@ -218,8 +218,11 @@ namespace HardaGroup.Web.Controllers
 
         }
 
-        public ActionResult ShowDetail(string moduleUrlId)
+        public ActionResult ShowDetail(string type,string moduleUrlId)
         {
+
+            if(string.IsNullOrEmpty(type) || !Common.Dic_ModuleType.ContainsKey(type.ToLower()))
+                throw new HttpException(404, "");
 
             B_Module bModule = new B_Module();
             //获取当前culture

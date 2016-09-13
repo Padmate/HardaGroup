@@ -160,6 +160,15 @@ namespace HardaGroup.Web.Globalization {
         }
         
         /// <summary>
+        ///   查找类似 制造服务特色 的本地化字符串。
+        /// </summary>
+        public static string ManufacturingServiceFeature {
+            get {
+                return ResourceManager.GetString("ManufacturingServiceFeature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 制造服务范围 的本地化字符串。
         /// </summary>
         public static string ManufacturingServiceScope {

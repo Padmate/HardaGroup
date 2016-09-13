@@ -150,6 +150,9 @@
   <data name="Login" xml:space="preserve">
     <value>登录</value>
   </data>
+  <data name="ManufacturingServiceFeature" xml:space="preserve">
+    <value>制造服务特色</value>
+  </data>
   <data name="ManufacturingServiceScope" xml:space="preserve">
     <value>制造服务范围</value>
   </data>

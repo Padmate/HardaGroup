@@ -56,19 +56,23 @@ namespace HardaGroup.Utility
         /// <summary>
         /// 智能制造简介
         /// </summary>
-        public const string ModuleType_Manufacturing_Introduction = "AdvancedManfacturingIntroduction";
+        public const string ModuleType_Manufacturing_Introduction = "introduction";
 
         /// <summary>
         /// 智能制造服务范围
         /// </summary>
-        public const string ModuleType_Manufacturing_ServiceScope = "AdvancedManfacturingServiceScope";
+        public const string ModuleType_Manufacturing_ServiceScope = "service-scopes";
 
         /// <summary>
         /// 智能制造服务特色
         /// </summary>
-        public const string ModuleType_Manufacturing_ServiceFeatures = "AdvancedManfacturingServiceFeatures";
+        public const string ModuleType_Manufacturing_ServiceFeatures = "service-features";
 
-
+        public static Dictionary<string, string> Dic_ModuleType = new Dictionary<string, string>(){
+            {ModuleType_Manufacturing_Introduction,"智能制造简介"},
+            {ModuleType_Manufacturing_ServiceScope,"制造服务范围"},
+            {ModuleType_Manufacturing_ServiceFeatures,"制造服务特色"}
+        };
         #endregion
 
     }

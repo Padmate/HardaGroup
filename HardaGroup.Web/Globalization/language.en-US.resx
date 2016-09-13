@@ -161,6 +161,10 @@
     <value>Login</value>
     <comment>登录</comment>
   </data>
+  <data name="ManufacturingServiceFeature" xml:space="preserve">
+    <value>Service Feature</value>
+    <comment>制造服务特色</comment>
+  </data>
   <data name="ManufacturingServiceScope" xml:space="preserve">
     <value>Service Scope</value>
     <comment>制造服务范围</comment>
