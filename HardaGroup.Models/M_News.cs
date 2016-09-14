@@ -20,6 +20,16 @@ namespace HardaGroup.Models
         public string NewsURLId { get; set; }
 
         /// <summary>
+        /// 新闻是否在首页滚动表示
+        /// </summary>
+        public bool IsScroll { get; set; }
+
+        /// <summary>
+        /// 设置新闻为 热点新闻
+        /// </summary>
+        public bool IsHot { get; set; }
+
+        /// <summary>
         /// 发表时间
         /// </summary>
         [Required(ErrorMessage = "发布时间不能为空")]
@@ -56,6 +66,19 @@ namespace HardaGroup.Models
         public string NewsScopeId { get; set; }
 
         public string NewsURLId { get; set; }
+
+        /// <summary>
+        /// 新闻是否在首页滚动表示
+        /// </summary>
+        public bool IsScroll { get; set; }
+
+        public string IsScrollSearch { get; set; }
+
+        public string IsHotSearch { get; set; }
+        /// <summary>
+        /// 设置新闻为 热点新闻
+        /// </summary>
+        public bool IsHot { get; set; }
 
         /// <summary>
         /// 标题
@@ -110,6 +133,10 @@ namespace HardaGroup.Models
         public string Culture { get; set; }
 
         public List<M_NewsGlobalization> NewsGlobalizations { get; set; }
+
+        public string ScopeTypeCode { get; set; }
+
+        public string ScopeTypeName { get; set; }
 
     }
 }

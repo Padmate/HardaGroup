@@ -1,95 +1,104 @@
-﻿@{
+﻿@using HardaGroup.Utility;
+@using System.Configuration;
+@using HardaGroup.Web.Globalization;
+@using HardaGroup.Models;
+@{
     ViewBag.From = "Default";
+    string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+    var scrollNews = (List<M_NewsSearch>)ViewData["scrollNews"];
+    var hotNews = (List<M_NewsSearch>)ViewData["hotNews"];
+    
 } 
 
 
 <div class="news-section">
     <div class="container">
-        <div class="row scrollnews">
-            <div class="col-is-12 col-xs-12 col-sm-1 col-md-1">
-                <img class="img-responsive" src="~/images/news.png" />
-            </div>
-            <div class="col-is-12 col-xs-12 col-sm-9 col-md-9">
+        @if (scrollNews.Count > 0)
+        {
+            <div class="row scrollnews">
+                <div class="col-is-12 col-xs-12 col-sm-1 col-md-1">
+                    <img class="img-responsive" src="~/images/news.png" />
+                </div>
+                <div class="col-is-12 col-xs-12 col-sm-9 col-md-9">
 
-                <div id="scrollDiv">
-                    <ul class="customer-content-md">
-                        <li>
-                            [<a href='http://www.51xuediannao.com/js/texiao/'>网页特效</a>] <a href="http://www.51xuediannao.com/js/texiao/642.html" title="为网站增加圣诞节祝福动画百度的圣诞老人动画" class="linktit">为网站增加圣诞节祝福动画百度的圣诞老人动画</a>
-                        </li>
-                        <li>[<a href='http://www.51xuediannao.com/yumenba/'>郁闷吧</a>] <a href="http://www.51xuediannao.com/yumenba/606.html" title="2011最简单最给力的兼职网赚项目" class="linktit">2011最简单最给力的兼职网赚项目</a></li>
-                        <li>[<a href='http://www.51xuediannao.com/yumenba/'>郁闷吧</a>] <a href="http://www.51xuediannao.com/yumenba/yuwangmen_heti.html" title="90后富家二小姐渔网妹欲造合体门(多图)" class="linktit">90后富家二小姐渔网妹欲造合体门(多图)</a></li>
-                        <li>[<a href='http://www.51xuediannao.com/yumenba/'>郁闷吧</a>] <a href="http://www.51xuediannao.com/yumenba/google.html" title="关于谷歌中国的最新声明(来自谷歌)" class="linktit">关于谷歌中国的最新声明(来自谷歌)</a></li>
-                        <li>[<a href='http://www.51xuediannao.com/jiqiao/'>建站技巧</a>] <a href="http://www.51xuediannao.com/jiqiao/chuangyi.html" title="设计创意究竟是怎么练出来的？" class="linktit">设计创意究竟是怎么练出来的？</a></li>
-                        <li>[<a href='http://www.51xuediannao.com/weike/'>威客网排行榜</a>] <a href="http://www.51xuediannao.com/weike/weike_daxuesheng.html" title="大三学生做威客一边学习一边赚生活费" class="linktit">大三学生做威客一边学习一边赚生活费</a></li>
-                        <li>[<a href='http://www.51xuediannao.com/js/texiao/'>网页特效</a>] <a href="http://www.51xuediannao.com/js/texiao/js-riqi.html" title="日期时间带星期农历js代码特效" class="linktit">日期时间带星期农历js代码特效</a></li>
-                        <li>[<a href='http://www.51xuediannao.com/html+css/htmlcssjq/'>html+css技巧</a>] <a href="http://www.51xuediannao.com/html+css/htmlcssjq/IE6 min.html" title="IE6最小高度最小宽度最大高度最大宽度css写法" class="linktit">IE6最小高度最小宽度最大高度最大宽度css写法</a></li>
-                    </ul>
+                    <div id="scrollDiv">
+                        <ul class="customer-content-md">
+                            @foreach (var news in scrollNews)
+                            {
+                                <li>
+                                    <a href="@string.Format("{0}/press/{1}/{2}{3}", cultureUri, news.ScopeTypeCode,news.NewsURLId ,urlRewriteExtension)" class="linktit" title="@news.Title">@news.SubTitle</a>
+                                </li>
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-is-12 col-xs-12 col-sm-2 col-md-2">
+                    <div class="scrollbox">
+                        <small id="but_up">↑上一条</small>
+                        <small id="but_down">↓下一条</small>
+                    </div>
                 </div>
             </div>
-            <div class="col-is-12 col-xs-12 col-sm-2 col-md-2">
-                <div class="scrollbox">
-                    <small id="but_up">↑上一条</small>
-                    <small id="but_down">↓下一条</small>
-                </div>
-            </div>
-        </div>
+        }
+        
         <div class="row text-center">
-            <div class="col-md-4 col-sm-4 highlight">
-                <div class="service-box">
-                    <a href="" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                    </a>
-                    <div class="service-information-caption">
-                        <h4 class="customer-h4">
-                           新闻资讯
-                        </h4>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
+            @for (int i = 0; i < hotNews.Count; i++)
+            {
+                //只显示前三条
+                if (i < 3)
+                {
+                    var href = string.Format("{0}/press/{1}/{2}{3}", cultureUri, hotNews[i].ScopeTypeCode, hotNews[i].NewsURLId, urlRewriteExtension);
 
-                        </span>
+                    var imageUrl = hotNews[i].Image != null ? hotNews[i].Image.VirtualPath : "/images/small_model.jpg";
+
+                    <div class="col-md-4 col-sm-4 col-is-4 highlight">
+                        <div class="service-box">
+                            <a href="@href" class="information-box">
+                                <img class="img-responsive" src="@imageUrl" />
+                            </a>
+                            <div class="service-information-caption hotnews-section">
+                                <h4 class="customer-h4">
+                                    @hotNews[i].SubTitle
+                                </h4>
+                                <span class="customer-content-sm">
+                                    @hotNews[i].Description
+
+                                </span>
+                            </div>
+
+                        </div>
                     </div>
+                }
 
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4 highlight">
-                <div class="service-box">
-                    <a href="" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                    </a>
-                    <div class="service-information-caption">
-                        <h4 class="customer-h4">
-                            新闻资讯
-                        </h4>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
+            }
+            
 
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4 highlight">
-                <div class="service-box">
-                    <a href="" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                    </a>
-                    <div class="service-information-caption">
-                        <h4 class="customer-h4">
-                            新闻资讯
-                        </h4>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
-
-                        </span>
-                    </div>
-
-                </div>
-            </div>
             
         </div>
+        <script>
+
+            //找出所有service-information-caption中div最高的那个高度
+            var higestCaption = 0;
+            $(".hotnews-section").each(function () {
+
+                var sectionHight = $(this).height();
+                if (higestCaption < sectionHight) {
+                    higestCaption = sectionHight;
+                }
+            });
+            //将所有servicescope-section的div高度赋值为最高高度
+            $(".hotnews-section").each(function () {
+                var padding = 20;
+                $(this).css({ 'height': higestCaption + padding });
+
+
+            });
+
+        </script>
+
     </div>
 </div>
 <!-- Intro -->

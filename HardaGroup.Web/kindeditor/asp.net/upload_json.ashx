@@ -37,8 +37,9 @@ public class Upload : IHttpHandler
 		extTable.Add("media", "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
 		extTable.Add("file", "doc,docx,xls,xlsx,ppt,htm,html,txt,zip,rar,gz,bz2");
 
-		//最大文件大小
-		int maxSize = 1000000;
+		//最大文件大小(byte)
+        //1MB = 1024*1024 = 1048576 byte
+        int maxSize = 1024 * 1024;
 		this.context = context;
 
 		HttpPostedFile imgFile = context.Request.Files["imgFile"];
@@ -68,7 +69,7 @@ public class Upload : IHttpHandler
 
 		if (imgFile.InputStream == null || imgFile.InputStream.Length > maxSize)
 		{
-			showError("上传文件大小超过限制。");
+			showError("上传文件大小不能超过1M。");
 		}
 
 		if (String.IsNullOrEmpty(fileExt) || Array.IndexOf(((String)extTable[dirName]).Split(','), fileExt.Substring(1).ToLower()) == -1)

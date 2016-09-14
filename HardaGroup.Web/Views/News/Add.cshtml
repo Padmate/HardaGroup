@@ -91,6 +91,28 @@
 
         <div class="form-group">
             <div class="col-md-2 control-label">
+                <label class="customer-content-sm">首页滚动：</label>
+            </div>
+            <div class="col-md-10" style="padding-top:5px;">
+                <input type="radio" value="true" name="IsScroll" /><label>是</label>
+                <input type="radio" value="false" checked="checked" name="IsScroll" style="margin-left:50px;" /><label>否</label>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">热点新闻：</label>
+            </div>
+            <div class="col-md-10" style="padding-top:5px;">
+                <input type="radio" value="true" name="IsHot" /><label>是</label>
+                <input type="radio" value="false" checked="checked" name="IsHot" style="margin-left:50px;" /><label>否</label>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
                 <label class="customer-content-sm">内 容：</label>
             </div>
             <div class="col-md-10">
@@ -275,6 +297,8 @@
 
         var obj = {
             NewsUrlId: $("#tbNewsUrlId").val(),
+            IsScroll: $("input[name='IsScroll']:checked").val(),
+            IsHot: $("input[name='IsHot']:checked").val(),
             PubTime: $("#tbPubTime").val(),
             NewsScopeId:$("#selNewsScopeId").val(),
             NewsGlobalizations: arrNewsGlobalization

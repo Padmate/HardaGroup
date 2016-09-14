@@ -17,6 +17,17 @@ namespace HardaGroup.Web.Controllers
             List<M_Image> bgImages = bImage.GetBGImagesByType(Common.Image_HomeBG);
             ViewData["bgimages"] = bgImages;
 
+            //获取当前国际化代码
+            var culture = GlobalizationHelp.GetCurrentThreadCultureCode();
+
+            B_News bNews = new B_News();
+            //查找首页滚动的新闻
+            var scrollNews = bNews.GetAllScrollNewsByCulture(culture);
+            ViewData["scrollNews"] = scrollNews;
+            //查找热点新闻
+            var hotNews = bNews.GetAllHotNewsByCulture(culture);
+            ViewData["hotNews"] = hotNews;
+
             return View();
         }
 

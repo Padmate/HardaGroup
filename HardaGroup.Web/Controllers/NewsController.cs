@@ -398,6 +398,8 @@ namespace HardaGroup.Web.Controllers
             {
                 Id = news.Id,
                 NewsURLId = news.NewsURLId,
+                IsScroll = news.IsScroll,
+                IsHot = news.IsHot,
                 Pubtime = news.Pubtime,
                 NewsScopeId = news.NewsScopeId,
                 Title = zhCNGlobalization == null ? "":zhCNGlobalization.Title,
@@ -498,6 +500,8 @@ namespace HardaGroup.Web.Controllers
             {
                 Id = news.Id,
                 NewsURLId = news.NewsURLId,
+                IsHot = news.IsHot,
+                IsScroll = news.IsScroll,
                 Pubtime = news.Pubtime,
                 NewsScopeId = news.NewsScopeId,
                 Title = zhCNGlobalization == null ? "" : zhCNGlobalization.Title,

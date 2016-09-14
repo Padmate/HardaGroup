@@ -50,6 +50,8 @@ namespace HardaGroup.DataAccess
                             ModifiedDate = a.ModifiedDate,
                             Modifier = a.Modifier,
                             NewsURLId = a.NewsURLId,
+                            IsScroll = a.IsScroll,
+                            IsHot = a.IsHot,
                             //如果当前culture获取不到数据，则默认取中文数据
                             ImageId = tt == null ? ttzhcndata.ImageId : tt.ImageId,
                             Title = tt == null ? ttzhcndata.Title : tt.Title,
@@ -67,6 +69,17 @@ namespace HardaGroup.DataAccess
                 query = query.Where(a => a.SubTitle.Contains(newsSearch.SubTitle));
             if (newsSearch.NewsScopeId != null)
                 query = query.Where(a => a.NewsScopeId == newsSearch.NewsScopeId);
+            if (!string.IsNullOrEmpty(newsSearch.IsHotSearch))
+            {
+                var isHot = newsSearch.IsHotSearch == Common.Yes ? true : false;
+                query = query.Where(a => a.IsHot == isHot);
+            }
+            if (!string.IsNullOrEmpty(newsSearch.IsScrollSearch))
+            {
+                var isScroll = newsSearch.IsScrollSearch == Common.Yes ? true : false;
+                query = query.Where(a => a.IsScroll == isScroll);
+            }
+                
             #endregion
 
             var result = query.OrderByDescending(a => a.Pubtime)
@@ -96,6 +109,8 @@ namespace HardaGroup.DataAccess
                             ModifiedDate = a.ModifiedDate,
                             Modifier = a.Modifier,
                             NewsURLId = a.NewsURLId,
+                            IsScroll = a.IsScroll,
+                            IsHot = a.IsHot,
                             ImageId = tt == null ? null : tt.ImageId,
                             Title = tt == null ? "" : tt.Title,
                             SubTitle = tt == null ? "" : tt.SubTitle,
@@ -112,6 +127,16 @@ namespace HardaGroup.DataAccess
                 query = query.Where(a => a.SubTitle.Contains(newsSearch.SubTitle));
             if (newsSearch.NewsScopeId != null)
                 query = query.Where(a => a.NewsScopeId == newsSearch.NewsScopeId);
+            if (!string.IsNullOrEmpty(newsSearch.IsHotSearch))
+            {
+                var isHot = newsSearch.IsHotSearch == Common.Yes ? true : false;
+                query = query.Where(a => a.IsHot == isHot);
+            }
+            if (!string.IsNullOrEmpty(newsSearch.IsScrollSearch))
+            {
+                var isScroll = newsSearch.IsScrollSearch == Common.Yes ? true : false;
+                query = query.Where(a => a.IsScroll == isScroll);
+            }
             #endregion
 
             var result = query.ToList().Count();
@@ -178,6 +203,32 @@ namespace HardaGroup.DataAccess
             return newss;
         }
 
+        /// <summary>
+        /// 获取所有首页滚动数据
+        /// </summary>
+        /// <returns></returns>
+        public List<News> GetAllScrollNews()
+        {
+            var result = _dbContext.News.Include("NewsScope").Include("NewsGlobalizations")
+                .Where(a => a.IsScroll == true)
+                .OrderByDescending(a => a.Pubtime)
+                .ToList();
+            return result;
+        }
+
+        /// <summary>
+        /// 获取所有热点新闻数据
+        /// </summary>
+        /// <returns></returns>
+        public List<News> GetAllHotNews()
+        {
+            var result = _dbContext.News.Include("NewsScope").Include("NewsGlobalizations")
+                .Where(a => a.IsHot == true)
+                .OrderByDescending(a => a.Pubtime)
+                .ToList();
+            return result;
+        }
+
         public List<News> GetByMulitCondition(News searchModel)
         {
             var query = _dbContext.News.Include("NewsGlobalizations").Where(n=>1==1);
@@ -216,6 +267,8 @@ namespace HardaGroup.DataAccess
             news.Modifier = model.Modifier;
             news.Pubtime = model.Pubtime;
             news.NewsURLId = model.NewsURLId;
+            news.IsScroll = model.IsScroll;
+            news.IsHot = model.IsHot;
 
             var culture = model.NewsGlobalizations.First().Culture;
             //先删除原来子数据

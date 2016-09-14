@@ -46,7 +46,10 @@ namespace HardaGroup.Service
 
                 Title = news.Title,
                 SubTitle = news.SubTitle,
-                Culture = news.Culture
+                Culture = news.Culture,
+                IsScrollSearch = news.IsScrollSearch,
+                IsHotSearch = news.IsHotSearch
+                
             };
 
             if(string.IsNullOrEmpty(news.NewsScopeId))
@@ -81,7 +84,9 @@ namespace HardaGroup.Service
             {
                 Title = news.Title,
                 SubTitle = news.SubTitle,
-                Culture = news.Culture
+                Culture = news.Culture,
+                IsScrollSearch = news.IsScrollSearch,
+                IsHotSearch = news.IsHotSearch
             };
             if (string.IsNullOrEmpty(news.NewsScopeId))
             {
@@ -116,7 +121,9 @@ namespace HardaGroup.Service
             {
                 Title = news.Title,
                 SubTitle = news.SubTitle,
-                Culture = news.Culture
+                Culture = news.Culture,
+                IsScrollSearch = news.IsScrollSearch,
+                IsHotSearch = news.IsHotSearch
             };
             if (string.IsNullOrEmpty(news.NewsScopeId))
             {
@@ -142,6 +149,88 @@ namespace HardaGroup.Service
             return result;
         }
 
+        public List<M_NewsSearch> GetAllScrollNewsByCulture(string culture)
+        {
+            var allScrollNews = _dNews.GetAllScrollNews();
+
+            D_NewsScope dNewsScope = new D_NewsScope();
+            B_Image bImage = new B_Image();
+            List<M_NewsSearch> cultureDatas = new List<M_NewsSearch>();
+            foreach (var news in allScrollNews)
+            {
+                
+                //根据国际化代码过滤数据，如果没有当前国际化代码的数据，则取中文数据
+                var defaultGlobalizationData = news.NewsGlobalizations.Where(ag => ag.Culture == culture).FirstOrDefault();
+                if (defaultGlobalizationData == null)
+                {
+                    defaultGlobalizationData = news.NewsGlobalizations.Where(ag => ag.Culture == Common.Globalization_Chinese).FirstOrDefault();
+                }
+
+                M_NewsSearch cultureData = new M_NewsSearch();
+                cultureData.Id = news.Id.ToString();
+                cultureData.NewsURLId = news.NewsURLId;
+                cultureData.IsScroll = news.IsScroll;
+                cultureData.IsHot = news.IsHot;
+                cultureData.Title = defaultGlobalizationData.Title;
+                cultureData.SubTitle = defaultGlobalizationData.SubTitle;
+                cultureData.Description = defaultGlobalizationData.Description;
+                cultureData.Content = defaultGlobalizationData.Content;
+                cultureData.Image = defaultGlobalizationData.ImageId == null ? null : bImage.GetImageById(System.Convert.ToInt32(defaultGlobalizationData.ImageId));
+                cultureData.CreateDate = news.CreateDate;
+                cultureData.Creator = news.Creator;
+                cultureData.ModifiedDate = news.ModifiedDate;
+                cultureData.Modifier = news.Modifier;
+                cultureData.Pubtime = news.Pubtime;
+                cultureData.NewsScopeId = news.NewsScopeId.ToString();
+                cultureData.ScopeTypeCode = news.NewsScope.TypeCode;
+
+                cultureDatas.Add(cultureData);
+            }
+
+            return cultureDatas;
+
+        }
+
+        public List<M_NewsSearch> GetAllHotNewsByCulture(string culture)
+        {
+            var allNews = _dNews.GetAllHotNews();
+
+            B_Image bImage = new B_Image();
+            List<M_NewsSearch> cultureDatas = new List<M_NewsSearch>();
+            foreach (var news in allNews)
+            {
+                //根据国际化代码过滤数据，如果没有当前国际化代码的数据，则取中文数据
+                var defaultGlobalizationData = news.NewsGlobalizations.Where(ag => ag.Culture == culture).FirstOrDefault();
+                if (defaultGlobalizationData == null)
+                {
+                    defaultGlobalizationData = news.NewsGlobalizations.Where(ag => ag.Culture == Common.Globalization_Chinese).FirstOrDefault();
+                }
+
+                M_NewsSearch cultureData = new M_NewsSearch();
+                cultureData.Id = news.Id.ToString();
+                cultureData.NewsURLId = news.NewsURLId;
+                cultureData.IsScroll = news.IsScroll;
+                cultureData.IsHot = news.IsHot;
+                cultureData.Title = defaultGlobalizationData.Title;
+                cultureData.SubTitle = defaultGlobalizationData.SubTitle;
+                cultureData.Description = defaultGlobalizationData.Description;
+                cultureData.Content = defaultGlobalizationData.Content;
+                cultureData.Image = defaultGlobalizationData.ImageId == null ? null : bImage.GetImageById(System.Convert.ToInt32(defaultGlobalizationData.ImageId));
+                cultureData.CreateDate = news.CreateDate;
+                cultureData.Creator = news.Creator;
+                cultureData.ModifiedDate = news.ModifiedDate;
+                cultureData.Modifier = news.Modifier;
+                cultureData.Pubtime = news.Pubtime;
+                cultureData.NewsScopeId = news.NewsScopeId.ToString();
+                cultureData.ScopeTypeCode = news.NewsScope.TypeCode;
+
+                cultureDatas.Add(cultureData);
+            }
+
+            return cultureDatas;
+
+        }
+
         /// <summary>
         /// 根据当前id获取上一条数据的id
         /// </summary>
@@ -165,6 +254,8 @@ namespace HardaGroup.Service
 
             cultureData.Id = news.Id.ToString();
             cultureData.NewsURLId = news.NewsURLId;
+            cultureData.IsScroll = news.IsScroll;
+            cultureData.IsHot = news.IsHot;
             cultureData.Title = defaultGlobalizationData.Title;
             cultureData.SubTitle = defaultGlobalizationData.SubTitle;
             cultureData.Description = defaultGlobalizationData.Description;
@@ -202,6 +293,8 @@ namespace HardaGroup.Service
 
             cultureData.Id = news.Id.ToString();
             cultureData.NewsURLId = news.NewsURLId;
+            cultureData.IsScroll = news.IsScroll;
+            cultureData.IsHot = news.IsHot;
             cultureData.Title = defaultGlobalizationData.Title;
             cultureData.SubTitle = defaultGlobalizationData.SubTitle;
             cultureData.Description = defaultGlobalizationData.Description;
@@ -238,6 +331,8 @@ namespace HardaGroup.Service
 
             cultureData.Id = news.Id.ToString();
             cultureData.NewsURLId = news.NewsURLId;
+            cultureData.IsScroll = news.IsScroll;
+            cultureData.IsHot = news.IsHot;
             cultureData.Title = defaultGlobalizationData.Title;
             cultureData.SubTitle = defaultGlobalizationData.SubTitle;
             cultureData.Description = defaultGlobalizationData.Description;
@@ -284,6 +379,8 @@ namespace HardaGroup.Service
                 {
                     
                     NewsURLId = model.NewsURLId,
+                    IsScroll = model.IsScroll,
+                    IsHot = model.IsHot,
                     CreateDate = DateTime.Now,
                     Creator = _currentUser.UserName,
                     Pubtime = model.Pubtime,
@@ -343,6 +440,8 @@ namespace HardaGroup.Service
                 var news = new News()
                 {
                     NewsURLId = model.NewsURLId,
+                    IsScroll = model.IsScroll,
+                    IsHot = model.IsHot,
                     ModifiedDate = DateTime.Now,
                     Modifier = _currentUser.UserName,
                     Pubtime = model.Pubtime,
@@ -448,6 +547,8 @@ namespace HardaGroup.Service
             {
                 Id = news.Id.ToString(),
                 NewsURLId = news.NewsURLId,
+                IsScroll = news.IsScroll,
+                IsHot = news.IsHot,
                 CreateDate = news.CreateDate,
                 Creator = news.Creator,
                 ModifiedDate = news.ModifiedDate,
@@ -476,6 +577,8 @@ namespace HardaGroup.Service
             {
                 Id = news.Id.ToString(),
                 NewsURLId = news.NewsURLId,
+                IsScroll = news.IsScroll,
+                IsHot = news.IsHot,
                 Title = news.Title,
                 SubTitle = news.SubTitle,
                 Description = news.Description,

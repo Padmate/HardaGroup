@@ -94,5 +94,23 @@ namespace HardaGroup.Utility
         };
         #endregion
 
+        #region 是与否
+        /// <summary>
+        /// 否
+        /// </summary>
+        public const string No = "0";
+
+        /// <summary>
+        /// 是
+        /// </summary>
+        public const string Yes = "1";
+
+        public static Dictionary<string, string> Dic_YesNo = new Dictionary<string, string>()
+        {
+            {Yes,"是"},
+            {No,"否"}
+        };
+
+        #endregion
     }
 }

@@ -23,6 +23,9 @@
 .search-area{
     
 }
+.search-row{
+    margin-bottom:5px;
+}
 .table-area{
     border:1px solid #00c0ef;
 }

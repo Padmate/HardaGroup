@@ -89,6 +89,10 @@
     <Compile Include="Migrations\201609130352298_addHrefColumnToModuleGlobalization.Designer.cs">
       <DependentUpon>201609130352298_addHrefColumnToModuleGlobalization.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609130927599_addIsScrollColumnAndIsHotToNews.cs" />
+    <Compile Include="Migrations\201609130927599_addIsScrollColumnAndIsHotToNews.Designer.cs">
+      <DependentUpon>201609130927599_addIsScrollColumnAndIsHotToNews.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -118,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609130352298_addHrefColumnToModuleGlobalization.resx">
       <DependentUpon>201609130352298_addHrefColumnToModuleGlobalization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609130927599_addIsScrollColumnAndIsHotToNews.resx">
+      <DependentUpon>201609130927599_addIsScrollColumnAndIsHotToNews.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

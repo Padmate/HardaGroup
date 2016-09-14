@@ -20,6 +20,16 @@ namespace HardaGroup.Entities
         public string NewsURLId { get; set; }
 
         /// <summary>
+        /// 新闻是否在首页滚动表示
+        /// </summary>
+        public bool IsScroll { get; set; }
+
+        /// <summary>
+        /// 设置新闻为 热点新闻
+        /// </summary>
+        public bool IsHot { get; set; }
+
+        /// <summary>
         /// 创建者
         /// </summary>
         public string Creator { get; set; }
@@ -67,6 +77,18 @@ namespace HardaGroup.Entities
         /// 资讯URL唯一标示，用于显示在URL中
         /// </summary>
         public string NewsURLId { get; set; }
+
+        public string IsScrollSearch { get; set; }
+        public string IsHotSearch { get; set; }
+        /// <summary>
+        /// 新闻是否在首页滚动表示
+        /// </summary>
+        public bool IsScroll { get; set; }
+
+        /// <summary>
+        /// 设置新闻为 热点新闻
+        /// </summary>
+        public bool IsHot { get; set; }
 
         /// <summary>
         /// 创建者
