@@ -256,3 +256,136 @@ div.divmiddle-box-content { display: table-cell; vertical-align: middle; }
 .whitefont{
     color:white;
 }
+
+/*媒体资讯*/
+.newscontent-area{
+}
+
+.newscontent-area h2 {
+    color: #337ab7;
+    margin-top: 0px;
+    font-weight: bold;
+    margin-bottom:20px;
+}
+
+.newsScopeTabs li {
+    width: 100%;
+}
+
+.newsScopeTabs > li.active > a {
+    color: #cd0200;
+}
+
+.news-paginatorbar{
+    margin:10px auto;
+        
+}
+.news-paginator a{
+    cursor:pointer;
+}
+.news-content
+{
+    min-height:400px;
+}
+.news-content-row {
+    background-color: #fff;
+    border: solid 1px lightgray;
+    -webkit-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+    -moz-box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+    box-shadow: 0 -1px 10px rgba(0,0,0,.5);
+    margin: 20px 0px;
+    padding: 10px 0px;
+}
+.news-description p:hover{
+    color:#337ab7;
+}
+
+.news-description{
+    color:#555;
+}
+.pointer-cursor{
+    cursor:pointer;
+}
+
+
+/*招聘*/
+/*媒体资讯*/
+.jobcontent-area{
+}
+
+.jobcontent-area h2 {
+    color: #337ab7;
+    margin-top: 0px;
+    font-weight: bold;
+    margin-bottom:20px;
+}
+
+.jobScopeTabs li {
+    width: 100%;
+}
+
+.jobScopeTabs > li.active > a {
+    color: #cd0200;
+}
+
+.job-paginatorbar{
+    margin:10px auto;
+        
+}
+.job-paginator a{
+    cursor:pointer;
+}
+.job-content
+{
+    min-height:400px;
+}
+.job-content-row {
+    background-color: #fff;
+    border: solid 1px lightgray;
+    -webkit-box-shadow: 0 -1px 5px rgba(0,0,0,.5);
+    -moz-box-shadow: 0 -1px 5px rgba(0,0,0,.5);
+    box-shadow: 0 -1px 5px rgba(0,0,0,.5);
+    margin: 20px 0px;
+    padding: 10px 0px;
+    border-radius:10px;
+}
+.job-description p:hover{
+    color:#337ab7;
+}
+
+.job-description{
+    color:#555;
+    
+}
+.job-scope
+{
+    padding:5px;
+    color:#337ab7;
+    border-bottom:dotted 1px #337ab7;
+}
+.join-us-right{
+    background-color: #fff;
+    border: solid 1px lightgray;
+    margin: 20px 0px;
+    padding:0px 20px;
+    padding-bottom:50px;
+}
+.hot-job{
+    margin:10px auto;
+}
+.company-activity
+{
+    margin:10px auto;
+    margin-top:50px;
+}
+.company-activity-images
+{
+    padding:5px;
+}
+.company-activity-images a{
+    cursor:pointer;
+}
+.company-activity-images:hover{
+  box-shadow: 0 1px 2px 0 #337ab7, 0 4px 8px 0 #337ab7;
+
+}
