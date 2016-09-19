@@ -1,0 +1,111 @@
+﻿@using HardaGroup.Utility;
+@using HardaGroup.Models;
+@{
+    Layout = null;
+    var job = (M_JobSearch)ViewData["JobSearch"];
+    var jobScopes = (List<M_JobScopeSearch>)ViewData["JobScope"];
+    
+    //当前职位类别
+    var scopeName = jobScopes.Where(s=>s.Id == job.JobScopeId).Select(s =>s.TypeName).FirstOrDefault();
+}
+<div class="close-modal" data-dismiss="modal">
+    <i class="fa fa-3x fa-close"></i>
+</div>
+<div class="container">
+
+    <h3 class="customer-h3 text-center curd-title">详 细</h3>
+    <hr />
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">职位类别：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@scopeName</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">URL唯一标识：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@job.URLId</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">工作地点：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@job.Location</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">职位名称：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@job.JobTitle</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">需求描述：</label>
+            </div>
+            <div class="col-md-10">
+                <textarea class="textarea-large" disabled="disabled">@job.Description</textarea>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">发布时间：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@job.Pubtime.ToString("yyyy-MM-dd hh:mm:ss")</label>
+            </div>
+
+
+        </div>
+
+        
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">热门新闻：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">
+                 @{
+                     var isHot = "否";
+                    if(job.IsHot){
+                        isHot = "是";
+                    }
+                  }
+                @isHot
+                  
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">具体需求：</label>
+            </div>
+            <div class="col-md-10">
+                @Html.Raw(job.Content)
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-lg btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+</div>
+
+
+

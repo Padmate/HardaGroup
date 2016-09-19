@@ -1,0 +1,456 @@
+﻿@using HardaGroup.Web.Globalization;
+@using HardaGroup.Models;
+@using System.Configuration;
+@using HardaGroup.Utility;
+@using System.Web;
+@{
+    ViewBag.Title = language.JoinHarda;
+    
+    string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
+    string cultureCode = GlobalizationHelp.GetCurrentThreadCultureCode();
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+    //所有职位分类
+    List<M_JobScopeSearch> allJobScope = (List<M_JobScopeSearch>)ViewData["allJobScopes"];
+    //热门职位
+    List<M_JobSearch> hotJobs = (List<M_JobSearch>)ViewData["hotJobs"];
+    //工作地点
+    List<string> locations = (List<string>)ViewData["locations"];
+    //公司活动
+    List<M_ModuleSearch> companyActivities = (List<M_ModuleSearch>)ViewData["companyActivities"];
+
+    // 
+    var jobtype = Request["type"];
+    var city = Request["city"];
+    
+}
+<style>
+    .job-search{
+        margin:5px auto;
+    }
+    .job-search-row{
+        margin:20px auto;
+    }
+    .job-detail{
+        margin-left:10px;
+        text-decoration:underline;
+        color:#337ab7;
+    }
+    .job-search-row li{
+        float:left;
+        padding:10px 2px;
+    }
+
+    .job-search-scope,.job-search-location{
+        padding:10px;
+    }
+
+    .job-search-scope:hover,.job-search-scope:focus,.job-search-scope:active,
+    .job-search-scope.active,
+    .job-search-location:hover,.job-search-location:focus,.job-search-location:active,
+    .job-search-location.active{
+        color:white;
+        padding:10px;
+        background-color:#337ab7;
+        border-radius:5px;
+        -webkit-radius:5px;
+        -o-radius:5px;
+    }
+    .empty-result{
+        margin-top:50px;
+    }
+</style>
+<section >
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="jobcontent-area">
+
+                    <div class="customer-content-sm job-search">
+                        <div class="job-search-row customer-content-sm">
+                            <ul>
+                                <li><strong>职位分类：</strong></li>
+                                @{
+                                    //构造url
+                                    var url = string.Format("{0}/join-us{1}", cultureUri, urlRewriteExtension);
+                                    if (!string.IsNullOrEmpty(city))
+                                    {
+                                        url = url + "?city=" + city;
+                                    }
+                                    <li><a href="@url" class="job-search-scope">所有职位</a></li>
+                                    foreach (var scope in allJobScope)
+                                    {
+                                        var scopeUrl = url;
+                                        if (!string.IsNullOrEmpty(city))
+                                        {
+                                            scopeUrl = url + "&type=" + scope.Id;
+                                        }
+                                        else
+                                        {
+                                            scopeUrl = url + "?type=" + scope.Id;
+
+                                        }
+                                        <li>
+                                            <a href="@scopeUrl" id="@scope.Id" class="job-search-scope">@scope.TypeName</a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                            <div class="clearfix"></div>
+                            
+
+                        </div>
+                        <div class="job-search-row">
+                            <ul>
+                                <li><strong>工作地点：</strong></li>
+                                @{
+                                    //构造url
+                                    url = string.Format("{0}/join-us{1}", cultureUri, urlRewriteExtension);
+                                    if (!string.IsNullOrEmpty(jobtype))
+                                    {
+                                        url = url + "?type=" + jobtype;
+                                    }
+                                    <li><a href="@url" class="job-search-location">所有地点</a></li>
+                                    foreach (var location in locations)
+                                    {
+                                        var locationUrl = url;
+                                        if (!string.IsNullOrEmpty(jobtype))
+                                        {
+                                            locationUrl = url + "&city=" + location;
+                                        }
+                                        else
+                                        {
+                                            locationUrl = url + "?city=" + location;
+
+                                        }
+                                        <li>
+                                            <a href="@locationUrl" id="@location" class="job-search-location">@location</a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                           
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="job-content" id="job-content"></div>
+                    <div class="job-paginatorbar">
+                        <ul id="job-paginator"></ul>
+                    </div>
+                </div>
+             </div>
+            <div class="col-is-4 col-sm-4 col-md-4">
+                <div class="join-us-right">
+                    <div class="hot-job">
+                        <h3 class="customer-h3">热门职位</h3>
+                        @for (int i = 0; i < hotJobs.Count; i++)
+                        {
+                            if (i <= 6)
+                            {
+                                var contentHref = cultureCode + "/join-us/jobs/"+ hotJobs[i].URLId + urlRewriteExtension;
+                                var des = hotJobs[i].JobTitle + "("+hotJobs[i].Location+")"+"   - "+hotJobs[i].Pubtime.ToString("yyyy-MM-dd") ;
+                                <p class="customer-content-sm">
+                                    <i class="fa fa-newspaper-o"></i>
+                                    <a href="@contentHref">@des</a>
+                                </p>
+                            }
+
+                        }
+                       
+                    </div>
+
+                    <div class="company-activity">
+                        <h3 class="customer-h3">公司活动</h3>
+                        <div class="row">
+                            @foreach (var activity in companyActivities)
+                            {
+                                var href = !string.IsNullOrEmpty(activity.Href) ? activity.Href
+                                    : string.Format("{0}/join-us/{1}/{2}{3}", cultureUri, activity.Type, activity.ModuleURLId, urlRewriteExtension);
+
+                                
+                                var imagePath = activity.Image ==null? "":activity.Image.VirtualPath;
+                                
+                                
+                                <div class="col-md-4 company-activity-images">
+                                    <a href="@href">
+                                        <img class="img-responsive" src="@imagePath" title="@activity.SubTitle" />
+                                    </a>
+                                </div>
+                            }
+                           
+                        </div>
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<script>
+
+    var currentPage = '@Request["page"]';
+    var _currentPage = currentPage != null && currentPage != "" ? currentPage : 1;
+
+    var jobType = '@Request["type"]';
+    var city ='@Request["city"]';
+    var lsJobScope = @Html.Raw(ViewData["jsonlsJobScope"]);
+
+    $(function () {
+
+        InitPaging();
+        SelectScopeSearch();
+        SelectLocationSearch();
+    });
+
+    function SelectScopeSearch()
+    {
+        //选中当前路径选项
+        var element = $('.job-search-scope').filter(function () {
+            return this.id == jobType;
+        });
+        
+        if(element.length ==0)
+        {
+            $('.job-search-scope').first().addClass('active');
+
+        } else {
+            element.addClass('active');
+
+        }
+    }
+
+    function SelectLocationSearch()
+    {
+        //选中当前路径选项
+        var element = $('.job-search-location').filter(function () {
+            return this.id == city;
+        });
+        
+        if(element.length ==0)
+        {
+            $('.job-search-location').first().addClass('active');
+
+        } else {
+            element.addClass('active');
+
+        }
+    }
+
+    //初始化分页数据
+    function InitPaging() {
+        //获取总页数及当前页数据
+        var firstResult = GetPageData(_currentPage);
+        //加载当前页数据
+        RenderPageData(firstResult.data);
+
+        //重置分页条
+        ResetPaginator();
+        //超过一页才显示分页
+        if (firstResult.totalPages > 1) {
+            InitPaginator(firstResult.totalPages);
+        }
+
+    }
+    //重置分页条
+    function ResetPaginator() {
+        $("#job-paginator").html("");
+
+    }
+    //初始化分页条
+    function InitPaginator(totalPages) {
+        //重置分页条
+
+        var options = {
+            size: 'large',            //指定分页条的大小
+            bootstrapMajorVersion: 3,  //指定bootstrap版本，为v3，则容器必须为ul;如果版本为v2，则容器必须为div
+            numberOfPages: 10,         //设置可选分页按钮个数，默认5
+            currentPage: _currentPage,          //当前页
+            totalPages: totalPages,         //总页数（从服务端获取）
+            //onPageClicked: function (e, originalEvent, type, page) {
+            //    //获取分页数据
+            //    var result = GetPageData(page);
+            //    //渲染当前页数据
+            //    RenderPageData(result.data);
+            //},
+            pageUrl: function (type, page, current) {
+
+                var url = '@string.Format("{0}/join-us{1}",cultureUri,urlRewriteExtension)';
+                if (page != 1) {
+                    url = url + "?page=" + page;
+                }
+                if(jobType != null && jobType !="")
+                {
+                    url = setUrlParam(url,"type",jobType);
+
+                }
+                if(city != null && city !="")
+                {
+                    url = setUrlParam(url,"city",city);
+
+                }
+                
+                return url;
+
+            },
+            itemContainerClass: function (type, page, current) {
+                return (page === current) ? "active" : "pointer-cursor";
+            },
+            itemTexts: function (type, page, current) {
+                switch (type) {
+                    case "first":
+                        return '@language.FirstPage';
+                    case "prev":
+                        return '@language.PreviousPage';
+                    case "next":
+                        return '@language.NextPage';
+                    case "last":
+                        return '@language.LastPage';
+                    case "page":
+                        return page;
+                }
+            }
+        }
+
+        $("#job-paginator").bootstrapPaginator(options);
+    }
+
+    //获取分页数据
+    function GetPageData(currentPage) {
+
+        var resultData = {
+            totalPages: 0,
+            data: null
+        };
+
+        var params = {
+
+            "Culture":'@cultureCode',
+            "page": currentPage,
+            "JobScopeId":jobType,
+            "Location":city
+        };
+
+        //添加遮罩
+        $(".jobcontent-area").showLoading();
+        //获取数据总页数
+        $.ajax({
+            type: "POST",
+            url: "/JoinUs/GetJobPageDataForBootstrapPaginator",
+            data: params,
+            dataType: "json",
+            async: false,   //同步
+            success: function (result) {
+
+                resultData.totalPages = result.totalPages;
+                resultData.data = result.pageDatas;
+                //添加遮罩
+                $(".jobcontent-area").hideLoading();
+            }
+        });
+
+        return resultData;
+
+    }
+
+    //重新生成Body
+    function RenderPageData(datas) {
+        var dynamicHtml = "";
+        if(datas.length ==0)
+        {
+            dynamicHtml +='<div class="empty-result"><label class="customer-content-sm">没有找到相关结果</label></div>';
+        }
+
+        for (var i = 0; i < datas.length; i++) {
+
+            var pubTime = JsonDateFormat2(datas[i].Pubtime);
+
+            var contentHref = '@cultureUri' + "/join-us/jobs/"+ datas[i].URLId + '@urlRewriteExtension';
+
+            dynamicHtml += '<div class="row job-content-row">';
+            dynamicHtml += '<div class="col-md-12">';
+            dynamicHtml += '<div>';
+            dynamicHtml += '<h3 class="customer-h3 job-scope">' + DicJobScope(datas[i].JobScopeId)+'</h3>';
+            dynamicHtml += '</div>';
+            dynamicHtml += '<div class="job-line">';
+            dynamicHtml += '<p class="customer-content-sm">';
+            dynamicHtml += '<strong>职位名称：</strong>' + datas[i].JobTitle;
+            dynamicHtml += '</p>';
+            dynamicHtml += '</div>';
+            dynamicHtml += '<div class="job-line">';
+            dynamicHtml += '<p class="customer-content-sm">';
+            dynamicHtml += '<strong>工作地点：</strong>' + datas[i].Location;
+            dynamicHtml += '</p>';
+
+            dynamicHtml += '</div>';
+            dynamicHtml += '<div class="job-line">';
+            dynamicHtml += '<p class="customer-content-sm">';
+            dynamicHtml += '<strong>发布时间：</strong>'+pubTime;
+            dynamicHtml += '</p>';
+            dynamicHtml += '</div>';
+            dynamicHtml += '<div class="job-line">';
+            dynamicHtml += '<p class="customer-content-sm">';
+            dynamicHtml += '<strong>职责需求：</strong>';
+            dynamicHtml += datas[i].Description;
+            dynamicHtml += '<a href="'+contentHref+'" class="customer-content-sm job-detail">详细</a>';
+            dynamicHtml += '</p>';
+            dynamicHtml += '</div>';
+            dynamicHtml += '</div>';
+            dynamicHtml += '</div>';
+
+            
+        }
+        $("#job-content").html(dynamicHtml);
+
+    }
+
+    function DicJobScope(value)
+    {
+        var result = value;
+        for (var i = 0; i < lsJobScope.length;i++)
+        {
+            if (lsJobScope[i].Id == value)
+            {
+                result = lsJobScope[i].TypeName;
+            }
+        }
+        return result;
+    }
+
+    function setUrlParam(url,para_name, para_value) {
+        var newUrl =url;
+
+        if (url.indexOf("?") != -1) {
+            //如果url已经 包含了?参数
+
+            //截取?以后的字符串
+            var queryUrl = url.substr(url.indexOf("?") + 1);
+            if (queryUrl.toLowerCase().indexOf(para_name.toLowerCase()) == -1) {
+                //如果当前url不包含当前传入的参数
+                newUrl = url + "&" + para_name + "=" + para_value;
+                return newUrl;
+            } else {
+                //如果当前url包含当前传入的参数
+                var aParam = queryUrl.split("&");
+                for (var i = 0; i < aParam.length; i++) {
+                    if (aParam[i].substr(0, aParam[i].indexOf("=")).toLowerCase() == para_name.toLowerCase()) {
+                        aParam[i] = aParam[i].substr(0, aParam[i].indexOf("=")) + "=" + para_value;
+                    }
+                }
+                newUrl = url.substr(0, url.indexOf("?") + 1) + aParam.join("&");
+               
+                return newUrl;
+            }
+        } else {
+            //如果url不包含任意参数
+            newUrl = url+ "?" + para_name + "=" + para_value;
+            return newUrl;
+        }
+    }
+</script>

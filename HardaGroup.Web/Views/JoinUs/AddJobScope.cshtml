@@ -1,0 +1,118 @@
+﻿@using HardaGroup.Utility;
+@{
+    Layout = null;
+    string currentCultureCode = GlobalizationHelp.GetCurrentThreadCultureCode();
+}
+}
+
+<div class="modal-body">
+
+    <h3 class="customer-h3 text-center">
+        新 增
+    </h3>
+    <hr />
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-4 control-label">
+                <label class="customer-content-sm">职位分类代码：</label>
+            </div>
+            <div class="col-md-8">
+                <input class="input-large" id="tbTypeCode" placeholder="职位分类代码" />
+            </div>
+        </div>
+
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-4 control-label">
+                <label class="customer-content-sm">职位分类名称：</label>
+            </div>
+            <div class="col-md-8">
+                <input class="input-large" id="tbTypeName" placeholder="职位分类名称" />
+            </div>
+        </div>
+
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-4 control-label">
+                <label class="customer-content-sm">顺 序：</label>
+            </div>
+            <div class="col-md-8">
+                <input class="input-large" id="tbSequence" placeholder="显示顺序" />
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+    <button type="button" class="btn btn-danger" onclick="SaveAdd()">
+        保 存
+    </button>
+</div>
+
+<script type="text/javascript">
+
+    //修改或新增保存
+    function SaveAdd() {
+
+        $("body").showLoading();
+        var saveObj = ConstructSaveObj();
+        var jsonParam = JSON.stringify(saveObj);
+        $.ajax({
+            type: "POST",
+            url: "/JoinUs/SaveAddJobScope",
+            dataType: "json",
+            data: jsonParam,
+            async: false,   //同步
+            success: function (message) {
+
+                if (message.Success) {
+
+                    //刷新表格
+                    CloseAddScreen();
+                    //刷新
+                    RefreshTable();
+                    $("body").hideLoading();
+
+
+                } else {
+                    $("body").hideLoading();
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                    return;
+                }
+            }
+        });
+    }
+
+
+    //构造保存对象
+    function ConstructSaveObj() {
+
+        var jobScopeGlobalization = {
+            TypeName: $("#tbTypeName").val(),
+            Culture: '@Common.Globalization_Chinese'
+        };
+        var arrJobScopeGlobalization = new Array();
+        arrJobScopeGlobalization.push(jobScopeGlobalization);
+
+        var obj = {
+            TypeCode: $("#tbTypeCode").val(),
+            Sequence: $("#tbSequence").val(),
+            JobScopeGlobalizations: arrJobScopeGlobalization
+
+        };
+        return obj;
+    }
+
+</script>

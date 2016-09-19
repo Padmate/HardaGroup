@@ -153,6 +153,22 @@ namespace HardaGroup.Web.Controllers
         }
 
 
+        public ActionResult Jobs()
+        {
+            B_JobScope bJobScope = new B_JobScope();
+            var allJobScopes = bJobScope.GetAllZHCNData();
+
+            ViewData["jsonlsJobScope"] = JsonHandle.ToJson(allJobScopes);
+            ViewData["JobScope"] = allJobScopes;
+
+            return View();
+        }
+
+        public ActionResult JobScope()
+        {
+
+            return View();
+        }
     }
 }
 

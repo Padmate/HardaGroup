@@ -1,0 +1,49 @@
+﻿@using System.Configuration;
+@using HardaGroup.Models;
+@using HardaGroup.Utility
+@using HardaGroup.Web.Globalization;
+@{
+    var module = (M_ModuleSearch)ViewData["module"];
+
+    ViewBag.Title = module.SubTitle;
+    string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+    var type = Request["type"];
+}
+
+<style>
+    .detailNav {
+        padding-bottom: 30px;
+    }
+</style>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 detailNav">
+                <h3>
+                    <a class="customer-content-xs" href="@cultureUri/">@language.Home  &nbsp;>&nbsp;  </a>
+                    <a class="customer-content-xs" href="@string.Format("{0}/join-us{1}", cultureUri, urlRewriteExtension)">@language.JoinHarda &nbsp;>&nbsp;</a>
+                    <a class="customer-content-xs" href="@string.Format("{0}/join-us/{1}/{2}{3}", cultureUri, type, module.ModuleURLId, urlRewriteExtension)">@module.SubTitle</a>
+
+                </h3>
+                <!-- share -->
+
+
+            </div>
+            <div class="col-md-12">
+                @Html.Raw(module.Content)
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+</section>
+
+<script>
+
+</script>
+

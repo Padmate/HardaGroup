@@ -1,0 +1,494 @@
+﻿@using HardaGroup.Utility;
+@using HardaGroup.Models;
+@using System.Configuration;
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    ViewBag.Title = "招聘信息";
+
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+    var allJobScope = (List<M_JobScopeSearch>)ViewData["JobScope"];
+
+}
+
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12 col-is-12 col-sm-12 col-md-12">
+
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-is-12 col-sm-12 col-md-12">
+
+            <div class="panel-group search-area" id="accordion">
+                <div class="panel search-panel">
+                    <div class="panel-heading">
+                        <span class="customer-content-sm whitefont search-title">
+                            <i class="fa fa-search"></i>检索条件
+                        </span>
+                        <a class="search-collapse searcharea-btn whitefont" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch">
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div id="collapseSearch" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <div class="row search-row">
+                                <div class="col-xs-4 col-is-4 col-sm-4 col-md-4">
+                                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 text-right">
+                                        <label class="customer-content-xs">职位分类：</label>
+
+                                    </div>
+                                    <select id="selSearchJobScope" class="customer-content-xs select-mediu">
+                                        <option value="">所有</option>
+                                        @foreach (var scope in allJobScope)
+                                        {
+                                            <option value="@scope.Id">@scope.TypeName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-xs-4 col-is-4 col-sm-4 col-md-4">
+                                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 text-right">
+                                        <label class="customer-content-xs">工作地点：</label>
+
+                                    </div>
+                                    <input class="input-mediu" id="tbSearchLocation" />
+                                </div>
+                                <div class="col-xs-4 col-is-4 col-sm-4 col-md-4">
+                                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 text-right">
+                                        <label class="customer-content-xs">职位名称：</label>
+
+                                    </div>
+                                    <input class="input-mediu" id="tbSearchJobTitle" />
+                                </div>
+                            </div>
+                            <div class="row search-row">
+                                <div class="col-xs-4 col-is-4 col-sm-4 col-md-4">
+                                    <div class="col-xs-4 col-is-4 col-sm-4 col-md-4 text-right">
+                                        <label class="customer-content-xs">热门职位：</label>
+
+                                    </div>
+                                    <select id="selIsHot" class="customer-content-xs select-mediu">
+                                        <option value="">所有</option>
+                                        @foreach (var key in Common.Dic_YesNo.Keys)
+                                        {
+                                            <option value="@key">@Common.Dic_YesNo[key]</option>
+                                        }
+                                    </select>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="table-area">
+                <div class="customer-toolbar">
+                    <a id="btnAdd">
+                        <i class="glyphicon glyphicon-plus"></i> 新 增
+                    </a>
+                    <a id="btnEdit">
+                        <i class="glyphicon glyphicon-edit"></i> 修 改
+                    </a>
+                    <a id="btnDelete">
+                        <i class="glyphicon glyphicon-remove"></i> 删 除
+                    </a>
+                    <a id="btnGlobalization">
+                        <i class="glyphicon glyphicon-transfer"></i> 国际化
+                    </a>
+                    <a id="btnRefresh" class="searcharea-btn">
+                        <i class="glyphicon fa-spin glyphicon-refresh"></i> 查 询
+                    </a>
+
+                </div>
+                <div class="customer-table">
+                    <table id="table"></table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!--#region新增-->
+<div class="curd-model modal fade" id="jobadd" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div id="divAddContainer"></div>
+
+
+        </div>
+    </div>
+</div>
+<!--#endregion 修改-->
+<!--#region修改-->
+<div class="curd-model modal fade" id="jobedit" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div id="divEditContainer"></div>
+
+
+        </div>
+    </div>
+</div>
+<!--#region详细-->
+<div class="curd-model modal fade" id="jobdetail" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div id="divJobContainer"></div>
+
+
+        </div>
+    </div>
+</div>
+<!--#region国际化-->
+<div class="curd-model modal fade" id="jobGlobalization" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div id="divGlobalizationContainer"></div>
+
+
+        </div>
+    </div>
+</div>
+
+<!--Script要放在HTML标签后，才能将值绑定到标签-->
+<script type="text/javascript">
+
+    var lsJobScope = @Html.Raw(ViewData["jsonlsJobScope"]);
+
+
+    $(document).ready(function () {
+        InitTable();
+        InitToolBarButton();
+        InitModalEvent();
+
+        if(@allJobScope.Count ==0)
+        {
+            //询问框
+            layer.confirm('请先在"职位分类"中添加职位分类数据', {
+                btn: ['现在就去', '稍后再说'] //按钮
+            }, function () {
+                location.href = '@string.Format("/manage/job-scope{0}",urlRewriteExtension)';
+            }, function () {
+
+            });
+        }
+
+    });
+    function InitTable()
+    {
+        $('#table').bootstrapTable({
+            height:800,
+            method: 'post',                 //The method type to request remote data.
+            url: '/JoinUs/GetJobPageData',
+            dataType: "json",               //The type of data that you are expecting back from the server.
+            contentType:'application/json',
+            pagination: true,               //True to show a pagination toolbar on table bottom.
+            pageSize: 10,                   //初始化每页显示几条
+            pageNumber:1,                   //初始化在第几页
+            pageList: [10,25,50,100,200,'All'],
+            sidePagination: "server",       //服务端请求
+            idField:'Id',
+            //toolbar:'#toolbar',
+            showRefresh:false,
+            search:false,
+            paginationVAlign:'top',  //分页条显示在顶部
+            //searchOnEnterKey:true,  //回车查询
+            clickToSelect:true,     //单击行选中数据
+            queryParams: ConstructQueryParams,
+            //queryParamsType: "limit",
+            locale:'zh-CN',
+            columns: [{
+                checkbox: true
+            },
+            {
+                field: 'Id',
+                title: 'Id',
+                visible:false,
+            },
+            {
+                field: 'JobScopeId',
+                title: '职位分类',
+                formatter: function (value, row, index) {
+                    return DicJobScope(value);
+                }
+
+            },
+            {
+                field: 'Location',
+                title: '工作地点'
+
+            },
+            {
+                field: 'JobTitle',
+                title: '职位名称'
+
+            },
+            {
+                field: 'Description',
+                title: '需求描述',
+                formatter: function (value, row, index) {
+
+                    var result = value;
+                    if (result.length > 20) {
+                        result = '<a class="custooltip" href="#">' + result.substr(0, 20) + '......<span class="classic">' + value + '</span></a>';
+
+                    }
+                    return result;
+                }
+
+            },
+            {
+                field: 'Content',
+                title: '具体需求',
+                formatter: function (value, row, index) {
+                    var result = '<a href="javaScript:void(0)" onclick="Detail(&apos;' + row.Id + '&apos;)">点击查看</a>';
+                    return result;
+                }
+
+            },
+            {
+                field: 'IsHot',
+                title: '热门职位',
+                align:'center',
+                formatter: function (value, row, index) {
+
+                    var result ="否";
+                    if (value) {
+                        return "<font style='color:red;'>是</font>";
+                    }
+                    return result;
+                }
+
+            },
+            {
+                field: 'Pubtime',
+                title: '发布时间',
+                formatter: function (value, row, index) {
+
+                    return JsonDateFormat2(value);
+                }
+            }
+            ]
+        });
+    }
+
+
+    function ConstructQueryParams(param)
+    {
+        var params = {
+            limit: param.limit, //页面大小
+            offset:param.offset,//偏移数量
+            page: param.offset / param.limit, //页码
+            Location:$("#tbSearchLocation").val(),
+            JobTitle: $("#tbSearchJobTitle").val(),
+            JobScopeId:$("#selSearchJobScope").val(),
+            IsHotSearch:$("#selIsHot").val()
+        };
+        return params;
+    }
+
+    function InitModalEvent() {
+        $('#jobadd').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#jobadd').on('hide.bs.modal', function () {
+
+            // 关闭事件
+            $("#divAddContainer").html("");
+
+        })
+
+        $('#jobedit').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#jobedit').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divEditContainer").html("");
+
+        });
+        $('#jobdetail').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#jobdetail').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divJobContainer").html("");
+
+        });
+        $('#jobGlobalization').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#jobGlobalization').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divGlobalizationContainer").html("");
+
+        });
+    }
+
+    function CloseAddScreen() {
+        $('#jobadd').modal('hide');
+
+    }
+    function CloseEditScreen() {
+        $('#jobedit').modal('hide');
+
+    }
+    function CloseGlobalizationScreen() {
+        $('#jobGlobalization').modal('hide');
+
+    }
+
+    function InitToolBarButton()
+    {
+        $("#btnRefresh").click(function(){
+            RefreshTable();
+        });
+
+        document.onkeydown = function(e){
+            var ev = document.all ? window.event : e;
+            if(ev.keyCode==13) {
+
+                RefreshTable();
+            }
+        };
+
+
+
+        $("#btnAdd").click(function(){
+            $('#jobadd').modal('show');
+            $("#divAddContainer").load("/JoinUs/JobAdd");
+        });
+
+        $("#btnEdit").click(function () {
+
+            var selections = $('#table').bootstrapTable('getSelections');
+            if (selections.length == 0) {
+                layer.alert("请选择要将要修改的数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            } else if (selections.length != 1)
+            {
+                layer.alert("只能选择一条数据进行修改", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+
+            var id = selections[0].Id;
+            $('#jobedit').modal('show');
+            $("#divEditContainer").load("/JoinUs/JobEdit?jobId=" + id);
+
+        });
+
+        $("#btnGlobalization").click(function () {
+
+            var selections = $('#table').bootstrapTable('getSelections');
+            if (selections.length == 0) {
+                layer.alert("请选择要将要国际化的数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            } else if (selections.length != 1)
+            {
+                layer.alert("只能选择一条数据进行国际化操作", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+
+            var id = selections[0].Id;
+            $('#jobGlobalization').modal('show');
+            $("#divGlobalizationContainer").load("/JoinUs/JobGlobalization?jobId=" + id);
+
+        });
+
+        $("#btnDelete").click(function(){
+            var selections = $('#table').bootstrapTable('getSelections');
+            if(selections.length == 0)
+            {
+                layer.alert("请选择要将要删除的数据", {
+                    skin: 'layui-layer-molv'
+                            ,closeBtn: 0
+                            ,shift: 5 //动画类型
+                });
+                return ;
+            }
+            var jobIds =[];
+            for(var i=0;i<selections.length;i++)
+            {
+                var id = selections[i].Id;
+                jobIds.push(id);
+            }
+            //delete records
+            var jsonContactId = JSON.stringify(jobIds);
+            $.ajax({
+                type: "post",//使用get方法访问后台
+                dataType: "json",//返回json格式的数据
+                url: "/JoinUs/BachDeleteJobById",
+                data: jsonContactId,
+                async:false,
+                success: function(message){
+                    if(message.Success)
+                    {
+                        RefreshTable();
+                    }else{
+                        layer.alert(message.Content, {
+                            skin: 'layui-layer-molv'
+                            ,closeBtn: 0
+                            ,shift: 5 //动画类型
+                        });
+                    }
+
+                }
+            });
+        });
+    }
+
+    function Detail(id) {
+        $('#jobdetail').modal('show');
+        $("#divJobContainer").load("/JoinUs/JobDetail?jobId=" + id);
+    }
+
+    function RefreshTable()
+    {
+        $('#table').bootstrapTable('refresh');
+
+    }
+
+    function DicJobScope(value)
+    {
+        var result = value;
+        for (var i = 0; i < lsJobScope.length;i++)
+        {
+            if (lsJobScope[i].Id == value)
+            {
+                result = lsJobScope[i].TypeName;
+            }
+        }
+        return result;
+    }
+</script>

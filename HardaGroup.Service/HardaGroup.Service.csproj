@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="B_About.cs" />
     <Compile Include="B_Image.cs" />
+    <Compile Include="B_Job.cs" />
+    <Compile Include="B_JobScope.cs" />
     <Compile Include="B_Module.cs" />
     <Compile Include="B_News.cs" />
     <Compile Include="B_NewsScope.cs" />

@@ -1,0 +1,213 @@
+﻿@using HardaGroup.Utility;
+@using HardaGroup.Models;
+@{
+    Layout = null;
+    var job = (M_Job)ViewData["Job"];
+    var jobScopes = (List<M_JobScopeSearch>)ViewData["JobScope"];
+    var globalizationLanguage = (Dictionary<string, string>)ViewData["globalizationLanguage"];
+    
+    //所属职位类别
+    var currentJobScope = jobScopes.Where(s => s.Id == job.JobScopeId).FirstOrDefault();
+    var currentJobScopeName = currentJobScope == null ? "" : currentJobScope.TypeName;
+}
+<div class="close-modal" data-dismiss="modal">
+    <i class="fa fa-3x fa-close"></i>
+</div>
+<div class="container">
+
+    <h3 class="customer-h3 text-center curd-title">国际化</h3>
+    <hr />
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">职位分类：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@currentJobScopeName</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">URL唯一标识：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@job.URLId</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">发布时间：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@job.Pubtime</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">国际化语言：</label>
+            </div>
+            <div class="col-md-10">
+                <select class="select-large" id="selCulture">
+                    @foreach (var key in globalizationLanguage.Keys)
+                    {
+                        <option value="@key">@globalizationLanguage[key]</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">工作地点：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="input-large" id="tbLocation" placeholder="工作地点" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">职位名称：</label>
+            </div>
+            <div class="col-md-10">
+                <input class="input-large" id="tbJobTitle" placeholder="职位名称" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">需求描述：</label>
+            </div>
+            <div class="col-md-10">
+                <textarea class="textarea-large" id="taDescription"></textarea>
+            </div>
+        </div>
+        
+        
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">具体需求：</label>
+            </div>
+            <div class="col-md-10">
+                <textarea id="taContent" name="content"></textarea>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-lg btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+    <button type="button" class="btn btn-lg btn-danger" onclick="SaveEdit()">
+        保 存
+    </button>
+</div>
+
+
+
+
+<script type="text/javascript">
+    var editor = KindEditor.create('textarea[name="content"]',kindeditorConfig);
+
+    $(function () {
+        InitDatetimepicker(".form_datetime");
+        LoadCultureData();
+
+        $("#selCulture").change(function () {
+            LoadCultureData();
+        });
+
+    });
+
+
+    //根据国际化语言加载数据
+    function LoadCultureData() {
+        $("body").showLoading();
+        $.ajax({
+            type: "POST",
+            url: "/JoinUs/LoadJobGlobalizationData",
+            dataType: "json",
+            data: { JobId: '@job.Id', Culture: $("#selCulture").val() },
+            async: false,   //同步
+            success: function (message) {
+                $("body").hideLoading();
+                //先清空
+                $("#tbLocation").val("");
+                $("#tbJobTitle").val("");
+                $("#taDescription").val("");
+                editor.html("");
+
+                if (message.Success) {
+                    
+                    //赋值
+                    var data = JSON.parse(message.Content);
+
+                    var imageUrl = data.Image != null ? data.Image.VirtualPath : "";
+                    $("#tbLocation").val(data.Location);
+                    $("#tbJobTitle").val(data.JobTitle);
+                    $("#taDescription").val(data.Description);
+                    editor.html(data.Content);
+
+                }
+            }
+        });
+    }
+
+
+    //修改或新增保存
+    function SaveEdit() {
+
+        $("body").showLoading();
+        var saveObj = ConstructSaveObj();
+        var jsonParam = JSON.stringify(saveObj);
+        $.ajax({
+            type: "POST",
+            url: "/JoinUs/SaveJobGlobalization",
+            dataType: "json",
+            data: jsonParam,
+            async: false,   //同步
+            success: function (message) {
+
+                if (message.Success) {
+
+                    //图片上传成功后关闭对话框，刷新表格
+                    CloseGlobalizationScreen();
+                    //刷新表格
+                    RefreshTable();
+                    $("body").hideLoading();
+
+                } else {
+                    $("body").hideLoading();
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                    return;
+                }
+            }
+        });
+    }
+
+
+    //构造保存对象
+    function ConstructSaveObj() {
+
+        var jobGlobalization = {
+            JobId:'@job.Id',
+            Location: $("#tbLocation").val(),
+            JobTitle: $("#tbJobTitle").val(),
+            Description: $("#taDescription").val(),
+            Content: editor.html(),
+            Culture: $("#selCulture").val()
+        };
+
+
+        return jobGlobalization;
+    }
+
+</script>
+
+

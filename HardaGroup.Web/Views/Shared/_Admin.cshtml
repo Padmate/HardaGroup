@@ -270,7 +270,29 @@
                             </li>
                         </ul>
                     </li>
-                    
+                    <li class="treeview">
+                        <a href="javaScript:void(0)">
+                            <i class="fa fa-image"></i> <span>加入我们</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="@string.Format("/manage/job-scope{0}",urlRewriteExtension)">
+                                    <i class="fa fa-info-circle text-blue"></i>招聘-职位分类
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@string.Format("/manage/jobs{0}",urlRewriteExtension)">
+                                    <i class="fa fa-info-circle text-blue"></i>招聘-职位信息
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@string.Format("/manage/{0}{1}", Common.ModuleType_Company_Activities, urlRewriteExtension)">
+                                    <i class="fa fa-info text-yellow"></i>公司活动
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
                  </ul>
             </section>
             <!-- /.sidebar -->

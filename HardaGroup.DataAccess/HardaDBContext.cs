@@ -35,9 +35,15 @@ namespace HardaGroup.DataAccess
         public DbSet<AboutGlobalization> AboutGlobalizations { get; set; }
         public DbSet<NewsScope> NewsScopes { get; set; }
         public DbSet<NewsScopeGlobalization> NewsScopeGlobalizations { get; set; }
-
         public DbSet<News> News { get; set; }
         public DbSet<NewsGlobalization> NewsGlobalizations { get; set; }
+
+        public DbSet<JobScope> JobScopes { get; set; }
+        public DbSet<JobScopeGlobalization> JobScopeGlobalizations { get; set; }
+
+        public DbSet<Job> Jobs { get; set; }
+        public DbSet<JobGlobalization> JobGlobalizations { get; set; }
+
 
         public DbSet<Module> Modules { get; set; }
         public DbSet<ModuleGlobalization> ModuleGlobalizations { get; set; }
@@ -52,6 +58,10 @@ namespace HardaGroup.DataAccess
             modelBuilder.Configurations.Add(new NewsScopeGlobalizationConfiguration());
             modelBuilder.Configurations.Add(new NewsConfiguration());
             modelBuilder.Configurations.Add(new NewsGlobalizationConfiguration());
+            modelBuilder.Configurations.Add(new JobScopeConfiguration());
+            modelBuilder.Configurations.Add(new JobScopeGlobalizationConfiguration());
+            modelBuilder.Configurations.Add(new JobConfiguration());
+            modelBuilder.Configurations.Add(new JobGlobalizationConfiguration());
             modelBuilder.Configurations.Add(new ModuleConfiguration());
             modelBuilder.Configurations.Add(new ModuleGlobalizationConfiguration());
 

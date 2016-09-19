@@ -59,6 +59,10 @@
     <Compile Include="DBConfiguration\AboutConfiguration.cs" />
     <Compile Include="DBConfiguration\AboutGlobalizationConfiguration.cs" />
     <Compile Include="DBConfiguration\ImageConfiguration.cs" />
+    <Compile Include="DBConfiguration\JobConfiguration.cs" />
+    <Compile Include="DBConfiguration\JobGlobalizationConfiguration.cs" />
+    <Compile Include="DBConfiguration\JobScopeConfiguration.cs" />
+    <Compile Include="DBConfiguration\JobScopeGlobalizationConfiguration.cs" />
     <Compile Include="DBConfiguration\ModuleConfiguration.cs" />
     <Compile Include="DBConfiguration\ModuleGlobalization.cs" />
     <Compile Include="DBConfiguration\ModuleGlobalizationConfiguration.cs" />
@@ -68,6 +72,8 @@
     <Compile Include="DBConfiguration\NewsScopeGlobalizationConfiguration.cs" />
     <Compile Include="D_About.cs" />
     <Compile Include="D_Image.cs" />
+    <Compile Include="D_Job.cs" />
+    <Compile Include="D_JobScope.cs" />
     <Compile Include="D_Module.cs" />
     <Compile Include="D_News.cs" />
     <Compile Include="D_User.cs" />
@@ -92,6 +98,14 @@
     <Compile Include="Migrations\201609130927599_addIsScrollColumnAndIsHotToNews.cs" />
     <Compile Include="Migrations\201609130927599_addIsScrollColumnAndIsHotToNews.Designer.cs">
       <DependentUpon>201609130927599_addIsScrollColumnAndIsHotToNews.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609180230032_AddJobTables.cs" />
+    <Compile Include="Migrations\201609180230032_AddJobTables.Designer.cs">
+      <DependentUpon>201609180230032_AddJobTables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201609180233254_AddJobRelateTables.cs" />
+    <Compile Include="Migrations\201609180233254_AddJobRelateTables.Designer.cs">
+      <DependentUpon>201609180233254_AddJobRelateTables.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -125,6 +139,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609130927599_addIsScrollColumnAndIsHotToNews.resx">
       <DependentUpon>201609130927599_addIsScrollColumnAndIsHotToNews.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609180230032_AddJobTables.resx">
+      <DependentUpon>201609180230032_AddJobTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609180233254_AddJobRelateTables.resx">
+      <DependentUpon>201609180233254_AddJobRelateTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

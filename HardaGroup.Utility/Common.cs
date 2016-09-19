@@ -83,14 +83,17 @@ namespace HardaGroup.Utility
         /// </summary>
         public const string ModuleType_VentureSupport_ThreeSpaces = "three-spaces";
 
+        public const string ModuleType_Company_Activities = "company-activities";
+
+
         public static Dictionary<string, string> Dic_ModuleType = new Dictionary<string, string>(){
             {ModuleType_Manufacturing_Introduction,"智能制造-制造简介"},
             {ModuleType_Manufacturing_ServiceScope,"智能制造-服务范围"},
             {ModuleType_Manufacturing_ServiceFeatures,"智能制造-服务特色"},
             {ModuleType_VentureSupport_InvestedFields,"创新创业-投资领域"},
             {ModuleType_VentureSupport_NineSupportingPlatforms,"创新创业-九大平台"},
-            {ModuleType_VentureSupport_ThreeSpaces,"创新创业-三大空间"}
-
+            {ModuleType_VentureSupport_ThreeSpaces,"创新创业-三大空间"},
+            {ModuleType_Company_Activities,"公司活动"}
         };
         #endregion
 

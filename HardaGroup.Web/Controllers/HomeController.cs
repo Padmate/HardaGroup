@@ -46,13 +46,6 @@ namespace HardaGroup.Web.Controllers
             return View();
         }
 
-        public ActionResult JoinUs()
-        {
-            B_Image bImage = new B_Image();
-            List<M_Image> bgImages = bImage.GetBGImagesByType(Common.Image_JoinUsBG);
-            ViewData["bgimages"] = bgImages;
-            return View();
-        }
-
+       
     }
 }

@@ -48,9 +48,13 @@
     <Compile Include="M_Mail.cs" />
     <Compile Include="M_Module.cs" />
     <Compile Include="M_ModuleGlobalization.cs" />
+    <Compile Include="M_Job.cs" />
     <Compile Include="M_News.cs" />
+    <Compile Include="M_JobGlobalization.cs" />
     <Compile Include="M_NewsGlobalization.cs" />
+    <Compile Include="M_JobScope.cs" />
     <Compile Include="M_NewsScope.cs" />
+    <Compile Include="M_JobScopeGlobalization.cs" />
     <Compile Include="M_NewsScopeGlobalization.cs" />
     <Compile Include="M_User.cs" />
     <Compile Include="PageRequest.cs" />

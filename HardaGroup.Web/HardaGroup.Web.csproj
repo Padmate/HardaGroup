@@ -178,6 +178,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
+    <Compile Include="Controllers\JoinUsController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\VentureSupportController.cs" />
@@ -581,7 +582,7 @@
     <Content Include="Views\Solutions\ResearchAndDevelopment.cshtml" />
     <Content Include="Views\VentureSupport\Index.cshtml" />
     <Content Include="Views\News\Index.cshtml" />
-    <Content Include="Views\Home\JoinUs.cshtml" />
+    <Content Include="Views\JoinUs\Index.cshtml" />
     <Content Include="Views\Shared\_map.cshtml" />
     <Content Include="Views\Shared\_Admin.cshtml" />
     <Content Include="Views\Manage\BackgroundImage.cshtml" />
@@ -610,6 +611,17 @@
     <Content Include="Views\Manage\Module.cshtml" />
     <Content Include="Views\AdvancedManufacturing\ShowDetail.cshtml" />
     <Content Include="Views\VentureSupport\ShowDetail.cshtml" />
+    <Content Include="Views\JoinUs\ShowCompanyActivityDetail.cshtml" />
+    <Content Include="Views\Manage\Jobs.cshtml" />
+    <Content Include="Views\JoinUs\JobAdd.cshtml" />
+    <Content Include="Views\JoinUs\AddJobScope.cshtml" />
+    <Content Include="Views\JoinUs\JobDetail.cshtml" />
+    <Content Include="Views\JoinUs\JobEdit.cshtml" />
+    <Content Include="Views\JoinUs\EditJobScope.cshtml" />
+    <Content Include="Views\JoinUs\JobGlobalization.cshtml" />
+    <Content Include="Views\JoinUs\GlobalizationJobScope.cshtml" />
+    <Content Include="Views\JoinUs\JobShowDetail.cshtml" />
+    <Content Include="Views\Manage\JobScope.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

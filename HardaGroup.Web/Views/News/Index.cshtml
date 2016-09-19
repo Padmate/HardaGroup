@@ -113,7 +113,7 @@
             //},
             pageUrl: function (type, page, current) {
 
-                var url = '@string.Format("/press/{0}{1}",typecode,urlRewriteExtension)';
+                var url = '@string.Format("{0}/press/{1}{2}",cultureUri,typecode,urlRewriteExtension)';
                 if (page != 1) {
                     url = url + "?page=" + page;
                 }
