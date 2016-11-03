@@ -148,6 +148,7 @@ namespace HardaGroup.Web.Controllers
 
             ViewData["jsonlsNewsScope"] = JsonHandle.ToJson(allNewsScopes);
             ViewData["NewsScope"] = allNewsScopes;
+            ViewData["yesno"] = JsonHandle.ToJson(Common.Dic_YesNo);
 
             return View();
         }
@@ -160,7 +161,7 @@ namespace HardaGroup.Web.Controllers
 
             ViewData["jsonlsJobScope"] = JsonHandle.ToJson(allJobScopes);
             ViewData["JobScope"] = allJobScopes;
-
+            ViewData["yesno"] = JsonHandle.ToJson(Common.Dic_YesNo);
             return View();
         }
 

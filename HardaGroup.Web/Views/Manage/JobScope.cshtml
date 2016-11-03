@@ -10,59 +10,22 @@
     <!-- Small boxes (Stat box) -->
     <div class="row">
         <div class="col-xs-12 col-is-12 col-sm-12 col-md-12">
-            <div class="panel-group search-area" id="accordion">
-                <div class="panel search-panel">
-                    <div class="panel-heading">
-                        <span class="customer-content-sm whitefont search-title">
-                            <i class="fa fa-search"></i>检索条件
-                        </span>
-                        <a class="search-collapse searcharea-btn whitefont" data-toggle="collapse" data-parent="#accordion" href="#collapseSearch">
-                            <i class="fa fa-chevron-down"></i>
-                        </a>
-
-                        <div class="clearfix"></div>
-                    </div>
-                    <div id="collapseSearch" class="panel-collapse collapse in">
-                        <div class="panel-body">
-
-                            <div class="col-xs-4 col-is-4 col-sm-4 col-md-4">
-                                <label class="customer-content-xs">职位分类代码</label>
-                                <input class="input-mediu" id="tbSearchTypeCode" />
-                            </div>
-                            <div class="col-xs-4 col-is-4 col-sm-4 col-md-4">
-                                <label class="customer-content-xs">职位分类名称</label>
-                                <input class="input-mediu" id="tbSearchTypeName" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="table-area">
-                <div class="customer-toolbar">
-                    <a id="btnAdd">
-                        <i class="glyphicon glyphicon-plus"></i> 新 增
-                    </a>
-                    <a id="btnEdit">
-                        <i class="glyphicon glyphicon-edit"></i> 修 改
-                    </a>
-                    <a id="btnDelete">
-                        <i class="glyphicon glyphicon-remove"></i> 删 除
-                    </a>
-                    <a id="btnGlobalization">
-                        <i class="glyphicon glyphicon-transfer"></i> 国际化
-                    </a>
-                    <a id="btnRefresh" class="searcharea-btn">
-                        <i class="glyphicon fa-spin glyphicon-refresh"></i> 查 询
-                    </a>
-
-                </div>
-                <div class="customer-table">
-                    <table id="table"></table>
-
-                </div>
+            <div id="toolbar">
+                <a id="btnAdd" class="btn btn-success">
+                    <i class="glyphicon glyphicon-plus"></i> 新 增
+                </a>
+                <a id="btnEdit" class="btn btn-info">
+                    <i class="glyphicon glyphicon-edit"></i> 修 改
+                </a>
+                <a id="btnDelete" class="btn btn-danger">
+                    <i class="glyphicon glyphicon-remove"></i> 删 除
+                </a>
+                <a id="btnGlobalization" class="btn btn-primary">
+                    <i class="glyphicon glyphicon-transfer"></i> 国际化
+                </a>
 
             </div>
-
+            <table id="table"></table>
         </div>
 
     </div>
@@ -123,12 +86,21 @@
             pageNumber:1,                   //初始化在第几页
             pageList: [10,25,50,100,200,'All'],
             sidePagination: "server",       //服务端请求
-            idField:'Id',
+            idField: 'Id',
+            toolbar: '#toolbar',
+            showRefresh: true,
             queryParams: ConstructQueryParams,
             //queryParamsType: "limit",
             locale: 'zh-CN',
-            paginationVAlign: 'top',  //分页条显示在顶部
+            paginationVAlign: 'bottom',  //分页条显示在顶部
             clickToSelect: true,     //单击行选中数据
+            showColumns: true,
+            showToggle: true,
+            showExport: true, //数据导出
+            exportDataType: 'basic', // 'basic', 'all', 'selected'.
+            exportTypes: ['excel'],
+            filterControl: true,   //显示过滤
+            filterShowClear: true,  //显示清空过滤按钮
             columns: [{
                 checkbox: true
             },
@@ -140,12 +112,14 @@
             {
                 field: 'TypeCode',
                 title: '职位分类代码',
+                filterControl: "input",
                 sortable: true
 
             },
             {
                 field: 'TypeName',
                 title: '职位分类名称',
+                filterControl: "input",
                 sortable: true
 
             },
@@ -160,12 +134,17 @@
     }
     function ConstructQueryParams(param)
     {
+        var filterObj = {};
+        if (param.filter != null) {
+            filterObj = JSON.parse(param.filter);
+        }
+
         var params = {
             limit: param.limit, //页面大小
             offset:param.offset,//偏移数量
             page: param.offset / param.limit, //页码
-            TypeCode: $("#tbSearchTypeCode").val(),
-            TypeName: $("#tbSearchTypeName").val()
+            TypeCode: filterObj.TypeCode == null ? "" : filterObj.TypeCode,
+            TypeName: filterObj.TypeName == null ? "" : filterObj.TypeName
         };
         return params;
     }
@@ -225,9 +204,6 @@
             }
         };
 
-        $("#btnRefresh").click(function () {
-            RefreshTable();
-        });
 
         $("#btnAdd").click(function(){
             $('#jobScopeadd').modal('show');

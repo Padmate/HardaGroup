@@ -460,6 +460,11 @@
     <Content Include="Scripts\bootstrap-table\bootstrap-table-zh-CN.js" />
     <Content Include="Scripts\bootstrap-table\bootstrap-table.js" />
     <Content Include="Scripts\bootstrap-table\customer-bootstrap-table.js" />
+    <Content Include="Scripts\bootstrap-table\export\bootstrap-table-export.js" />
+    <Content Include="Scripts\bootstrap-table\export\bootstrap-table-export.min.js" />
+    <Content Include="Scripts\bootstrap-table\export\tableExport.js" />
+    <Content Include="Scripts\bootstrap-table\export\tableExport.min.js" />
+    <Content Include="Scripts\bootstrap-table\filter-control\bootstrap-table-filter-control.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\fontawesome-webfont.eot" />
@@ -538,6 +543,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\template.js" />
+    <Content Include="Scripts\webuploader\customer-image-webuploader.js" />
     <Content Include="Scripts\webuploader\Uploader.swf" />
     <Content Include="Scripts\webuploader\webuploader.css" />
     <Content Include="Scripts\webuploader\webuploader.js" />

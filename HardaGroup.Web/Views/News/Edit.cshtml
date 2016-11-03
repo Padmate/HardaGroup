@@ -155,10 +155,12 @@
 
 <link rel="stylesheet" type="text/css" href="~/Scripts/webuploader/webuploader.css">
 <script src="~/Scripts/webuploader/webuploader.js"></script>
+<script src="~/Scripts/webuploader/customer-image-webuploader.js"></script>
 
 
 <script type="text/javascript">
     var editor = KindEditor.create('textarea[name="content"]',kindeditorConfig);
+
 
     $(function () {
         InitDatetimepicker(".form_datetime");
@@ -179,48 +181,15 @@
     var uploader;
     function InitWebUploader() {
 
-
-        // 初始化Web Uploader
-        uploader = WebUploader.create({
-            auto: false,   // 选完文件后，是否自动上传。
-            swf: '../Scripts/webuploader/Uploader.swf',
-            server: '/News/UploadThumbnailsImage',
-            duplicate: true, //可重复上传同一文件
-            pick: '#uploadThumbnailsImage',  // 选择文件的按钮。可选。内部根据当前运行是创建，可能是input元素，也可能是flash.
-            compress: false, //图片不压缩
-            accept: {           // 只允许选择图片文件。
-                title: 'Images',
-                extensions: 'gif,jpg,jpeg,bmp,png',
-                mimeTypes: 'image/*'
-            },
+        //初始化图片上传插件
+        uploader = $("#uploadThumbnailsImage").InitImageWebUploader({
+            url: "/News/UploadThumbnailsImage",
+            size: 1,
             multiple: false,
-            fileSingleSizeLimit: 1 * 1024 * 1024, // 单个文件最大不能超过1 M
-            thumb: {        //缩略图配置
-                // 为空的话则保留原有图片格式。
-                // 否则强制转换成指定的类型。
-                type: ''
-
-            }
-        });
-        uploader.on('fileQueued', function (file) {
-            $("#status").html("");
-            //生成预览图片
-            uploader.makeThumb(file, function (error, src) {
-                if (error) {
-                    $("#showUploadImage").attr('alt', "预览错误");
-                } else {
-                    $("#showUploadImage").attr('src', src);
-                }
-            }, 1, 1);
-        });
-
-        uploader.on('startUpload', function () {
-
-            //开始上传，添加遮罩
-            //$("body").showLoading();
-        });
-        uploader.on('uploadFinished', function () {
-
+            autoupload: false,
+            thumbid: "#showUploadImage",
+            singleupload: true
+        }, function () {
             //图片上传成功后关闭对话框，刷新表格
             CloseEditScreen();
             //刷新表格
@@ -228,40 +197,6 @@
             $("body").hideLoading();
         });
 
-        uploader.on('error', function (handler) {
-
-            //隐藏遮罩
-            $("body").hideLoading();
-
-            if (handler == "Q_EXCEED_NUM_LIMIT") {
-                alert("超出最大张数");
-            }
-            if (handler == "F_DUPLICATE") {
-                alert("文件重复");
-            }
-            if (handler == "F_EXCEED_SIZE") {
-                $("#status").html("<lable style='color:red;'>图片大小不能超过1M</lable>");
-            }
-        });
-
-
-        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
-        uploader.on('uploadSuccess', function (file, response) {
-
-            if (response.Success == false || response.Success == "false") {
-
-            } else {
-
-            }
-
-        });
-
-        // 完成上传完了，成功或者失败，先删除进度条。
-        uploader.on('uploadComplete', function (file) {
-            //$('#' + file.id).find('.progress').remove();
-            //隐藏遮罩
-            //$("body").hideLoading();
-        });
     }
 
     function UploadImage(newsGlobalizationId,culture) {
