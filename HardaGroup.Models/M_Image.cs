@@ -52,6 +52,10 @@ namespace HardaGroup.Models
         [MaxLength(50, ErrorMessage = "图片类型不能超过50个字符")]
         public string Type { get; set; }
 
+        [MaxLength(2000, ErrorMessage = "图片链接不能超过2000个字符")]
+        public string LinkHref { get; set; }
+
+
         /// <summary>
         /// 国际化代码
         /// </summary>

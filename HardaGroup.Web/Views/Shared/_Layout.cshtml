@@ -231,8 +231,21 @@
                     {
                         activeClass = "active";
                     }
+
+                   
                     <div class="item @activeClass">
-                        <img class="img-responsive" src="@bgimages[i].VirtualPath" alt="@bgimages[i].Name.Split('.').First()">
+                        @if (string.IsNullOrEmpty(bgimages[i].LinkHref))
+                        {
+                            <img class="img-responsive" src="@bgimages[i].VirtualPath" alt="@bgimages[i].Name.Split('.').First()">
+
+                        }
+                        else
+                        {
+                            <a href="@bgimages[i].LinkHref">
+                                <img class="img-responsive" src="@bgimages[i].VirtualPath" alt="@bgimages[i].Name.Split('.').First()">
+
+                            </a>
+                        }
 
                     </div>
                 }

@@ -46,6 +46,11 @@ namespace HardaGroup.Entities
         public string Type { get; set; }
 
         /// <summary>
+        /// 相关链接
+        /// </summary>
+        public string LinkHref { get; set; }
+
+        /// <summary>
         /// 国际化代码
         /// </summary>
         public string Culture { get; set; }

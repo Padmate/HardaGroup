@@ -222,7 +222,38 @@ div.divmiddle-box-content { display: table-cell; vertical-align: middle; }
     width: 50%;
     max-width: 50%;
 }
+.input-mediu-full {
+    width: 100%;
+    max-width: 100%;
+    line-height: 30px;
+    height: 30px;
+}
 
+.select-mediu-full{
+    width: 100%;
+    max-width: 100%;
+    line-height: 30px;
+    height: 30px;
+}
+
+.input-large-full{
+    width: 100%;
+    max-width: 100%;
+    line-height: 35px;
+    height: 35px;
+}
+.select-large-full{
+    width: 100%;
+    max-width: 100%;
+    line-height: 35px;
+    height: 35px;
+}
+
+.textarea-large-full {
+    height: 150px;
+    width: 100%;
+    max-width: 100%;
+}
 /*摸态框*/
 .small-modal{
     width:400px;

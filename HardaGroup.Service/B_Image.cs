@@ -33,6 +33,7 @@ namespace HardaGroup.Service
                 Extension = i.Extension,
                 Sequence = i.Sequence,
                 Type = i.Type,
+                LinkHref = i.LinkHref,
                 Culture = i.Culture
 
             }).ToList();
@@ -59,6 +60,7 @@ namespace HardaGroup.Service
                 Extension = i.Extension,
                 Sequence = i.Sequence,
                 Type = i.Type,
+                LinkHref = i.LinkHref,
                 Culture = i.Culture
 
             }).ToList();
@@ -84,6 +86,7 @@ namespace HardaGroup.Service
                 Extension = image.Extension,
                 Sequence = image.Sequence,
                 Type = image.Type,
+                LinkHref = image.LinkHref,
                 Culture = image.Culture
 
             };
@@ -135,6 +138,7 @@ namespace HardaGroup.Service
                         SaveName = saveName,
                         Sequence = sequence,
                         Type = imageType,
+                        LinkHref = string.Empty, //图片相关链接默认为空
                         Culture = culture
                     };
                     message.ReturnId = _dImage.AddImage(image);
@@ -206,6 +210,26 @@ namespace HardaGroup.Service
             {
                 message.Success = false;
                 message.Content = "图片顺序更新失败，异常：" + e.Message;
+            }
+            return message;
+        }
+
+
+        public Message UpdateLinkHref(int id, string linkhref)
+        {
+            Message message = new Message();
+            message.Success = true;
+            message.Content = "图片链接更新成功";
+
+            try
+            {
+                _dImage.UpdateLinkHref(id, linkhref);
+
+            }
+            catch (Exception e)
+            {
+                message.Success = false;
+                message.Content = "图片链接更新失败，异常：" + e.Message;
             }
             return message;
         }

@@ -83,6 +83,23 @@ namespace HardaGroup.DataAccess
         }
 
         /// <summary>
+        /// 更新相关链接
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="linkhref"></param>
+        /// <returns></returns>
+        public int UpdateLinkHref(int id, string linkhref)
+        {
+            var model = _dbContext.Images.Where(i => i.Id == id).FirstOrDefault();
+            if (model != null)
+            {
+                model.LinkHref = linkhref;
+                _dbContext.SaveChanges();
+            }
+            return model.Id;
+        }
+
+        /// <summary>
         /// 删除图片
         /// </summary>
         /// <param name="id"></param>

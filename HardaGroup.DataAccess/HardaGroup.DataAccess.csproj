@@ -107,6 +107,10 @@
     <Compile Include="Migrations\201609180233254_AddJobRelateTables.Designer.cs">
       <DependentUpon>201609180233254_AddJobRelateTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611030109591_AddLinkHrefToImage.cs" />
+    <Compile Include="Migrations\201611030109591_AddLinkHrefToImage.Designer.cs">
+      <DependentUpon>201611030109591_AddLinkHrefToImage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -145,6 +149,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609180233254_AddJobRelateTables.resx">
       <DependentUpon>201609180233254_AddJobRelateTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611030109591_AddLinkHrefToImage.resx">
+      <DependentUpon>201611030109591_AddLinkHrefToImage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

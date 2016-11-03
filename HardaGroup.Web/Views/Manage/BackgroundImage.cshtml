@@ -63,6 +63,9 @@
     .sel-culture{
         margin-bottom:10px;
     }
+    .linkhref{
+        border:none;
+    }
 </style>
 <section class="content">
     <div class="row">
@@ -129,6 +132,8 @@
         $("#selCulture").change(function () {
             LoadBGImage();
         });
+
+        LinkHrefEvent();
 
     });
 
@@ -273,8 +278,13 @@
                 $("#imageList").html("");
                 var dynamicHtml = ""
                 for (var i = 0; i < bgImages.length; i++) {
+
+                    var linkHref = bgImages[i].LinkHref == null ? "" : bgImages[i].LinkHref;
+
+
                     dynamicHtml += '<li class="text-center" id="' + bgImages[i].Id + '">';
                     dynamicHtml += '<img src="' + bgImages[i].VirtualPath + '" class="' + imgClass + '">';
+                    dynamicHtml += '<input class="input-large-full linkhref" placeholder="图片链接" value="' + linkHref + '"/>';
                     dynamicHtml += '<label>' + bgImages[i].Name + '</label>';
                     dynamicHtml += '<div class="imageButtonPanel">';
                     dynamicHtml += '<a href="javaScript:void(0)" class="deleteImage"><i class="fa fa-lg fa-remove"></i></a>';
@@ -291,6 +301,37 @@
                 $("#status").html("");
             }
         });
+    }
+
+    function LinkHrefEvent() {
+        $(".linkhref").blur(function () {
+            var imageId = $(this).parent().attr("id");
+            var href = $(this).val();
+
+            var obj = {
+                Id: imageId,
+                LinkHref: href
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Images/UpdateLinkHref",
+                dataType: "json",
+                data: obj,
+                async: false,   //同步
+                success: function (message) {
+                    if (!message.Success) {
+                        layer.alert(message.Content, {
+                            skin: 'layui-layer-molv' //样式类名
+                       , closeBtn: 0
+                        });
+                    }
+
+                }
+            });
+
+        });
+
     }
 
 </script>

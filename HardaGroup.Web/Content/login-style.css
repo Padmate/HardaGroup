@@ -241,3 +241,25 @@ form:after {
 	color: #00aeef;
 }
 .login-tip {color: red;}
+
+@media(max-width:479px) {
+   .container{
+       width:280px;
+   }
+   #content{
+       width:280px;
+   }
+   #content form div a{
+       margin-right:5px;
+   }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+   .container{
+       width:480px;
+   }
+   #content{
+       width:400px;
+   }
+
+}
