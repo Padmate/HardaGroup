@@ -1,6 +1,17 @@
-﻿@{
+﻿@using HardaGroup.Web.Globalization;
+@using HardaGroup.Models;
+@using System.Configuration;
+@using HardaGroup.Utility;
+@{
     ViewBag.Title = "组件产品";
+
+    string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+    M_ModuleSearch content = (M_ModuleSearch)ViewData["content"];
+
 }
+
 <style>
     .component .row{
         margin-bottom:50px;
@@ -11,39 +22,12 @@
         <h2 class="customer-h2 text-center">组件产品</h2>
 
         <div class="row">
-            <div class="col-md-5">
-                <img class="img-responsive" src="~/images/medium_model.jpg" />
-            </div>
-            <div class="col-md-7">
-                <p class="customer-content-sm">
-                    公司拥有自己的模具厂，可快速地进行模具设计、制造、维护与保养工作。我们有能力按照设计图纸对模具进行加工和检验,极大地缩短了新产品开发周期。
-                </p>
-            </div>
-
-
+            @if (content != null)
+            {
+                @Html.Raw(content.Content)
+            }
         </div>
-        <div class="row">
-            <div class="col-md-7 text-right">
-                <p class="customer-content-sm">
-                    公司拥有自己的模具厂，可快速地进行模具设计、制造、维护与保养工作。我们有能力按照设计图纸对模具进行加工和检验,极大地缩短了新产品开发周期。
-                </p>
-            </div>
-            <div class="col-md-5">
-                <img class="img-responsive" src="~/images/medium_model.jpg" />
-            </div>
 
-        </div>
-        <div class="row">
-            <div class="col-md-5">
-                <img class="img-responsive" src="~/images/medium_model.jpg" />
-            </div>
-            <div class="col-md-7">
-                <p class="customer-content-sm">
-                    公司拥有自己的模具厂，可快速地进行模具设计、制造、维护与保养工作。我们有能力按照设计图纸对模具进行加工和检验,极大地缩短了新产品开发周期。
-                </p>
-            </div>
-
-
-        </div>
+        
     </div>
 </section>

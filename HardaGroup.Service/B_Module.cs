@@ -182,6 +182,35 @@ namespace HardaGroup.Service
         }
 
         /// <summary>
+        /// 获取模块数据
+        /// </summary>
+        /// <returns></returns>
+        public M_ModuleSearch GetModuleByCultureAndType(string culture, string type)
+        {
+            M_ModuleSearch result = new M_ModuleSearch();
+            var modules = _dModule.GetModuleByType(type);
+            if (modules.Count > 0)
+            {
+                var introductionModule = modules.First();
+
+                //根据culture过滤数据，如果找不到数据则取中文数据
+                var cultureGlobalizationData = introductionModule.ModuleGlobalizations
+                    .Where(v => v.Culture == culture).FirstOrDefault();
+                if (cultureGlobalizationData == null)
+                {
+                    cultureGlobalizationData = introductionModule.ModuleGlobalizations
+                         .Where(v => v.Culture == Common.Globalization_Chinese).FirstOrDefault();
+                }
+
+                result.Id = introductionModule.Id.ToString();
+                result.Content = cultureGlobalizationData.Content;
+            }
+
+            return result;
+
+        }
+
+        /// <summary>
         /// 根据条件查找
         /// </summary>
         /// <param name="modules"></param>

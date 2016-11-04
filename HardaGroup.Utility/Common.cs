@@ -56,7 +56,7 @@ namespace HardaGroup.Utility
         /// <summary>
         /// 智能制造简介
         /// </summary>
-        public const string ModuleType_Manufacturing_Introduction = "introduction";
+        public const string ModuleType_Manufacturing_Introduction = "manufacturing-introduction";
 
         /// <summary>
         /// 智能制造服务范围
@@ -67,6 +67,32 @@ namespace HardaGroup.Utility
         /// 智能制造服务特色
         /// </summary>
         public const string ModuleType_Manufacturing_ServiceFeatures = "service-features";
+
+        /// <summary>
+        /// 解决方案-研发简介
+        /// </summary>
+        public const string ModuleType_Solutions_RDIntroduction = "research-and-development-introduction";
+
+        /// <summary>
+        /// 解决方案-设计服务范围
+        /// </summary>
+        public const string ModuleType_Solutions_DesignScopes = "design-socpes";
+
+        /// <summary>
+        /// 解决方案-产品解决方案
+        /// </summary>
+        public const string ModuleType_Solutions_ProductSolution = "product-solutions";
+
+        /// <summary>
+        /// 解决方案-研发流程与管理
+        /// </summary>
+        public const string ModuleType_Solutions_Workflow = "workflow";
+
+        /// <summary>
+        /// 解决方案-组件产品
+        /// </summary>
+        public const string ModuleType_Solutions_PartsAndModules = "parts-and-modules";
+
 
         /// <summary>
         /// 创新创业-投资领域
@@ -90,6 +116,11 @@ namespace HardaGroup.Utility
             {ModuleType_Manufacturing_Introduction,"智能制造-制造简介"},
             {ModuleType_Manufacturing_ServiceScope,"智能制造-服务范围"},
             {ModuleType_Manufacturing_ServiceFeatures,"智能制造-服务特色"},
+            {ModuleType_Solutions_RDIntroduction,"研发简介"},
+            {ModuleType_Solutions_ProductSolution,"产品解决方案"},
+            {ModuleType_Solutions_DesignScopes,"设计服务范围"},
+            {ModuleType_Solutions_Workflow,"研发流程与管理"},
+            {ModuleType_Solutions_PartsAndModules,"组件产品"},
             {ModuleType_VentureSupport_InvestedFields,"创新创业-投资领域"},
             {ModuleType_VentureSupport_NineSupportingPlatforms,"创新创业-九大平台"},
             {ModuleType_VentureSupport_ThreeSpaces,"创新创业-三大空间"},

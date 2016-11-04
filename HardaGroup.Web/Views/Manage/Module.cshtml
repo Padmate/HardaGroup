@@ -44,51 +44,18 @@
 
 </section>
 
-<!--#region新增-->
-<div class="curd-model modal fade" id="moduleadd" role="dialog" aria-hidden="true">
+<!--#region摸态框-->
+<div class="curd-model modal fade" id="win-modal" role="dialog" aria-hidden="true">
     <div class="modal-content">
         <div class="container">
 
-            <div id="divAddContainer"></div>
+            <div id="win-modal-content"></div>
 
 
         </div>
     </div>
 </div>
-<!--#endregion 修改-->
-<!--#region修改-->
-<div class="curd-model modal fade" id="moduleedit" role="dialog" aria-hidden="true">
-    <div class="modal-content">
-        <div class="container">
 
-            <div id="divEditContainer"></div>
-
-
-        </div>
-    </div>
-</div>
-<!--#region详细-->
-<div class="curd-model modal fade" id="moduledetail" role="dialog" aria-hidden="true">
-    <div class="modal-content">
-        <div class="container">
-
-            <div id="divModuleContainer"></div>
-
-
-        </div>
-    </div>
-</div>
-<!--#region国际化-->
-<div class="curd-model modal fade" id="moduleGlobalization" role="dialog" aria-hidden="true">
-    <div class="modal-content">
-        <div class="container">
-
-            <div id="divGlobalizationContainer"></div>
-
-
-        </div>
-    </div>
-</div>
 
 <!--Script要放在HTML标签后，才能将值绑定到标签-->
 <script type="text/javascript">
@@ -227,58 +194,25 @@
     }
 
     function InitModalEvent() {
-        $('#moduleadd').on('show.bs.modal', function () {
+        $('#win-modal').on('shown.bs.modal', function () {
             //打开事件
+            alert("shown");
         });
 
-        $('#moduleadd').on('hide.bs.modal', function () {
+        $('#win-modal').on('hide.bs.modal', function () {
 
             // 关闭事件
-            $("#divAddContainer").html("");
+            $("#win-modal-content").empty();
 
         })
 
-        $('#moduleedit').on('show.bs.modal', function () {
-            //打开事件
-        });
-
-        $('#moduleedit').on('hide.bs.modal', function () {
-            // 关闭事件
-            $("#divEditContainer").html("");
-
-        });
-        $('#moduledetail').on('show.bs.modal', function () {
-            //打开事件
-        });
-
-        $('#moduledetail').on('hide.bs.modal', function () {
-            // 关闭事件
-            $("#divModuleContainer").html("");
-
-        });
-        $('#moduleGlobalization').on('show.bs.modal', function () {
-            //打开事件
-        });
-
-        $('#moduleGlobalization').on('hide.bs.modal', function () {
-            // 关闭事件
-            $("#divGlobalizationContainer").html("");
-
-        });
     }
 
-    function CloseAddScreen() {
-        $('#moduleadd').modal('hide');
+    function CloseModal() {
+        $('#win-modal').modal('hide');
 
     }
-    function CloseEditScreen() {
-        $('#moduleedit').modal('hide');
 
-    }
-    function CloseGlobalizationScreen() {
-        $('#moduleGlobalization').modal('hide');
-
-    }
 
     function InitToolBarButton()
     {
@@ -293,9 +227,10 @@
 
 
 
-        $("#btnAdd").click(function(){
-            $('#moduleadd').modal('show');
-            $("#divAddContainer").load("/Module/Add?type="+_type);
+        $("#btnAdd").click(function () {
+
+            $('#win-modal').modal('show');
+            $("#win-modal-content").load("/Module/Add?type="+_type);
         });
 
         $("#btnEdit").click(function () {
@@ -319,8 +254,8 @@
             }
 
             var id = selections[0].Id;
-            $('#moduleedit').modal('show');
-            $("#divEditContainer").load("/Module/Edit?moduleId=" + id);
+            $('#win-modal').modal('show');
+            $("#win-modal-content").load("/Module/Edit?moduleId=" + id);
 
         });
 
@@ -345,8 +280,8 @@
             }
 
             var id = selections[0].Id;
-            $('#moduleGlobalization').modal('show');
-            $("#divGlobalizationContainer").load("/Module/Globalization?moduleId=" + id);
+            $('#win-modal').modal('show');
+            $("#win-modal-content").load("/Module/Globalization?moduleId=" + id);
 
         });
 
@@ -393,8 +328,8 @@
     }
 
     function Detail(id) {
-        $('#moduledetail').modal('show');
-        $("#divModuleContainer").load("/Module/Detail?moduleId=" + id);
+        $('#win-modal').modal('show');
+        $("#win-modal-content").load("/Module/Detail?moduleId=" + id);
     }
 
     function RefreshTable()

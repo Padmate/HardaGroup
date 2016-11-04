@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="~/Content/admin-skin.css">
     <link rel="stylesheet" href="~/Scripts/loading/showLoading.css">
     <link rel="stylesheet" href="~/Content/tooltip.css">
-    
+    <link rel="stylesheet" href="~/Scripts/layer/layer-v2.4/skin/layer.css"/>
 
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -61,7 +61,7 @@
     <script src="~/Scripts/bootstrap-table/export/tableExport.min.js"></script>
 
 
-    <script src="~/Scripts/layer/layer.js"></script>
+    <script src="~/Scripts/layer/layer-v2.4/layer.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker/bootstrap-datetimepicker.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker/customer-datetimepicker.js"></script>
@@ -167,7 +167,7 @@
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu">
-                    <li><a href="@string.Format("/manage{0}",urlRewriteExtension)"><i class="fa fa-dashboard"></i> <span>首页</span></a></li>
+                    <li><a href="@string.Format("/manage/index{0}",urlRewriteExtension)"><i class="fa fa-dashboard"></i> <span>首页</span></a></li>
                     <li class="treeview">
                         <a href="javaScript:void(0)">
                             <i class="fa fa-image"></i> <span>图片管理</span> <i class="fa fa-angle-left pull-right"></i>
@@ -222,7 +222,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li>
-                                <a href="@string.Format("/manage/manufacturing/introduction{0}", urlRewriteExtension)">
+                                <a href="@string.Format("/manage/{0}{1}",Common.ModuleType_Manufacturing_Introduction, urlRewriteExtension)">
                                     <i class="fa fa-info-circle text-blue"></i>制造简介
                                 </a>
                             </li>
@@ -234,6 +234,45 @@
                             <li>
                                 <a href="@string.Format("/manage/manufacturing/{0}{1}",Common.ModuleType_Manufacturing_ServiceFeatures ,urlRewriteExtension)">
                                     <i class="fa fa-info text-yellow"></i>服务特色
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="javaScript:void(0)">
+                            <i class="fa fa-question"></i> <span>解决方案</span> <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li>
+                                <a href="#">
+                                    <i class="fa fa-stack-exchange"></i>研发 <i class="fa fa-angle-left pull-right"></i>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="@string.Format("/manage/{0}{1}",Common.ModuleType_Solutions_RDIntroduction, urlRewriteExtension)">
+                                            <i class="fa fa-info"></i>研发简介
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@string.Format("/manage/solutions/{0}{1}",Common.ModuleType_Solutions_DesignScopes, urlRewriteExtension)">
+                                            <i class="fa fa-info"></i>设计服务范围
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@string.Format("/manage/solutions/{0}{1}",Common.ModuleType_Solutions_ProductSolution, urlRewriteExtension)">
+                                            <i class="fa fa-info"></i>产品解决方案
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="@string.Format("/manage/solutions/{0}{1}",Common.ModuleType_Solutions_Workflow, urlRewriteExtension)">
+                                            <i class="fa fa-info"></i>研发流程与管理
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="@string.Format("/manage/{0}{1}",Common.ModuleType_Solutions_PartsAndModules, urlRewriteExtension)">
+                                    <i class="fa fa-info-circle text-blue"></i>组件产品
                                 </a>
                             </li>
                         </ul>
@@ -266,7 +305,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li>
-                                <a href="@string.Format("/manage/news-scope{0}",urlRewriteExtension)">
+                                <a href="@string.Format("/manage/newsscope{0}",urlRewriteExtension)">
                                     <i class="fa fa-info-circle text-blue"></i>模块管理
                                 </a>
                             </li>
@@ -283,7 +322,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li>
-                                <a href="@string.Format("/manage/job-scope{0}",urlRewriteExtension)">
+                                <a href="@string.Format("/manage/jobscope{0}",urlRewriteExtension)">
                                     <i class="fa fa-info-circle text-blue"></i>招聘-职位分类
                                 </a>
                             </li>
@@ -293,7 +332,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="@string.Format("/manage/{0}{1}", Common.ModuleType_Company_Activities, urlRewriteExtension)">
+                                <a href="@string.Format("/manage/joinus/{0}{1}", Common.ModuleType_Company_Activities, urlRewriteExtension)">
                                     <i class="fa fa-info text-yellow"></i>公司活动
                                 </a>
                             </li>
@@ -332,6 +371,12 @@
             if (element.is('li')) {
 
                 element.addClass('active');
+                //三级菜单
+                var thelement = element.parent().parent();
+                if (thelement.is('li'))
+                {
+                    thelement.addClass('active');
+                }
             }
 
             //$(".sidebar-menu a").click(function () {

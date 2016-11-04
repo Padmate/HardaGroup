@@ -394,6 +394,7 @@ namespace HardaGroup.Web.Controllers
             return Json(message);
         }
 
+       
 
         // POST:
         [HttpPost]
@@ -446,5 +447,112 @@ namespace HardaGroup.Web.Controllers
 
             return Json(message);
         }
+
+        #region 单页模块
+       
+
+        /// <summary>
+        /// 保存模块
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult SaveSingleModule()
+        {
+            StreamReader srRequest = new StreamReader(Request.InputStream);
+            String strReqStream = srRequest.ReadToEnd();
+            M_Module model = JsonHandle.DeserializeJsonToObject<M_Module>(strReqStream);
+
+            Message message = new Message();
+
+            if(string.IsNullOrEmpty(model.Type) || !Common.Dic_ModuleType.ContainsKey(model.Type))
+            {
+                message.Success = false;
+                message.Content = "获取模块类型失败。";
+                return Json(message);
+            }
+            model.ModuleURLId = Guid.NewGuid().ToString();
+            model.ModuleGlobalizations.First().SubTitle = Common.Dic_ModuleType[model.Type];
+
+            //校验model
+            message = model.validate();
+            if (!message.Success) return Json(message);
+
+            message = model.ModuleGlobalizations.First().validate();
+            if (!message.Success) return Json(message);
+
+            var currentUser = this.GetCurrentUser();
+            B_Module bModule = new B_Module(currentUser);
+
+            string saveModuleId = string.Empty;
+            //根据页面传入的moduleId判断是新增还是修改
+            if (!string.IsNullOrEmpty(model.Id))
+            {
+                M_ModuleGlobalization mModuleGlobalization = new M_ModuleGlobalization();
+                mModuleGlobalization = model.ModuleGlobalizations.First();
+                mModuleGlobalization.ModuleId = model.Id;
+                //修改
+                message = bModule.DealModuleGlobalization(mModuleGlobalization);
+
+                message.ReturnStrId = model.Id;
+
+            }
+            else
+            {
+                //校验必须先添加中文数据
+                if (model.ModuleGlobalizations.First().Culture != Common.Globalization_Chinese)
+                {
+                    message.Success = false;
+                    message.Content = "请先添加中文数据，再进行国际化操作。";
+                    return Json(message);
+                }
+                //新增
+                message = bModule.AddModule(model);
+                message.ReturnStrId = message.ReturnId.ToString();
+            }
+
+            if (message.Success) message.Content = "保存成功";
+
+
+
+            return Json(message);
+        }
+
+        /// <summary>
+        /// 根据国际化代码加载数据
+        /// </summary>
+        /// <param name="Culture"></param>
+        /// <returns></returns>
+        public ActionResult LoadModuleGlobalizationDataByType(string Culture,string moduletype)
+        {
+            //
+            Message message = new Message();
+            message.Success = false;
+
+            B_Module bModule = new B_Module();
+            M_ModuleSearch searchModel = new M_ModuleSearch();
+            searchModel.Type = moduletype;
+            //根据类型查找数据
+            var modules = bModule.GetModulesByMulitCondition(searchModel);
+
+            if (modules.Count > 0)
+            {
+                var cultureModules = modules.Where(v => v.Culture == Culture).ToList();
+                M_ModuleSearch result = new M_ModuleSearch();
+                if (cultureModules.Count > 0)
+                {
+                    result = cultureModules.First();
+                }
+                else
+                {
+                    result.Id = modules.First().Id;
+                }
+                message.Success = true;
+                message.Content = JsonHandle.ToJson(result);
+            }
+            return Json(message);
+        }
+
+        #endregion
     }
 }

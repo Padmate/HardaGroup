@@ -169,12 +169,12 @@
             singleupload: true
         }, function () {
             //图片上传成功后关闭对话框，刷新表格
-            CloseEditScreen();
+            CloseModal();
             //刷新表格
             RefreshTable();
             $("body").hideLoading();
         });
-
+        
     });
 
     function UploadImage(moduleGlobalizationId, culture) {

@@ -1,22 +1,29 @@
-﻿@{
+﻿@using HardaGroup.Web.Globalization;
+@using HardaGroup.Models;
+@using System.Configuration;
+@using HardaGroup.Utility;
+@{
     ViewBag.Title = "研发";
+
+    string cultureUri = GlobalizationHelp.GetCurrentThreadCultureUri();
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+    M_ModuleSearch introduction = (M_ModuleSearch)ViewData["introduction"];
+    List<M_ModuleSearch> designscopes = (List<M_ModuleSearch>)ViewData["designscopes"];
+    List<M_ModuleSearch> productsolutions = (List<M_ModuleSearch>)ViewData["productsolutions"];
+    List<M_ModuleSearch> workflow = (List<M_ModuleSearch>)ViewData["workflow"];
+    
+
 }
 <section>
     <div class="container">
         <h2 class="customer-h2 text-center">研发简介</h2>
 
         <div class="row">
-            <div class="col-md-7">
-                <p class="customer-content-sm">
-                    自创立以来，华尔达科技始终以“致力产品与服务增值”为企业成长的原动力，逐步建立了以客户需求为导向、以项目管理为核心的研发管理平台，贴近市场全面了解用户需求，并快速响应，以融合创新技术和研发生产成本优势，为全球客户提供高性能价格比的产品和服务。
-                    华尔达科技目前在深圳、厦门设立了两个研发中心，拥有一支丰富研发经验、前瞻性思维和分工细致的技术团队，从概念设计、原型设计、测试、认证、试产到最终产品交付。我们坚持学习新技术、理念，并将这些机会迅速融入到我们为客户所设计的解决方案中。作为全球领先的产品和服务解决方案商，公司坚持加大研发投入、以客户需求和前沿技术驱动的创新，不断优化产品结构，以质取胜。
-                    华尔达科技相继成为深圳市研究开发中心、国家高新技术企业，着眼于全球技术最前沿，华尔达科技公司坚持每年投入费用到支持产品创新研发，先后成了IOE物联网实验室、视频影像实验室以及自动化装备创新实验室等关键技术研究实验室，不断把领先技术转化为客户的竞争优势和商业成功。同时华尔达科技建立了与国际一流水
-                </p>
-            </div>
-            <div class="col-md-5">
-                <img class="img-responsive" src="~/images/medium_model.jpg" />
-            </div>
-            
+            @if (introduction != null)
+            {
+                @Html.Raw(introduction.Content)
+            }
         </div>
     </div>
 </section>
@@ -26,173 +33,64 @@
         <h2 class="customer-h2 text-center">设计服务范围</h2>
 
         <div class="row">
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="service-box">
-                    <a href="" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                        @*<div class="information-box-caption">
+            @foreach (var field in designscopes)
+            {
+
+                var href = !string.IsNullOrEmpty(field.Href) ? field.Href
+                    : string.Format("{0}/solutions/{1}/{2}{3}", cultureUri, field.Type, field.ModuleURLId, urlRewriteExtension);
+
+                var imageUrl = field.Image != null ? field.Image.VirtualPath : "/images/small_model.jpg";
+
+                <div class="col-md-3 col-sm-3 col-is-6 col-xs-12 highlight">
+                    <div class="service-box">
+                        <a href="@href" class="information-box">
+                            <img class="img-responsive" src="@imageUrl" />
+                            <div class="information-box-caption">
                                 <div class="information-box-caption-content">
-                                    div文字居中
                                     <div class="divmiddle-box">
                                         <div class="divmiddle-box-content">
-                                            <p class="customer-content-md whitefont">阅读全文</p>
+                                            <p class="customer-content-md whitefont">了解详情</p>
                                         </div>
                                     </div>
                                 </div>
-                            </div>*@
-                    </a>
-                    <div class="service-information-caption">
-                        <h4 class="customer-h4">
-                            Fat-free
-                        </h4>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
-
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="service-box">
-                    <a href="" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                    </a>
-                    <div class="service-information-caption">
-                        <h4 class="customer-h4">
-                            Fat-free
-                        </h4>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
-
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="service-box">
-                    <a href="" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                    </a>
-                    <div class="service-information-caption">
-                        <h4 class="customer-h4">
-                            Fat-free
-                        </h4>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
-
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="service-box">
-                    <a href="" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                    </a>
-                    <div class="service-information-caption">
-                        <h4 class="customer-h4">
-                            Fat-free
-                        </h4>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
-
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-        </div> <!-- /row  -->
-        <div class="row">
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="service-box">
-                    <a href="" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                        @*<div class="information-box-caption">
-                            <div class="information-box-caption-content">
-                                div文字居中
-                                <div class="divmiddle-box">
-                                    <div class="divmiddle-box-content">
-                                        <p class="customer-content-md whitefont">阅读全文</p>
-                                    </div>
-                                </div>
                             </div>
-                        </div>*@
-                    </a>
-                    <div class="service-information-caption">
-                        <h4 class="customer-h4">
-                            Fat-free
-                        </h4>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
+                        </a>
+                        <div class="service-information-caption designscopes-section">
+                            <h3 class="customer-h3">
+                                @field.SubTitle
+                            </h3>
+                            <span class="customer-content-sm">
+                                @field.Description
+                            </span>
+                        </div>
 
-                        </span>
                     </div>
-
                 </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="service-box">
-                    <a href="" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                    </a>
-                    <div class="service-information-caption">
-                        <h4 class="customer-h4">
-                            Fat-free
-                        </h4>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
 
-                        </span>
-                    </div>
+            }
 
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="service-box">
-                    <a href="" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                    </a>
-                    <div class="service-information-caption">
-                        <h4 class="customer-h4">
-                            Fat-free
-                        </h4>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
+        </div> <!-- /row  -->
+        <script>
 
-                        </span>
-                    </div>
+            //找出所有div最高的那个高度
+            var higestCaption = 0;
+            $(".designscopes-section").each(function () {
 
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="service-box">
-                    <a href="" class="information-box">
-                        <img class="img-responsive" src="~/images/small_model.jpg" />
-                    </a>
-                    <div class="service-information-caption">
-                        <h4 class="customer-h4">
-                            Fat-free
-                        </h4>
-                        <span class="customer-content-sm">
-                            Lorem ipsum dolor sit amet
-                            Lorem ipsum dolor sit amet
+                var sectionHight = $(this).height();
+                if (higestCaption < sectionHight) {
+                    higestCaption = sectionHight;
+                }
+            });
+            //将所有的div高度赋值为最高高度
+            $(".designscopes-section").each(function () {
+                var padding = 20;
+                $(this).css({ 'height': higestCaption + padding });
 
-                        </span>
-                    </div>
 
-                </div>
-            </div>
-        </div>
+            });
+
+        </script>
+
     </div>
 </section>
 <section class="">
@@ -202,34 +100,52 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-digg wow bounceIn text-primary"></i>
-                        <h3>Sturdy Templates</h3>
-                        <p class="text-muted">Our templates are updated regularly so they don't break.</p>
+                @foreach (var field in productsolutions)
+                {
+                    var href = !string.IsNullOrEmpty(field.Href) ? field.Href
+                   : string.Format("{0}/solutions/{1}/{2}{3}", cultureUri, field.Type, field.ModuleURLId, urlRewriteExtension);
+
+                    var imageUrl = field.Image != null ? field.Image.VirtualPath : "/images/small_model.jpg";
+                    
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <div class="service-box productsolutions-section">
+                            @if (string.IsNullOrEmpty(field.ImageClass))
+                            {
+                                <img src="@imageUrl" class="img-responsive" />
+                            }
+                            else
+                            {
+                                <i class="@field.ImageClass"></i>
+
+                            }
+                            <h3>@field.SubTitle</h3>
+                            <p class="text-muted">@field.Description</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-paper-plane wow bounceIn text-primary" data-wow-delay=".1s"></i>
-                        <h3>Ready to Ship</h3>
-                        <p class="text-muted">You can use this theme as is, or you can make changes!</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-newspaper-o wow bounceIn text-primary" data-wow-delay=".2s"></i>
-                        <h3>Up to Date</h3>
-                        <p class="text-muted">We update dependencies to keep things fresh.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-heart wow bounceIn text-primary" data-wow-delay=".3s"></i>
-                        <h3>Made with Love</h3>
-                        <p class="text-muted">You have to make your websites with love these days!</p>
-                    </div>
-                </div>
+                }
+                <script>
+
+                    //找出所有div最高的那个高度
+                    var higestCaption = 0;
+                    $(".productsolutions-section").each(function () {
+
+                        var sectionHight = $(this).height();
+                        if (higestCaption < sectionHight) {
+                            higestCaption = sectionHight;
+                        }
+                    });
+                    //将所有的div高度赋值为最高高度
+                    $(".productsolutions-section").each(function () {
+                        var padding = 20;
+                        $(this).css({ 'height': higestCaption + padding });
+
+
+                    });
+
+                </script>
+
+
+                
             </div>
         </div> <!-- /row  -->
 
@@ -242,30 +158,34 @@
         <h3 class="text-center thin">研发流程与管理</h3>
 
         <div class="row">
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="h-caption"><h4><i class="fa fa-cogs fa-5"></i>Bootstrap-powered</h4></div>
-                <div class="h-body text-center">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit</p>
+            @foreach (var field in workflow)
+            {
+                var href = !string.IsNullOrEmpty(field.Href) ? field.Href
+                   : string.Format("{0}/solutions/{1}/{2}{3}", cultureUri, field.Type, field.ModuleURLId, urlRewriteExtension);
+
+                var imageUrl = field.Image != null ? field.Image.VirtualPath : "/images/small_model.jpg";
+                
+                <div class="col-md-3 col-sm-6 highlight">
+                    <div class="h-caption">
+                        <h4>
+                            @if (string.IsNullOrEmpty(field.ImageClass))
+                            {
+                                <img src="@imageUrl" class="img-responsive" />
+                            }
+                            else
+                            {
+                                <i class="@field.ImageClass"></i>
+
+                            }
+                            @field.SubTitle
+                        </h4>
+                    </div>
+                    <div class="h-body text-center">
+                        <p>@field.Description</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="h-caption"><h4><i class="fa fa-flash fa-5"></i>Fat-free</h4></div>
-                <div class="h-body text-center">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit </p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="h-caption"><h4><i class="fa fa-heart fa-5"></i>Creative Commons</h4></div>
-                <div class="h-body text-center">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, vitae</p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="h-caption"><h4><i class="fa fa-smile-o fa-5"></i>Author's support</h4></div>
-                <div class="h-body text-center">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, excepturi</p>
-                </div>
-            </div>
+            }
+            
         </div> <!-- /row  -->
 
     </div>

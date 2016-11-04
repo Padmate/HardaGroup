@@ -3,47 +3,47 @@
 @using System.Configuration;
 @{
     Layout = "~/Views/Shared/_Admin.cshtml";
-    ViewBag.Title = Common.Dic_ModuleType[Common.ModuleType_Manufacturing_Introduction];
-
+    var moduletype = Request["type"];
+    ViewBag.Title = Common.Dic_ModuleType[moduletype];    
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
 
 }
 <style>
-    .sel-culture{
-        margin-bottom:10px;
+    .sel-culture {
+        margin-bottom: 10px;
     }
 </style>
 <section class="content">
-        
-       <div class="row">
 
-            <div class="col-xs-6 col-is-6 col-sm-4 col-md-4 sel-culture">
-               <span class="customer-content-sm">国际化：</span>
-                <select class="select-mediu" id="selCulture">
-                    @foreach (var key in Common.Dic_Globalization.Keys)
-                    {
-                        <option value="@key">@Common.Dic_Globalization[key]</option>
-                    }
-                </select>
-            </div>
+    <div class="row">
+
+        <div class="col-xs-6 col-is-6 col-sm-4 col-md-4 sel-culture">
+            <span class="customer-content-sm">国际化：</span>
+            <select class="select-mediu" id="selCulture">
+                @foreach (var key in Common.Dic_Globalization.Keys)
+                {
+                    <option value="@key">@Common.Dic_Globalization[key]</option>
+                }
+            </select>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <textarea id="taContent" name="content"></textarea>
 
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <textarea id="taContent" name="content"></textarea>
-
-            </div>
-            <div class="col-md-12 text-right" style="margin:20px 0px;">
-                <button type="button" class="btn btn-lg btn-danger" onclick="SaveAdd()">
-                    保 存
-                </button>
-            </div>
+        <div class="col-md-12 text-right" style="margin:20px 0px;">
+            <button type="button" class="btn btn-lg btn-danger" onclick="SaveAdd()">
+                保 存
+            </button>
         </div>
-        
+    </div>
+
 </section>
 <script type="text/javascript">
     var moduleId;
-    var _type = '@Common.ModuleType_Manufacturing_Introduction';
+    var _type = '@Request["type"]';
     var editor = KindEditor.create('textarea[name="content"]', kindeditorConfig);
 
     $(function () {
@@ -62,7 +62,7 @@
         var jsonParam = JSON.stringify(saveObj);
         $.ajax({
             type: "POST",
-            url: "/AdvancedManufacturing/SaveIntroduction",
+            url: "/Module/SaveSingleModule",
             dataType: "json",
             data: jsonParam,
             async: false,   //同步
@@ -76,7 +76,7 @@
                 if (message.Success) {
                     moduleId = message.ReturnStrId;
                 }
-                
+
             }
         });
     }
@@ -107,9 +107,9 @@
         $("body").showLoading();
         $.ajax({
             type: "POST",
-            url: "/AdvancedManufacturing/LoadIntroductionGlobalizationData",
+            url: "/Module/LoadModuleGlobalizationDataByType",
             dataType: "json",
-            data: {Culture: $("#selCulture").val() },
+            data: {Culture: $("#selCulture").val(),moduletype:_type},
             async: false,   //同步
             success: function (message) {
                 $("body").hideLoading();
