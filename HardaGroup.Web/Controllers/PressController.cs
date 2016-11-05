@@ -10,7 +10,7 @@ using System.Web.Mvc;
 
 namespace HardaGroup.Web.Controllers
 {
-    public class NewsController:BaseController
+    public class PressController:BaseController
     {
         public ActionResult Index(string typecode)
         {

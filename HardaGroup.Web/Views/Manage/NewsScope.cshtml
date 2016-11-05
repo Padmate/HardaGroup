@@ -80,7 +80,7 @@
         $('#table').bootstrapTable({
             height:500,
             method: 'post',                 //The method type to request remote data.
-            url: '/News/GetScopePageData',
+            url: '/Press/GetScopePageData',
             dataType: "json",               //The type of data that you are expecting back from the server.
             contentType:'application/json',
             pagination: true,               //True to show a pagination toolbar on table bottom.
@@ -209,7 +209,7 @@
 
         $("#btnAdd").click(function(){
             $('#newsScopeadd').modal('show');
-            $("#divAddContainer").load("/News/AddScope");
+            $("#divAddContainer").load("/Press/AddScope");
         });
 
         $("#btnEdit").click(function () {
@@ -234,7 +234,7 @@
 
             var id = selections[0].Id;
             $('#newsScopeedit').modal('show');
-            $("#divEditContainer").load("/News/EditScope?id=" + id);
+            $("#divEditContainer").load("/Press/EditScope?id=" + id);
 
         });
 
@@ -259,7 +259,7 @@
 
             var id = selections[0].Id;
             $('#newsScopeGlobalization').modal('show');
-            $("#divGlobalizationContainer").load("/News/GlobalizationNewsScope?id=" + id);
+            $("#divGlobalizationContainer").load("/Press/GlobalizationNewsScope?id=" + id);
 
         });
 
@@ -285,7 +285,7 @@
             $.ajax({
                 type: "post",//使用get方法访问后台
                 dataType: "json",//返回json格式的数据
-                url: "/News/BachDeleteScopeById",
+                url: "/Press/BachDeleteScopeById",
                 data: jsonContactId,
                 async:false,
                 success: function(message){

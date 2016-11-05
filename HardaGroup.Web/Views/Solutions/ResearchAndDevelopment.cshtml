@@ -60,7 +60,7 @@
                                 @field.SubTitle
                             </h3>
                             <span class="customer-content-sm">
-                                @field.Description
+                               @Html.Raw(field.Description)
                             </span>
                         </div>
 
@@ -119,7 +119,7 @@
 
                             }
                             <h3>@field.SubTitle</h3>
-                            <p class="text-muted">@field.Description</p>
+                            <p class="text-muted">@Html.Raw(field.Description)</p>
                         </div>
                     </div>
                 }
@@ -155,7 +155,7 @@
 <section class="jumbotron text-capitalize">
     <div class="container">
 
-        <h3 class="text-center thin">研发流程与管理</h3>
+        <h3 class="customer-h2 text-center">研发流程与管理</h3>
 
         <div class="row">
             @foreach (var field in workflow)
@@ -181,7 +181,7 @@
                         </h4>
                     </div>
                     <div class="h-body text-center">
-                        <p>@field.Description</p>
+                        @Html.Raw(field.Description)
                     </div>
                 </div>
             }

@@ -136,7 +136,7 @@
         $('#table').bootstrapTable({
             height:800,
             method: 'post',                 //The method type to request remote data.
-            url: '/News/GetPageData',
+            url: '/Press/GetPageData',
             dataType: "json",               //The type of data that you are expecting back from the server.
             contentType:'application/json',
             pagination: true,               //True to show a pagination toolbar on table bottom.
@@ -367,7 +367,7 @@
 
         $("#btnAdd").click(function(){
             $('#newsadd').modal('show');
-            $("#divAddContainer").load("/News/Add");
+            $("#divAddContainer").load("/Press/Add");
         });
 
         $("#btnEdit").click(function () {
@@ -392,7 +392,7 @@
 
             var id = selections[0].Id;
             $('#newsedit').modal('show');
-            $("#divEditContainer").load("/News/Edit?newsId=" + id);
+            $("#divEditContainer").load("/Press/Edit?newsId=" + id);
 
         });
 
@@ -418,7 +418,7 @@
 
             var id = selections[0].Id;
             $('#newsGlobalization').modal('show');
-            $("#divGlobalizationContainer").load("/News/Globalization?newsId=" + id);
+            $("#divGlobalizationContainer").load("/Press/Globalization?newsId=" + id);
 
         });
 
@@ -444,7 +444,7 @@
             $.ajax({
                 type: "post",//使用get方法访问后台
                 dataType: "json",//返回json格式的数据
-                url: "/News/BachDeleteById",
+                url: "/Press/BachDeleteById",
                 data: jsonContactId,
                 async:false,
                 success: function(message){
@@ -466,7 +466,7 @@
 
     function Detail(id) {
         $('#newsdetail').modal('show');
-        $("#divNewsContainer").load("/News/Detail?newsId=" + id);
+        $("#divNewsContainer").load("/Press/Detail?newsId=" + id);
     }
 
     function RefreshTable()

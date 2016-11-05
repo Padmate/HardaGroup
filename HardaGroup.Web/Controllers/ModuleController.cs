@@ -300,9 +300,9 @@ namespace HardaGroup.Web.Controllers
             }
             else if (!isHref && string.IsNullOrEmpty(content))
             {
-                message.Success = false;
-                message.Content = "内容不能为空";
-                return message;
+                //message.Success = false;
+                //message.Content = "内容不能为空";
+                //return message;
             }
 
             return message;

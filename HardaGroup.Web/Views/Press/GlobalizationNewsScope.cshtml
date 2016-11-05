@@ -75,7 +75,7 @@
         $("body").showLoading();
         $.ajax({
             type: "POST",
-            url: "/News/LoadNewsScopeGlobalizationData",
+            url: "/Press/LoadNewsScopeGlobalizationData",
             dataType: "json",
             data: { NewsScopeId: '@newsScope.Id', Culture: $("#selCulture").val() },
             async: false,   //同步
@@ -104,7 +104,7 @@
         var jsonParam = JSON.stringify(saveObj);
         $.ajax({
             type: "POST",
-            url: "/News/SaveNewsScopeGlobalization",
+            url: "/Press/SaveNewsScopeGlobalization",
             dataType: "json",
             data: jsonParam,
             async: false,   //同步

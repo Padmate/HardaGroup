@@ -2,57 +2,37 @@
 @using HardaGroup.Models;
 @{
     Layout = null;
-    var news = (M_News)ViewData["News"];
     var newsScopes = (List<M_NewsScopeSearch>)ViewData["NewsScope"];
-    var globalizationLanguage = (Dictionary<string, string>)ViewData["globalizationLanguage"];
-    
-    //所属模块
-    var currentNewsScope = newsScopes.Where(s => s.Id == news.NewsScopeId).FirstOrDefault();
-    var currentNewsScopeName = currentNewsScope == null ? "" : currentNewsScope.TypeName;
 }
 <div class="close-modal" data-dismiss="modal">
     <i class="fa fa-3x fa-close"></i>
 </div>
 <div class="container">
 
-    <h3 class="customer-h3 text-center curd-title">国际化</h3>
+    <h3 class="customer-h3 text-center curd-title">新 增</h3>
     <hr />
     <div class="form-horizontal">
         <div class="form-group">
-            <div class="col-md-2 text-right">
+            <div class="col-md-2 control-label">
                 <label class="customer-content-sm">资讯模块：</label>
             </div>
             <div class="col-md-10">
-                <label class="customer-content-sm">@currentNewsScopeName</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-2 text-right">
-                <label class="customer-content-sm">唯一标识：</label>
-            </div>
-            <div class="col-md-10">
-                <label class="customer-content-sm">@news.NewsURLId</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-2 text-right">
-                <label class="customer-content-sm">发布时间：</label>
-            </div>
-            <div class="col-md-10">
-                <label class="customer-content-sm">@news.Pubtime</label>
+                <select class="select-large" id="selNewsScopeId">
+                    <option value="">请选择资讯模块</option>
+                    @foreach(var scope in newsScopes)
+                    {
+                        <option value="@scope.Id">@scope.TypeName</option>
+                    }
+                </select>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-2 control-label">
-                <label class="customer-content-sm">国际化语言：</label>
+                <label class="customer-content-sm">资讯标识：</label>
             </div>
             <div class="col-md-10">
-                <select class="select-large" id="selCulture">
-                    @foreach (var key in globalizationLanguage.Keys)
-                    {
-                        <option value="@key">@globalizationLanguage[key]</option>
-                    }
-                </select>
+                <input class="input-large" id="tbNewsUrlId" style="width:40%" placeholder="只能是字母、数字或 - 组成" />
+                <input class="btn btn-default" id="btnGenerateNewUrlId" type="button" style="width:9%" value="自动生成"/>
             </div>
         </div>
         <div class="form-group">
@@ -60,7 +40,7 @@
                 <label class="customer-content-sm">标题：</label>
             </div>
             <div class="col-md-10">
-                <input class="input-large" id="tbTitle" placeholder="标题"/>
+                <input class="input-large" id="tbTitle" placeholder="标题" />
             </div>
         </div>
         <div class="form-group">
@@ -89,11 +69,47 @@
             </div>
             <div class="col-lg-4 col-md-6 col-md-offset-2" style="margin-top:10px;">
                <img class="img-responsive" id="showUploadImage" src="~/images/small_model.jpg" alt="无图标" />
-
+                
             </div>
 
         </div>
-        
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">发布时间：</label>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group date form_datetime" data-date=""
+                     data-date-format="yyyy-mm-dd hh:ii:ss" data-link-field="tbPubTime">
+                    <input class="form-control" size="16" type="text" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                <input type="hidden" id="tbPubTime" name="PubTime" value="@DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")" /><br />
+            </div>
+
+
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">首页滚动：</label>
+            </div>
+            <div class="col-md-10" style="padding-top:5px;">
+                <input type="radio" value="true" name="IsScroll" /><label>是</label>
+                <input type="radio" value="false" checked="checked" name="IsScroll" style="margin-left:50px;" /><label>否</label>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2 control-label">
+                <label class="customer-content-sm">热点新闻：</label>
+            </div>
+            <div class="col-md-10" style="padding-top:5px;">
+                <input type="radio" value="true" name="IsHot" /><label>是</label>
+                <input type="radio" value="false" checked="checked" name="IsHot" style="margin-left:50px;" /><label>否</label>
+
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-2 control-label">
@@ -113,7 +129,7 @@
             data-dismiss="modal">
         退 出
     </button>
-    <button type="button" class="btn btn-lg btn-danger" onclick="SaveEdit()">
+    <button type="button" class="btn btn-lg btn-danger" onclick="SaveAdd()">
         保 存
     </button>
 </div>
@@ -126,61 +142,14 @@
 <script type="text/javascript">
     var editor = KindEditor.create('textarea[name="content"]',kindeditorConfig);
 
+    var uploader;
     $(function () {
         InitDatetimepicker(".form_datetime");
-        InitWebUploader();
-
-        LoadCultureData();
-
-        $("#selCulture").change(function () {
-            LoadCultureData();
-        });
-
-    });
-
-
-    //根据国际化语言加载数据
-    function LoadCultureData() {
-        $("body").showLoading();
-        $.ajax({
-            type: "POST",
-            url: "/News/LoadNewsGlobalizationData",
-            dataType: "json",
-            data: { NewsId: '@news.Id', Culture: $("#selCulture").val() },
-            async: false,   //同步
-            success: function (message) {
-                $("body").hideLoading();
-                //先清空
-                $("#tbTitle").val("");
-                $("#tbSubTitle").val("");
-                $("#taDescription").val("");
-                $("#showUploadImage").attr("src", "/images/small_model.jpg");
-                editor.html("");
-
-                if (message.Success) {
-                    
-                    //赋值
-                    var data = JSON.parse(message.Content);
-
-                    var imageUrl = data.Image != null ? data.Image.VirtualPath : "";
-                    $("#tbTitle").val(data.Title);
-                    $("#tbSubTitle").val(data.SubTitle);
-                    $("#taDescription").val(data.Description);
-                    $("#showUploadImage").attr("src", imageUrl);
-                    editor.html(data.Content);
-
-                }
-            }
-        });
-    }
-
-
-
-    var uploader;
-    function InitWebUploader() {
+        InitGenerateNewsUrlIdEvent();
+        
         //初始化图片上传插件
         uploader = $("#uploadThumbnailsImage").InitImageWebUploader({
-            url: "/News/UploadThumbnailsImage",
+            url: "/Press/UploadThumbnailsImage",
             size: 1,
             multiple: false,
             autoupload: false,
@@ -188,16 +157,15 @@
             singleupload: true
         }, function () {
             //图片上传成功后关闭对话框，刷新表格
-            CloseGlobalizationScreen();
+            CloseAddScreen();
             //刷新表格
             RefreshTable();
             $("body").hideLoading();
         });
+    });
 
 
-        
-    }
-
+  
     function UploadImage(newsGlobalizationId,culture) {
 
         uploader.options.formData.newsGlobalizationId = newsGlobalizationId;
@@ -207,14 +175,14 @@
     }
 
     //修改或新增保存
-    function SaveEdit() {
+    function SaveAdd() {
 
         $("body").showLoading();
         var saveObj = ConstructSaveObj();
         var jsonParam = JSON.stringify(saveObj);
         $.ajax({
             type: "POST",
-            url: "/News/SaveNewsGlobalization",
+            url: "/Press/SaveAdd",
             dataType: "json",
             data: jsonParam,
             async: false,   //同步
@@ -226,7 +194,7 @@
                     //上传图片
                     var newsGlobalizationId = newsGlobalization.Id;
                     var culture = newsGlobalization.Culture;
-                    UploadImage(newsGlobalizationId, culture);
+                    UploadImage(newsGlobalizationId,culture);
 
                 } else {
                     $("body").hideLoading();
@@ -246,16 +214,52 @@
     function ConstructSaveObj() {
 
         var newsGlobalization = {
-            NewsId:'@news.Id',
+
             Title: $("#tbTitle").val(),
             SubTitle: $("#tbSubTitle").val(),
             Description: $("#taDescription").val(),
             Content: editor.html(),
-            Culture: $("#selCulture").val()
+            Culture: '@Common.Globalization_Chinese'
         };
+        var arrNewsGlobalization = new Array();
+        arrNewsGlobalization.push(newsGlobalization);
 
+        var obj = {
+            NewsUrlId: $("#tbNewsUrlId").val(),
+            IsScroll: $("input[name='IsScroll']:checked").val(),
+            IsHot: $("input[name='IsHot']:checked").val(),
+            PubTime: $("#tbPubTime").val(),
+            NewsScopeId:$("#selNewsScopeId").val(),
+            NewsGlobalizations: arrNewsGlobalization
 
-        return newsGlobalization;
+        };
+        return obj;
+    }
+
+    function InitGenerateNewsUrlIdEvent() {
+        $("#btnGenerateNewUrlId").click(function () {
+
+            $.ajax({
+                type: "POST",
+                url: "/Press/GenerateNewURLId",
+                dataType: "json",
+                async: false,   //同步
+                success: function (message) {
+
+                    if (message.Success) {
+
+                        $("#tbNewsUrlId").val(message.ReturnStrId);
+
+                    } else {
+                        layer.alert(message.Content, {
+                            skin: 'layui-layer-molv' //样式类名
+                          , closeBtn: 0
+                        });
+                        return;
+                    }
+                }
+            });
+        });
     }
 
 </script>

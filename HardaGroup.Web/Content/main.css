@@ -157,11 +157,12 @@ section{
     line-height: 40px;
     vertical-align: bottom;
     zoom: 1;
+    text-align:center;
 }
 
 #scrollDiv li a {
     color: #333;
-    text-decoration: none;
+    text-decoration:none;
 }
 
 .news-section{
@@ -172,8 +173,11 @@ section{
     background: #f7f7f7;
     padding: 10px 0px;
     margin:0;
-    -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius:5px;
-	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    -webkit-border-radius: 5px; 
+    -moz-border-radius: 5px; 
+    border-radius:5px;
+	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
 
 }
 #but_up,#but_down{
@@ -181,4 +185,87 @@ section{
     box-shadow: 0px 6px 12px lightgray;
     background-color:#337ab7;
     color:white;
+}
+.scrollNews-section{
+    background-color:#404d5b;
+    padding:50px 10px;
+    margin:0px;
+}
+
+.hotNews-section{
+    /*background-color:lightgray;
+    padding:50px;
+    margin:0px;
+    background-image:url(http://192.168.20.250:8888/img/servicebg2.jpg);
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-size:cover;*/
+}
+.scrollNews-title{
+    text-align:center;
+    padding-bottom:50px;
+}
+.scrollbox a{
+    color:white;
+}
+.hotNews-section .service-box{
+    transition: all 0.6s; /*表示所有的属性变化在0.6s的时间段内完成。*/
+}
+.hotNews-section .service-box:hover{
+    transform: scale(1.1); /*表示在鼠标放到图片上的时候图片按比例放大1.1倍*/
+}
+
+
+@media (max-width: 479px) {
+    .scrollNews-section{
+        padding:10px 10px;
+    }
+    .scrollNews-title{
+        padding-bottom:10px;
+    }
+    .scrollNews-title .customer-h1{
+        font-size:18px;
+    }
+    .scrollbox{
+        height:20px;
+        line-height:20px;
+    }
+    .scrollbox .fa-3x{
+        font-size:1.5em;
+    }
+}
+@media (min-width: 480px) and (max-width: 767px) {
+ 
+    .scrollNews-section{
+        padding:20px 10px;
+    }
+    .scrollNews-title{
+        padding-bottom:20px;
+    }
+    .scrollNews-title .customer-h1{
+        font-size:20px;
+    }
+    .scrollNews-title .customer-h2{
+        font-size:16px;
+    }
+    .scrollbox{
+        height:20px;
+        line-height:20px;
+    }
+    .scrollbox .fa-3x{
+        font-size:1.5em;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+@media (min-width: 1200px) {
+ 
+
 }

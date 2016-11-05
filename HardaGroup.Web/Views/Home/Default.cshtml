@@ -11,39 +11,107 @@
     var hotNews = (List<M_NewsSearch>)ViewData["hotNews"];
     
 } 
+<style>
+    
+    
+</style>
+<div class="jumbotron">
+    <div class="container">
 
+        <h3 class="text-center thin">模块标题</h3>
 
-<div class="news-section">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 highlight">
+                <div class="h-caption"><h4><i class="fa fa-cogs fa-5"></i>自动化制造</h4></div>
+                <div class="h-body text-center">
+                    <p>
+                        文字介绍文字介绍文字介绍文字介绍
+                        文字介绍文字介绍文字介绍文字介绍
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 highlight">
+                <div class="h-caption"><h4><i class="fa fa-flash fa-5"></i>智能硬件</h4></div>
+                <div class="h-body text-center">
+                    <p>
+                        文字介绍文字介绍文字介绍文字介绍
+                        文字介绍文字介绍文字介绍文字介绍
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 highlight">
+                <div class="h-caption"><h4><i class="fa fa-heart fa-5"></i>华尔达精密</h4></div>
+                <div class="h-body text-center">
+                    <p>
+                        文字介绍文字介绍文字介绍文字介绍
+                        文字介绍文字介绍文字介绍文字介绍
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 highlight">
+                <div class="h-caption"><h4><i class="fa fa-send fa-5"></i>SVV加速</h4></div>
+                <div class="h-body text-center">
+                    <p>
+                        文字介绍文字介绍文字介绍文字介绍
+                        文字介绍文字介绍文字介绍文字介绍
+                    </p>
+                </div>
+            </div>
+        </div> <!-- /row  -->
+
+    </div>
+</div>
+<div class="scrollNews-section">
     <div class="container">
         @if (scrollNews.Count > 0)
         {
-            <div class="row scrollnews">
-                <div class="col-is-12 col-xs-12 col-sm-1 col-md-1">
-                    <img class="img-responsive" src="~/images/news.png" />
+            <div class="row">
+                <div class="col-md-12 scrollNews-title">
+                    <h1 class="customer-h1 whitefont">最新资讯</h1>
                 </div>
-                <div class="col-is-12 col-xs-12 col-sm-9 col-md-9">
+            </div>
+            <div class="row">
+                
+                <div class="col-is-8 col-xs-7 col-sm-9 col-md-9">
 
                     <div id="scrollDiv">
                         <ul class="customer-content-md">
                             @foreach (var news in scrollNews)
                             {
                                 <li>
-                                    <a href="@string.Format("{0}/press/{1}/{2}{3}", cultureUri, news.ScopeTypeCode,news.NewsURLId ,urlRewriteExtension)" class="linktit" title="@news.Title">@news.SubTitle</a>
+                                    <a href="@string.Format("{0}/press/{1}/{2}{3}", cultureUri, news.ScopeTypeCode,news.NewsURLId ,urlRewriteExtension)" class="linktit" title="@news.Title">
+                                      <h2 class="customer-h2 whitefont">@news.SubTitle</h2> 
+                                    </a>
                                 </li>
                             }
 
                         </ul>
                     </div>
                 </div>
-                <div class="col-is-12 col-xs-12 col-sm-2 col-md-2">
+                <div class="col-is-4 col-xs-5 col-sm-3 col-md-3">
                     <div class="scrollbox">
-                        <small id="but_up">↑上一条</small>
-                        <small id="but_down">↓下一条</small>
+                        <a href="javaScript:void(0)" id="btn_up">
+                            <i class="fa fa-arrow-circle-o-up fa-3x"></i>
+
+                        </a>
+                        <a href="javaScript:void(0)" id="btn_down">
+                            <i class="fa fa-arrow-circle-o-down fa-3x"></i>
+
+                        </a>
+
+                        @*<small id="but_up">↑上一条</small>
+                        <small id="but_down">↓下一条</small>*@
                     </div>
                 </div>
             </div>
         }
-        
+    </div>
+    
+</div>
+<div class="hotNews-section">
+    <div class="container">
+
+
         <div class="row text-center">
             @for (int i = 0; i < hotNews.Count; i++)
             {
@@ -54,29 +122,29 @@
 
                     var imageUrl = hotNews[i].Image != null ? hotNews[i].Image.VirtualPath : "/images/small_model.jpg";
 
-                    <div class="col-md-4 col-sm-4 col-is-4 highlight">
-                        <div class="service-box">
-                            <a href="@href" class="information-box">
-                                <img class="img-responsive" src="@imageUrl" />
-                            </a>
-                            <div class="service-information-caption hotnews-section">
-                                <h4 class="customer-h4">
-                                    @hotNews[i].SubTitle
-                                </h4>
-                                <span class="customer-content-sm">
-                                    @hotNews[i].Description
+            <div class="col-md-4 col-sm-4 col-is-4 highlight">
+                <div class="service-box">
+                    <a href="@href" class="information-box">
+                        <img class="img-responsive" src="@imageUrl" />
+                    </a>
+                    <div class="service-information-caption hotnews-section">
+                        <h4 class="customer-h4">
+                            @hotNews[i].SubTitle
+                        </h4>
+                        <span class="customer-content-sm">
+                            @hotNews[i].Description
 
-                                </span>
-                            </div>
-
-                        </div>
+                        </span>
                     </div>
+
+                </div>
+            </div>
                 }
 
             }
-            
 
-            
+
+
         </div>
         <script>
 
@@ -103,55 +171,6 @@
 </div>
 <!-- Intro -->
 
-<!-- /Intro-->
-<!-- Highlights - jumbotron -->
-<div class="jumbotron top-space">
-    <div class="container">
-
-        <h3 class="text-center thin">模块标题</h3>
-
-        <div class="row">
-            <div class="col-md-3 col-sm-6 highlight feature">
-                <div class="h-caption"><h4><i class="fa fa-cogs fa-5"></i>自动化制造</h4></div>
-                <div class="h-body text-center">
-                    <p>
-                        文字介绍文字介绍文字介绍文字介绍
-                        文字介绍文字介绍文字介绍文字介绍
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight feature">
-                <div class="h-caption"><h4><i class="fa fa-flash fa-5"></i>智能硬件</h4></div>
-                <div class="h-body text-center">
-                    <p>
-                        文字介绍文字介绍文字介绍文字介绍
-                        文字介绍文字介绍文字介绍文字介绍
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight feature">
-                <div class="h-caption"><h4><i class="fa fa-heart fa-5"></i>华尔达精密</h4></div>
-                <div class="h-body text-center">
-                    <p>
-                        文字介绍文字介绍文字介绍文字介绍
-                        文字介绍文字介绍文字介绍文字介绍
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight feature">
-                <div class="h-caption"><h4><i class="fa fa-send fa-5"></i>SVV加速</h4></div>
-                <div class="h-body text-center">
-                    <p>
-                        文字介绍文字介绍文字介绍文字介绍
-                        文字介绍文字介绍文字介绍文字介绍
-                    </p>
-                </div>
-            </div>
-        </div> <!-- /row  -->
-
-    </div>
-</div>
-<!-- /Highlights -->
 <!-- container -->
 <div class="container">
 
@@ -217,8 +236,8 @@
             line: 1,
             speed: 500,
             timer: 3000,
-            up: "but_up",
-            down: "but_down"
+            up: "btn_up",
+            down: "btn_down"
         });
     }
 </script>

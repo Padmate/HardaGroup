@@ -183,7 +183,7 @@
 
         //初始化图片上传插件
         uploader = $("#uploadThumbnailsImage").InitImageWebUploader({
-            url: "/News/UploadThumbnailsImage",
+            url: "/Press/UploadThumbnailsImage",
             size: 1,
             multiple: false,
             autoupload: false,
@@ -215,7 +215,7 @@
         var jsonParam = JSON.stringify(saveObj);
         $.ajax({
             type: "POST",
-            url: "/News/SaveEdit",
+            url: "/Press/SaveEdit",
             dataType: "json",
             data: jsonParam,
             async: false,   //同步
@@ -276,7 +276,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "/News/GenerateNewURLId",
+                url: "/Press/GenerateNewURLId",
                 dataType: "json",
                 async: false,   //同步
                 success: function (message) {
