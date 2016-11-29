@@ -66,6 +66,7 @@ namespace HardaGroup.Web.Controllers
         /// 背景图片管理
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult BackgroundImage(string type)
         {
             ViewData["type"] = type;
@@ -76,6 +77,7 @@ namespace HardaGroup.Web.Controllers
         /// 关于华尔达内容管理
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult About()
         {
             return View();
@@ -86,6 +88,7 @@ namespace HardaGroup.Web.Controllers
         /// Common.Dic_ModuleType
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult Module()
         {
             
@@ -96,6 +99,7 @@ namespace HardaGroup.Web.Controllers
         /// 单个模块编辑页面
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult ModulePage()
         {
             return View();
@@ -106,6 +110,7 @@ namespace HardaGroup.Web.Controllers
         /// 新闻模块管理
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult NewsScope()
         {
             return View();
@@ -115,6 +120,7 @@ namespace HardaGroup.Web.Controllers
         /// 新闻管理
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult News()
         {
             B_NewsScope bNewsScope = new B_NewsScope();
@@ -128,6 +134,7 @@ namespace HardaGroup.Web.Controllers
         }
 
 
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult Jobs()
         {
             B_JobScope bJobScope = new B_JobScope();
@@ -139,12 +146,14 @@ namespace HardaGroup.Web.Controllers
             return View();
         }
 
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult JobScope()
         {
 
             return View();
         }
 
+        [Authorize(Roles = SystemRole.SystemAdmin)]
         public ActionResult UserManage()
         {
 
@@ -157,6 +166,7 @@ namespace HardaGroup.Web.Controllers
             return View();
         }
 
+        [Authorize(Roles = SystemRole.SystemAdmin)]
         public ActionResult RoleManage()
         {
             //角色
@@ -194,6 +204,7 @@ namespace HardaGroup.Web.Controllers
         /// 系统邮件
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult Mail()
         {
             return View();

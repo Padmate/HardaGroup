@@ -651,6 +651,8 @@
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\Mail.cshtml" />
     <Content Include="Views\Mail\Detail.cshtml" />
+    <Content Include="Views\Shared\_NormalMenu.cshtml" />
+    <Content Include="Views\Shared\_AdminMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

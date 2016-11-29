@@ -38,7 +38,7 @@
                 @{
                     foreach (var role in roles)
                     {
-                        var roleName = SystemRole.Roles.Dic_Roles.ContainsKey(role.Name) ? SystemRole.Roles.Dic_Roles[role.Name] : role.Name;
+                        var roleName = SystemRole.Dic_Roles.ContainsKey(role.Name) ? SystemRole.Dic_Roles[role.Name] : role.Name;
                         <input name="ckRole" id='@role.Id' class="rolecheck" value=@role.Id type="checkbox" />
                         <label for='@role.Id' style="font-weight:bold">@roleName</label>
                         <br />

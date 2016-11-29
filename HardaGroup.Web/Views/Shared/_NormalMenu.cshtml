@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNet.Identity
+@using System.Configuration;
+@using HardaGroup.Utility;
+@using HardaGroup.Web.Globalization;
+@using HardaGroup.Service;
+@{
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+}
+
+<ul class="sidebar-menu">
+    <li>
+        <a href="@string.Format("/manage/index{0}", urlRewriteExtension)">
+            <i class="fa fa-dashboard"></i>
+            <span>公告通知</span>
+        </a>
+    </li>
+    <li>
+        <a href="@string.Format("/manage/userinfo{0}", urlRewriteExtension)">
+            <i class="fa fa-user"></i>
+            <span>用户信息</span>
+        </a>
+    </li>
+    <li>
+        <a href="@string.Format("/manage/changepassword{0}", urlRewriteExtension)">
+            <i class="fa fa-edit"></i>
+            <span>修改密码</span>
+        </a>
+    </li>
+
+</ul>

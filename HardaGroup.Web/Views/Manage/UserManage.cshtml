@@ -10,7 +10,7 @@
     var isSystemAdmin = "false";
     if (loginUser.Roles != null)
     {
-        var sysAdminRole = loginUser.Roles.Where(r => r.Name == SystemRole.Roles.SystemAdmin).ToList();
+        var sysAdminRole = loginUser.Roles.Where(r => r.Name == SystemRole.SystemAdmin).ToList();
         if (sysAdminRole.Count() > 0)
         {
             isSystemAdmin = "true";

@@ -1,0 +1,243 @@
+﻿@using Microsoft.AspNet.Identity
+@using System.Configuration;
+@using HardaGroup.Utility;
+@using HardaGroup.Web.Globalization;
+@using HardaGroup.Service;
+@{
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+    B_Mail bMail = new B_Mail();
+    int unSendMailNum = bMail.GetAllUnReadMail().Count();
+}
+
+<ul class="sidebar-menu">
+    <li>
+        @*<a href="@string.Format("/manage/index{0}",urlRewriteExtension)">
+                <i class="fa fa-dashboard"></i> <span>首页</span>
+            </a>*@
+        <a href="javaScript:void(0)">
+            <i class="fa fa-dashboard"></i> <span>首页</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="@string.Format("/manage/index{0}",urlRewriteExtension)">
+                    <i class="fa fa-circle-o text-blue"></i>公告通知
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/{0}{1}",Common.ModuleType_Home_Module1, urlRewriteExtension)">
+                    <i class="fa fa-circle-o text-yellow"></i>备用模块一
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/{0}{1}",Common.ModuleType_Home_Module2, urlRewriteExtension)">
+                    <i class="fa fa-circle-o text-yellow"></i>备用模块二
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/{0}{1}",Common.ModuleType_Home_WhyChooseHarda, urlRewriteExtension)">
+                    <i class="fa fa-circle-o text-red"></i>为什么选择华尔达
+                </a>
+            </li>
+
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="javaScript:void(0)">
+            <i class="fa fa-image"></i> <span>图片管理</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="@string.Format("/manage/background-{0}{1}",@Common.Image_HomeBG,urlRewriteExtension)">
+                    <i class="fa fa-circle-o text-blue"></i>首页
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/background-{0}{1}", @Common.Image_AboutBG, urlRewriteExtension)">
+                    <i class="fa fa-circle-o text-yellow"></i>关于华尔达
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/background-{0}{1}",@Common.Image_AdvancedManufacturingBG, urlRewriteExtension)">
+                    <i class="fa fa-circle-o text-red"></i>智能制造
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/background-{0}{1}",@Common.Image_SolutionsBG_RD, urlRewriteExtension)">
+                    <i class="fa fa-circle-o text-red"></i>解决方案-研发
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/background-{0}{1}",@Common.Image_SolutionsBG_PM, urlRewriteExtension)">
+                    <i class="fa fa-circle-o text-red"></i>解决方案-组件产品
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/background-{0}{1}",@Common.Image_VentureSupportBG, urlRewriteExtension)">
+                    <i class="fa fa-circle-o text-red"></i>创新创业
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/background-{0}{1}",@Common.Image_PressBG, urlRewriteExtension)">
+                    <i class="fa fa-circle-o text-red"></i>媒体资讯
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/background-{0}{1}",@Common.Image_JoinUsBG, urlRewriteExtension)">
+                    <i class="fa fa-circle-o text-red"></i>加入华尔达
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li><a href="@string.Format("/manage/about{0}", urlRewriteExtension)"><i class="fa fa-files-o"></i> <span>关于华尔达</span></a></li>
+    <li class="treeview">
+        <a href="javaScript:void(0)">
+            <i class="fa fa-magic"></i> <span>智能制造</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="@string.Format("/manage/{0}{1}",Common.ModuleType_Manufacturing_Introduction, urlRewriteExtension)">
+                    <i class="fa fa-info-circle text-blue"></i>制造简介
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/manufacturing/{0}{1}",Common.ModuleType_Manufacturing_ServiceScope,urlRewriteExtension)">
+                    <i class="fa fa-info text-yellow"></i>服务范围
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/manufacturing/{0}{1}",Common.ModuleType_Manufacturing_ServiceFeatures ,urlRewriteExtension)">
+                    <i class="fa fa-info text-yellow"></i>服务特色
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="javaScript:void(0)">
+            <i class="fa fa-question"></i> <span>解决方案</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="#">
+                    <i class="fa fa-stack-exchange"></i>研发 <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li>
+                        <a href="@string.Format("/manage/{0}{1}",Common.ModuleType_Solutions_RDIntroduction, urlRewriteExtension)">
+                            <i class="fa fa-info"></i>研发简介
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@string.Format("/manage/solutions/{0}{1}",Common.ModuleType_Solutions_DesignScopes, urlRewriteExtension)">
+                            <i class="fa fa-info"></i>设计服务范围
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@string.Format("/manage/solutions/{0}{1}",Common.ModuleType_Solutions_ProductSolution, urlRewriteExtension)">
+                            <i class="fa fa-info"></i>产品解决方案
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@string.Format("/manage/solutions/{0}{1}",Common.ModuleType_Solutions_Workflow, urlRewriteExtension)">
+                            <i class="fa fa-info"></i>研发流程与管理
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/{0}{1}",Common.ModuleType_Solutions_PartsAndModules, urlRewriteExtension)">
+                    <i class="fa fa-info-circle text-blue"></i>组件产品
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="javaScript:void(0)">
+            <i class="fa fa-support"></i> <span>创新创业</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="@string.Format("/manage/venture/{0}{1}",Common.ModuleType_VentureSupport_InvestedFields, urlRewriteExtension)">
+                    <i class="fa fa-info-circle text-blue"></i>投资领域
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/venture/{0}{1}", Common.ModuleType_VentureSupport_NineSupportingPlatforms, urlRewriteExtension)">
+                    <i class="fa fa-info text-yellow"></i>九大平台
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/venture/{0}{1}", Common.ModuleType_VentureSupport_ThreeSpaces, urlRewriteExtension)">
+                    <i class="fa fa-info text-yellow"></i>三大空间
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="javaScript:void(0)">
+            <i class="fa fa-image"></i> <span>媒体资讯</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="@string.Format("/manage/newsscope{0}",urlRewriteExtension)">
+                    <i class="fa fa-info-circle text-blue"></i>模块管理
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/news{0}",urlRewriteExtension)">
+                    <i class="fa fa-info text-yellow"></i>内容管理
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="treeview">
+        <a href="javaScript:void(0)">
+            <i class="fa fa-image"></i> <span>加入我们</span> <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            <li>
+                <a href="@string.Format("/manage/jobscope{0}",urlRewriteExtension)">
+                    <i class="fa fa-info-circle text-blue"></i>招聘-职位分类
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/jobs{0}",urlRewriteExtension)">
+                    <i class="fa fa-info-circle text-blue"></i>招聘-职位信息
+                </a>
+            </li>
+            <li>
+                <a href="@string.Format("/manage/joinus/{0}{1}", Common.ModuleType_Company_Activities, urlRewriteExtension)">
+                    <i class="fa fa-info text-yellow"></i>公司活动
+                </a>
+            </li>
+        </ul>
+    </li>
+    @if (User.IsInRole(SystemRole.SystemAdmin))
+    {
+        <li class="treeview">
+            <a href="javaScript:void(0)">
+                <i class="fa fa-image"></i> <span>用户管理</span> <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li>
+                    <a href="@string.Format("/manage/rolemanage{0}",urlRewriteExtension)">
+                        <i class="fa fa-user-md text-blue"></i>角色管理
+                    </a>
+                </li>
+                <li>
+                    <a href="@string.Format("/manage/usermanage{0}",urlRewriteExtension)">
+                        <i class="fa fa-users text-blue"></i>用户管理
+                    </a>
+                </li>
+            </ul>
+        </li>
+    }
+    <li>
+        <a href="@string.Format("/manage/mail{0}", urlRewriteExtension)">
+            <i class="fa fa-files-o"></i>
+            <span>系统邮件</span>
+            <small class="label pull-right bg-red">@unSendMailNum</small>
+        </a>
+    </li>
+
+</ul>
