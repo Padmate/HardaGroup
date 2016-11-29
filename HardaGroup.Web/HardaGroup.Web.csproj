@@ -179,8 +179,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImagesController.cs" />
     <Compile Include="Controllers\JoinUsController.cs" />
+    <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\ModuleController.cs" />
     <Compile Include="Controllers\PressController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\VentureSupportController.cs" />
     <Compile Include="Controllers\AdvancedManufacturingController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -511,6 +514,7 @@
     <None Include="Properties\PublishProfiles\hardagroup.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\classie.js" />
+    <Content Include="Scripts\data-operater.js" />
     <Content Include="Scripts\dateformathelp.js" />
     <Content Include="Scripts\Globalization.js" />
     <Content Include="Scripts\headroom.min.js" />
@@ -636,6 +640,17 @@
     <Content Include="Views\Manage\JobScope.cshtml" />
     <Content Include="Views\Manage\ModulePage.cshtml" />
     <Content Include="Views\Solutions\ShowDetail.cshtml" />
+    <Content Include="Views\Manage\UserManage.cshtml" />
+    <Content Include="Views\Manage\RoleManage.cshtml" />
+    <Content Include="Views\Role\Add.cshtml" />
+    <Content Include="Views\Role\Edit.cshtml" />
+    <Content Include="Views\User\Add.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\Detail.cshtml" />
+    <Content Include="Views\Manage\UserInfo.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Mail.cshtml" />
+    <Content Include="Views\Mail\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

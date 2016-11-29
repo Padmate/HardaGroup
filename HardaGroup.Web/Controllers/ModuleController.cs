@@ -75,7 +75,7 @@ namespace HardaGroup.Web.Controllers
         /// <param name="ReturnUrl"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult UploadThumbnailsImage(string moduleGlobalizationId, string culture, HttpPostedFileBase file)
         {
             Message message = new Message();
@@ -116,7 +116,7 @@ namespace HardaGroup.Web.Controllers
 
         // POST:
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveAdd()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -184,7 +184,7 @@ namespace HardaGroup.Web.Controllers
         // POST:
         [HttpPost]
         [ValidateInput(false)]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveEdit()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -308,7 +308,7 @@ namespace HardaGroup.Web.Controllers
             return message;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult Delete(string ModuleId)
         {
             B_Module bModule = new B_Module();
@@ -318,7 +318,7 @@ namespace HardaGroup.Web.Controllers
         }
 
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult BachDeleteById()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -398,7 +398,7 @@ namespace HardaGroup.Web.Controllers
 
         // POST:
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveModuleGlobalization()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -456,7 +456,7 @@ namespace HardaGroup.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveSingleModule()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);

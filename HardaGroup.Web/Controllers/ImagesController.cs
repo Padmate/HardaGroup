@@ -117,7 +117,7 @@ namespace HardaGroup.Web.Controllers
         /// <param name="image"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult UploadBGImageByType(HttpPostedFileBase file,string imageType,string culture)
         {
             //背景图片虚拟目录

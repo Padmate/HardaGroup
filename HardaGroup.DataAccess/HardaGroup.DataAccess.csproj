@@ -63,6 +63,8 @@
     <Compile Include="DBConfiguration\JobGlobalizationConfiguration.cs" />
     <Compile Include="DBConfiguration\JobScopeConfiguration.cs" />
     <Compile Include="DBConfiguration\JobScopeGlobalizationConfiguration.cs" />
+    <Compile Include="DBConfiguration\MailAttachmentConfiguration.cs" />
+    <Compile Include="DBConfiguration\MailConfiguration.cs" />
     <Compile Include="DBConfiguration\ModuleConfiguration.cs" />
     <Compile Include="DBConfiguration\ModuleGlobalization.cs" />
     <Compile Include="DBConfiguration\ModuleGlobalizationConfiguration.cs" />
@@ -74,42 +76,16 @@
     <Compile Include="D_Image.cs" />
     <Compile Include="D_Job.cs" />
     <Compile Include="D_JobScope.cs" />
+    <Compile Include="D_Mail.cs" />
     <Compile Include="D_Module.cs" />
     <Compile Include="D_News.cs" />
+    <Compile Include="D_Role.cs" />
     <Compile Include="D_User.cs" />
     <Compile Include="HardaDBContext.cs" />
     <Compile Include="D_NewsScope.cs" />
-    <Compile Include="Migrations\201608230603557_init.cs" />
-    <Compile Include="Migrations\201608230603557_init.Designer.cs">
-      <DependentUpon>201608230603557_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201608231009424_rafactnewstable.cs" />
-    <Compile Include="Migrations\201608231009424_rafactnewstable.Designer.cs">
-      <DependentUpon>201608231009424_rafactnewstable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609120316091_addModuleAndModuleGlobalization.cs" />
-    <Compile Include="Migrations\201609120316091_addModuleAndModuleGlobalization.Designer.cs">
-      <DependentUpon>201609120316091_addModuleAndModuleGlobalization.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609130352298_addHrefColumnToModuleGlobalization.cs" />
-    <Compile Include="Migrations\201609130352298_addHrefColumnToModuleGlobalization.Designer.cs">
-      <DependentUpon>201609130352298_addHrefColumnToModuleGlobalization.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609130927599_addIsScrollColumnAndIsHotToNews.cs" />
-    <Compile Include="Migrations\201609130927599_addIsScrollColumnAndIsHotToNews.Designer.cs">
-      <DependentUpon>201609130927599_addIsScrollColumnAndIsHotToNews.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609180230032_AddJobTables.cs" />
-    <Compile Include="Migrations\201609180230032_AddJobTables.Designer.cs">
-      <DependentUpon>201609180230032_AddJobTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609180233254_AddJobRelateTables.cs" />
-    <Compile Include="Migrations\201609180233254_AddJobRelateTables.Designer.cs">
-      <DependentUpon>201609180233254_AddJobRelateTables.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201611030109591_AddLinkHrefToImage.cs" />
-    <Compile Include="Migrations\201611030109591_AddLinkHrefToImage.Designer.cs">
-      <DependentUpon>201611030109591_AddLinkHrefToImage.cs</DependentUpon>
+    <Compile Include="Migrations\201611290605063_init.cs" />
+    <Compile Include="Migrations\201611290605063_init.Designer.cs">
+      <DependentUpon>201611290605063_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -129,29 +105,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201608230603557_init.resx">
-      <DependentUpon>201608230603557_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201608231009424_rafactnewstable.resx">
-      <DependentUpon>201608231009424_rafactnewstable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609120316091_addModuleAndModuleGlobalization.resx">
-      <DependentUpon>201609120316091_addModuleAndModuleGlobalization.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609130352298_addHrefColumnToModuleGlobalization.resx">
-      <DependentUpon>201609130352298_addHrefColumnToModuleGlobalization.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609130927599_addIsScrollColumnAndIsHotToNews.resx">
-      <DependentUpon>201609130927599_addIsScrollColumnAndIsHotToNews.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609180230032_AddJobTables.resx">
-      <DependentUpon>201609180230032_AddJobTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609180233254_AddJobRelateTables.resx">
-      <DependentUpon>201609180233254_AddJobRelateTables.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201611030109591_AddLinkHrefToImage.resx">
-      <DependentUpon>201611030109591_AddLinkHrefToImage.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201611290605063_init.resx">
+      <DependentUpon>201611290605063_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

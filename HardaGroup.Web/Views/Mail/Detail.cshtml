@@ -1,0 +1,83 @@
+﻿@using HardaGroup.Utility;
+@using HardaGroup.Models;
+@{
+    Layout = null;
+    M_Mail mail = (M_Mail)ViewData["Mail"];
+
+}
+<div class="close-modal" data-dismiss="modal">
+    <i class="fa fa-3x fa-close"></i>
+</div>
+<div class="container">
+
+    <h3 class="customer-h3 text-center curd-title">详 细</h3>
+    <hr />
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">发件人：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@mail.From (@mail.Creator)</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">收件人：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@mail.To</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">抄送：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@mail.Cc</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">邮件主题：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@mail.Subject</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">邮件内容：</label>
+            </div>
+            <div class="col-md-10">
+                @Html.Raw(mail.Body)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">邮件是否发送：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@mail.SendTag</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-2 text-right">
+                <label class="customer-content-sm">邮件发送日期：</label>
+            </div>
+            <div class="col-md-10">
+                <label class="customer-content-sm">@mail.SendDate</label>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-lg btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+</div>
+
+
+

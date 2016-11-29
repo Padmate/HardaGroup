@@ -1,0 +1,144 @@
+﻿@using HardaGroup.Utility;
+@using HardaGroup.Models;
+
+@{
+    Layout = null;
+    var roles = (List<M_Role>)ViewData["roles"];
+}
+
+<div class="modal-body">
+
+    <h3 class="customer-h3 text-center">
+        新 增
+    </h3>
+    <hr />
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-4 col-md-3 control-label">
+                <label class="customer-content-sm">用户名称：</label>
+            </div>
+            <div class="col-sm-8 col-md-8">
+                <input class="input-large-full" id="tbUserName" placeholder="用户名称" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-4 col-md-3 text-right">
+                <label class="customer-content-sm">密 码：</label>
+            </div>
+            <div class="col-sm-8 col-md-8">
+                <label class="customer-content-sm">默认密码为：123456</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-4 col-md-3 text-right">
+                <label class="customer-content-sm">所属角色：</label>
+            </div>
+            <div class="col-sm-8 col-md-8">
+                @{
+                    foreach (var role in roles)
+                    {
+                        var roleName = SystemRole.Roles.Dic_Roles.ContainsKey(role.Name) ? SystemRole.Roles.Dic_Roles[role.Name] : role.Name;
+                        <input name="ckRole" id='@role.Id' class="rolecheck" value=@role.Id type="checkbox" />
+                        <label for='@role.Id' style="font-weight:bold">@roleName</label>
+                        <br />
+                    }
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-4 col-md-3 control-label">
+                <label class="customer-content-sm">邮 箱：</label>
+            </div>
+            <div class="col-sm-8 col-md-8">
+                <input class="input-large-full" id="tbEmail" placeholder="邮 箱" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-4 col-md-3 control-label">
+                <label class="customer-content-sm">联系电话：</label>
+            </div>
+            <div class="col-sm-8 col-md-8">
+                <input class="input-large-full" id="tbPhoneNumber" placeholder="联系电话" />
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+    <button type="button" class="btn btn-danger" onclick="SaveAdd()">
+        保 存
+    </button>
+</div>
+
+<script type="text/javascript">
+
+    //修改或新增保存
+    function SaveAdd() {
+
+        $("body").showLoading();
+        var saveObj = ConstructSaveObj();
+        var jsonParam = JSON.stringify(saveObj);
+        $.ajax({
+            type: "POST",
+            url: "/User/SaveAdd",
+            dataType: "json",
+            data: jsonParam,
+            async: false,   //同步
+            success: function (message) {
+
+                if (message.Success) {
+                    CloseModal();
+                    //刷新
+                    RefreshTable();
+                    $("body").hideLoading();
+
+
+                } else {
+                    $("body").hideLoading();
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                    return;
+                }
+            }
+        });
+    }
+
+
+    //构造保存对象
+    function ConstructSaveObj() {
+
+        var roles = [];
+
+        $("[name = ckRole]:checkbox").each(function () {
+            if ($(this).is(":checked")) {
+
+                var roleId = $(this).attr('id');
+                var role = {
+                    Id: roleId
+                };
+                roles.push(role);
+            }
+
+        });
+
+        var obj = {
+            UserName: $("#tbUserName").val(),
+            Email: $("#tbEmail").val(),
+            PhoneNumber: $("#tbPhoneNumber").val(),
+            Roles: roles
+
+        };
+        return obj;
+    }
+
+
+</script>

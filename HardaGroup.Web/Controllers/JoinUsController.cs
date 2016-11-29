@@ -104,7 +104,7 @@ namespace HardaGroup.Web.Controllers
 
         // POST:
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveAddJobScope()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -154,7 +154,7 @@ namespace HardaGroup.Web.Controllers
 
         // POST:
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveEditJobScope()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -252,7 +252,7 @@ namespace HardaGroup.Web.Controllers
 
         // POST:
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveJobScopeGlobalization()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -339,7 +339,7 @@ namespace HardaGroup.Web.Controllers
 
         // POST:
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveJobAdd()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -412,7 +412,7 @@ namespace HardaGroup.Web.Controllers
         // POST:
         [HttpPost]
         [ValidateInput(false)]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveJobEdit()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -516,7 +516,7 @@ namespace HardaGroup.Web.Controllers
             return message;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult DeleteJob(string JobId)
         {
             B_Job bJob = new B_Job();
@@ -526,7 +526,7 @@ namespace HardaGroup.Web.Controllers
         }
 
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult BachDeleteJobById()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -612,7 +612,7 @@ namespace HardaGroup.Web.Controllers
 
         // POST:
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveJobGlobalization()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);

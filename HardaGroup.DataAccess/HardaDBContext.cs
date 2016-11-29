@@ -12,17 +12,7 @@ using System.Threading.Tasks;
 
 namespace HardaGroup.DataAccess
 {
-    public class ApplicationUser : IdentityUser
-    {
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
-        {
-            // 请注意，authenticationType 必须与 CookieAuthenticationOptions.AuthenticationType 中定义的相应项匹配
-            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // 在此处添加自定义用户声明
-            return userIdentity;
-        }
-    }
-
+   
     public class HardaDBContext : IdentityDbContext<ApplicationUser>
     {
         public HardaDBContext()
@@ -48,6 +38,9 @@ namespace HardaGroup.DataAccess
         public DbSet<Module> Modules { get; set; }
         public DbSet<ModuleGlobalization> ModuleGlobalizations { get; set; }
 
+        public DbSet<Mail> Mails { get; set; }
+        public DbSet<MailAttachment> MailAttachements { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -64,6 +57,8 @@ namespace HardaGroup.DataAccess
             modelBuilder.Configurations.Add(new JobGlobalizationConfiguration());
             modelBuilder.Configurations.Add(new ModuleConfiguration());
             modelBuilder.Configurations.Add(new ModuleGlobalizationConfiguration());
+            modelBuilder.Configurations.Add(new MailConfiguration());
+            modelBuilder.Configurations.Add(new MailAttachmentConfiguration());
 
         }
 

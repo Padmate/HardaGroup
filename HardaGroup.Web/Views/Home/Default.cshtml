@@ -9,58 +9,17 @@
 
     var scrollNews = (List<M_NewsSearch>)ViewData["scrollNews"];
     var hotNews = (List<M_NewsSearch>)ViewData["hotNews"];
+
+    var module1 = (M_ModuleSearch)ViewData["module1"];
+    var module2 = (M_ModuleSearch)ViewData["module2"];
+    var whychooseharda = (M_ModuleSearch)ViewData["whychooseharda"];
     
 } 
 <style>
     
     
 </style>
-<div class="jumbotron">
-    <div class="container">
-
-        <h3 class="text-center thin">模块标题</h3>
-
-        <div class="row">
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="h-caption"><h4><i class="fa fa-cogs fa-5"></i>自动化制造</h4></div>
-                <div class="h-body text-center">
-                    <p>
-                        文字介绍文字介绍文字介绍文字介绍
-                        文字介绍文字介绍文字介绍文字介绍
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="h-caption"><h4><i class="fa fa-flash fa-5"></i>智能硬件</h4></div>
-                <div class="h-body text-center">
-                    <p>
-                        文字介绍文字介绍文字介绍文字介绍
-                        文字介绍文字介绍文字介绍文字介绍
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="h-caption"><h4><i class="fa fa-heart fa-5"></i>华尔达精密</h4></div>
-                <div class="h-body text-center">
-                    <p>
-                        文字介绍文字介绍文字介绍文字介绍
-                        文字介绍文字介绍文字介绍文字介绍
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-3 col-sm-6 highlight">
-                <div class="h-caption"><h4><i class="fa fa-send fa-5"></i>SVV加速</h4></div>
-                <div class="h-body text-center">
-                    <p>
-                        文字介绍文字介绍文字介绍文字介绍
-                        文字介绍文字介绍文字介绍文字介绍
-                    </p>
-                </div>
-            </div>
-        </div> <!-- /row  -->
-
-    </div>
-</div>
+@Html.Raw(module1.Content)
 <div class="scrollNews-section">
     <div class="container">
         @if (scrollNews.Count > 0)
@@ -72,7 +31,15 @@
             </div>
             <div class="row">
                 
-                <div class="col-is-8 col-xs-7 col-sm-9 col-md-9">
+                <div class="col-is-2 col-xs-2 col-sm-2 col-md-2 text-right">
+                    <div class="scrollbox">
+                        <a href="javaScript:void(0)" id="btn_up">
+                            <i class="fa fa-chevron-left fa-2x"></i>
+
+                        </a>
+                    </div>
+                </div>
+                <div class="col-is-8 col-xs-8 col-sm-8 col-md-8">
 
                     <div id="scrollDiv">
                         <ul class="customer-content-md">
@@ -88,19 +55,13 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-is-4 col-xs-5 col-sm-3 col-md-3">
+                <div class="col-is-2 col-xs-2 col-sm-2 col-md-2 text-left">
                     <div class="scrollbox">
-                        <a href="javaScript:void(0)" id="btn_up">
-                            <i class="fa fa-arrow-circle-o-up fa-3x"></i>
-
-                        </a>
+                      
                         <a href="javaScript:void(0)" id="btn_down">
-                            <i class="fa fa-arrow-circle-o-down fa-3x"></i>
+                            <i class="fa fa-chevron-right fa-2x"></i>
 
                         </a>
-
-                        @*<small id="but_up">↑上一条</small>
-                        <small id="but_down">↓下一条</small>*@
                     </div>
                 </div>
             </div>
@@ -170,44 +131,8 @@
     </div>
 </div>
 <!-- Intro -->
-
-<!-- container -->
-<div class="container">
-
-    <h2 class="text-center top-space">为什么选择华尔达</h2>
-    <br>
-
-    <div class="row">
-        <div class="col-sm-6">
-            <h3>Which code editor would you recommend?</h3>
-            <p>I'd highly recommend you <a href="http://www.sublimetext.com/">Sublime Text</a> - a free to try text editor which I'm using daily. Awesome tool!</p>
-        </div>
-        <div class="col-sm-6">
-            <h3>Nice header. Where do I find more images like that one?</h3>
-            <p>
-                Well, there are thousands of stock art galleries, but personally,
-                I prefer to use photos from these sites: <a href="http://unsplash.com">Unsplash.com</a>
-                and <a href="http://www.flickr.com/creativecommons/by-2.0/tags/">Flickr - Creative Commons</a>
-            </p>
-        </div>
-    </div> <!-- /row -->
-
-    <div class="row">
-        <div class="col-sm-6">
-            <h3>Can I use it to build a site for my client?</h3>
-            <p>
-                Yes, you can. You may use this template for any purpose, just don't forget about the <a href="http://creativecommons.org/licenses/by/3.0/">license</a>,
-                which says: "You must give appropriate credit", i.e. you must provide the name of the creator and a link to the original template in your work.
-            </p>
-        </div>
-        <div class="col-sm-6">
-            <h3>Can you customize this template for me?</h3>
-            <p>Yes, I can. Please drop me a line to sergey-at-pozhilov.com and describe your needs in details. Please note, my services are not cheap.</p>
-        </div>
-    </div> <!-- /row -->
-
-
-</div>	<!-- /container -->
+@Html.Raw(module2.Content)
+@Html.Raw(whychooseharda.Content)
 
 <script>
     $(function () {

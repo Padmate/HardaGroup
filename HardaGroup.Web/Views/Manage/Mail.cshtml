@@ -1,0 +1,285 @@
+﻿@using HardaGroup.Utility;
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    ViewBag.Title = "系统邮件";
+
+
+}
+
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12 col-is-12 col-sm-12 col-md-12">
+            <div id="toolbar">
+                <a id="btnDetail" class="btn btn-info">
+                    <i class="glyphicon glyphicon-inbox"></i> 详细
+                </a>
+                <a id="btnDelete" class="btn btn-danger">
+                    <i class="glyphicon glyphicon-remove"></i> 删 除
+                </a>
+
+            </div>
+            <table id="table"></table>
+        </div>
+
+    </div>
+
+</section>
+
+<div class="curd-model modal fade" id="templetemodal" role="dialog" aria-hidden="true">
+    <div class="modal-content">
+        <div class="container">
+
+            <div id="divModalContent"></div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<!--Script要放在HTML标签后，才能将值绑定到标签-->
+<script type="text/javascript">
+
+    //bootstrap filter 选择项
+    var SendTagTableSelect = {};
+    SendTagTableSelect[0] = "已发送";
+    SendTagTableSelect[1] = "未发送";
+
+    var ReadTagTableSelect = {};
+    ReadTagTableSelect[0] = "已读";
+    ReadTagTableSelect[1] = "未读";
+
+
+    $(document).ready(function () {
+        InitTable();
+        InitToolBarButton();
+        InitModalEvent();
+    });
+    function InitTable() {
+        $('#table').bootstrapTable({
+            height: 500,
+            method: 'post',                 //The method type to request remote data.
+            url: '/Mail/GetPageData',
+            dataType: "json",               //The type of data that you are expecting back from the server.
+            contentType: 'application/json',
+            pagination: true,               //True to show a pagination toolbar on table bottom.
+            pageSize: 10,                   //初始化每页显示几条
+            pageNumber: 1,                   //初始化在第几页
+            pageList: [10, 25, 50, 100, 200, 'All'],
+            sidePagination: "server",       //服务端请求
+            idField: 'Id',
+            toolbar: '#toolbar',
+            showRefresh: true,
+            queryParams: ConstructQueryParams,
+            //queryParamsType: "limit",
+            locale: 'zh-CN',
+            paginationVAlign: 'bottom',  //分页条显示在顶部
+            clickToSelect: true,     //单击行选中数据
+            showColumns: true,
+            showToggle: true,
+            showExport: true, //数据导出
+            exportDataType: 'basic', // 'basic', 'all', 'selected'.
+            exportTypes: ['excel'],
+            filterControl: true,   //显示过滤
+            filterShowClear: true,  //显示清空过滤按钮
+            columns: [{
+                checkbox: true
+            },
+            {
+                field: 'Id',
+                title: 'Id',
+                visible: false,
+            },
+            {
+                field: 'From',
+                title: 'From',
+                sortable: true
+
+            },
+            {
+                field: 'To',
+                title: 'To',
+                sortable: true
+
+            },
+            {
+                field: 'Subject',
+                title: '邮件主题',
+                filterControl: 'input'
+
+            },
+            {
+                field: 'Body',
+                title: '邮件内容',
+                sortable: true,
+                formatter: function (value, row, index) {
+
+                    var result = row.Body;
+                    if (result.length > 10) {
+                        result = result.substr(0, 10) + "...";
+                    }
+                    return result;
+                }
+            },
+            {
+                field: 'SendTag',
+                title: '发送状态',
+                filterControl: 'select',
+                filterData: 'var:SendTagTableSelect',
+                formatter: function (value, row, index) {
+
+                    if (row.SendTag) {
+                        return "<label style='color:blue'>已发送</label>";
+                    } else {
+                        return "<label style='color:red'>未发送</label>";
+                    }
+                }
+
+            },
+            {
+                field: 'SendDate',
+                title: '发送时间',
+                formatter: function (value, row, index) {
+                    var result = value;
+                    if (value != null) {
+                        result = JsonDateFormat2(value);
+                    }
+
+
+                    return result;
+                }
+            }, {
+                field: 'ReadTag',
+                title: '读取状态',
+                filterControl: 'select',
+                filterData: 'var:ReadTagTableSelect',
+                formatter: function (value, row, index) {
+
+                    if (row.ReadTag) {
+                        return "<label style='color:green'>已读</label>";
+                    } else {
+                        return "<label style='color:red'>未读</label>";
+                    }
+                }
+
+            },
+            {
+                field: 'ReadDate',
+                title: '读取时间',
+                formatter: function (value, row, index) {
+                    var result = value;
+                    if (value != null) {
+                        result = JsonDateFormat2(value);
+                    }
+
+
+                    return result;
+                }
+            }
+            ]
+        });
+    }
+    function ConstructQueryParams(param) {
+        var filterObj = {};
+        if (param.filter != null) {
+            filterObj = JSON.parse(param.filter);
+        }
+
+        var params = {
+            limit: param.limit, //页面大小
+            offset: param.offset,//偏移数量
+            page: param.offset / param.limit, //页码
+            Subject: filterObj.Subject == null ? "" : filterObj.Subject,
+            SendTagSearch: filterObj.SendTag,
+            ReadTagSearch: filterObj.ReadTag
+
+        };
+        return params;
+    }
+
+    function InitModalEvent() {
+        $('#templetemodal').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#templetemodal').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divModalContent").html("");
+
+        })
+
+
+    }
+
+    function InitToolBarButton() {
+
+        $("#btnDetail").click(function () {
+
+            var selections = $('#table').bootstrapTable('getSelections');
+            if (selections.length == 0) {
+                layer.alert("请选择数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            } else if (selections.length != 1) {
+                layer.alert("只能选择一条数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+
+            var id = selections[0].Id;
+            $('#templetemodal').modal('show');
+            $("#divModalContent").load("/Mail/Detail?id=" + id);
+
+        });
+
+        $("#btnDelete").click(function () {
+            var selections = $('#table').bootstrapTable('getSelections');
+            if (selections.length == 0) {
+                layer.alert("请选择要将要删除的数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+            var mailIds = [];
+            for (var i = 0; i < selections.length; i++) {
+                var id = selections[i].Id;
+                mailIds.push(id);
+            }
+            //delete records
+            var jsonContactId = JSON.stringify(mailIds);
+            $.ajax({
+                type: "post",//使用get方法访问后台
+                dataType: "json",//返回json格式的数据
+                url: "/Mail/BachDeleteById",
+                data: jsonContactId,
+                async: false,
+                success: function (message) {
+                    if (message.Success) {
+                        RefreshTable();
+                    } else {
+                        layer.alert(message.Content, {
+                            skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                        });
+                    }
+
+                }
+            });
+        });
+    }
+
+    function RefreshTable() {
+        $('#table').bootstrapTable('refresh');
+
+    }
+</script>

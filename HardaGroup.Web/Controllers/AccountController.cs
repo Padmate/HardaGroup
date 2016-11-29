@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HardaGroup.Web.Models;
 using HardaGroup.DataAccess;
+using HardaGroup.Entities;
 
 namespace HardaGroup.Web.Controllers
 {

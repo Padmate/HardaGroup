@@ -1,0 +1,147 @@
+﻿@using HardaGroup.Utility;
+@using HardaGroup.Models;
+@using System.Configuration;
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+
+    M_User user = (M_User)ViewData["UserInfo"];
+    ViewBag.Title = "用户信息";
+    var from = Request["from"];
+    var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
+
+    
+}
+<style>
+  
+</style>
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12 col-is-12 col-sm-6 col-md-6">
+
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-7 col-is-4 col-sm-4 col-md-3 text-right">
+                        <label class="customer-content-sm">用户名称：</label>
+                    </div>
+                    <div class="col-xs-5 col-is-8 col-sm-8 col-md-9">
+                        <label class="customer-content-sm data-UserName"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12 col-is-12 col-sm-4 col-md-3 control-label">
+                        <label class="customer-content-sm">邮 箱：</label>
+                    </div>
+                    <div class="col-xs-12 col-is-12 col-sm-8 col-md-9">
+                        <input class="input-large-full data-Email" placeholder="邮 箱" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12 col-is-12 col-sm-4 col-md-3 control-label">
+                        <label class="customer-content-sm">联系电话：</label>
+                    </div>
+                    <div class="col-xs-12 col-is-12 col-sm-8 col-md-9">
+                        <input class="input-large-full data-PhoneNumber" placeholder="联系电话" />
+                    </div>
+                </div>
+                <div class="form-group" style="padding-top:100px;">
+                    <div class="col-xs-12 col-is-12 col-sm-8 col-md-6 text-right">
+                        <input type="button" class="btn btn-lg btn-success" onclick="SaveEdit()" value="保存更改" />
+                    </div>
+
+
+                </div>
+            </div>
+            
+        </div>
+        
+
+    </div>
+    
+</section>
+<script>
+
+    var userid = '@user.Id';
+
+    $(function () {
+
+        LoadUserInfoByUserId();
+
+    });
+
+    var mask;
+    //修改或新增保存
+    function SaveEdit() {
+
+        mask = layer.load(0,  //0代表加载的风格，支持0-2
+        {
+            shade: [0.5, '#fff'] //0.1透明度的白色背景
+        });
+
+        var saveObj = ConstructSaveObj();
+        var jsonParam = JSON.stringify(saveObj);
+        $.ajax({
+            type: "POST",
+            url: "/User/SetUserInfo",
+            dataType: "json",
+            data: jsonParam,
+            async: false,   //同步
+            success: function (message) {
+                layer.close(mask);
+                layer.alert(message.Content, {
+                    skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                });
+
+            }
+        });
+    }
+
+    //构造保存对象
+    function ConstructSaveObj() {
+
+
+
+        var obj = {
+            Id: "",
+            Email: "",
+            PhoneNumber: ""
+        };
+
+        obj = $.GetBindData(obj);
+        obj.Id = userid;
+        return obj;
+    }
+
+    //加载用户信息
+    function LoadUserInfoByUserId() {
+
+        $.ajax({
+            type: "POST",
+            url: "/User/LoadUserInfoByUserId",
+            dataType: "json",
+            data: { UserId: userid },
+            async: false,   //同步
+            success: function (message) {
+                if (message.Success) {
+
+                    var user = $.parseJSON(message.Content);
+                    $.SetBindData(user);
+
+                } else {
+
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                    return;
+                }
+
+            }
+        });
+
+    }
+
+   
+
+</script>

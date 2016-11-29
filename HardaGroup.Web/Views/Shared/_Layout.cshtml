@@ -23,6 +23,7 @@
     var urlRewriteExtension = ConfigurationManager.AppSettings["UrlRewriteExtension"];
     
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,6 +47,7 @@
 
     <link rel="stylesheet" href="~/Content/Common.css">
     <link rel="stylesheet" href="~/fonts/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Scripts/layer/layer-v2.4/skin/layer.css" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -67,6 +69,13 @@
         }
         .top-right-nav li{
             float:left;
+        }
+        #emailContent {
+            height:100px;
+        }
+        #btn-sendmail {
+            color:white;
+            background-color:#46b8da;
         }
     </style>
 </head>
@@ -200,6 +209,7 @@
     <script src="~/Scripts/Globalization.js"></script>
     <script src="~/Scripts/loading/jquery.showLoading.js"></script>
     <script src="~/Scripts/dateformathelp.js"></script>
+    <script src="~/Scripts/layer/layer-v2.4/layer.js"></script>
 
     @RenderSection("scripts", required: false)
 
@@ -290,27 +300,37 @@
                         </div>
                     </div>
                     <div class="col-md-4 widget">
-                        <h3 class="widget-title">联系我们</h3>
+                        <h3 class="widget-title">关注我们</h3>
                         <div class="widget-body">
-                            <p>
-                                +234 23 9873237<br>
-                                <a href="mailto:#">some.email@somewhere.com</a><br>
-                                <br>
-                                234 Hidden Pond Road, Ashland City, TN 37015
-                            </p>
+                            <div class="col-is-6 col-xs-6 col-sm-6 col-md-6" style="padding-left:0px;padding-right:30px;">
+                                <img src="http://192.168.20.250:8888/img/logos/weixin.png" class="img-responsive" />
+                            </div>
+                            <div class="col-is-6 col-xs-6 col-sm-6 col-md-6">
+                                <img src="http://192.168.20.250:8888/img/logos/weixin.png" class="img-responsive" />
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-md-4 widget">
-                        <h3 class="widget-title">关注我们</h3>
+                        <h3 class="widget-title">在线反馈</h3>
                         <div class="widget-body">
                            
-                            <p class="follow-me-icons">
-                                <a href=""><i class="fa fa-twitter fa-2"></i></a>
-                                <a href=""><i class="fa fa-dribbble fa-2"></i></a>
-                                <a href=""><i class="fa fa-github fa-2"></i></a>
-                                <a href=""><i class="fa fa-facebook fa-2"></i></a>
-                            </p>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="您的姓名" id="fromname">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="您的邮箱(发件人)" id="fromemail">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="邮件主题" id="emailsubject">
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" placeholder="邮件内容" id="emailContent"></textarea>
+                            </div>
+                            <div class="text-right">
+                                <a class="btn btn-info" href="javaScript:void(0);" id="btn-sendmail">发送邮件</a>
+
+                            </div>
                         </div>
                     </div>
 
@@ -351,8 +371,45 @@
 <script>
     $(function () {
         
-        
+        InitSendMail();
     });
 
-   
+    //发送邮件
+    function InitSendMail() {
+        $("#btn-sendmail").click(function () {
+
+            var obj = {
+                Creator: $("#fromname").val(),
+                From: $("#fromemail").val(),
+                Subject: $("#emailsubject").val(),
+                Body: $("#emailContent").val()
+            };
+
+            var jsonParam = JSON.stringify(obj);
+            $.ajax({
+                type: "POST",
+                url: "/Mail/SendOnlineMail",
+                dataType: "json",
+                data: jsonParam,
+                async: false,   //同步
+                success: function (message) {
+                   
+                    if (message.Success) {
+                        $("#fromname").val("");
+                        $("#fromemail").val("");
+                        $("#emailsubject").val("");
+                        $("#emailContent").val("");
+
+                    }
+                    //tips层
+                    layer.tips(message.Content, "#btn-sendmail", {
+                        tips: [1, '#f90'] //提示位置：上,还可配置颜色
+                    });
+                }
+            });
+
+
+
+        });
+    }
 </script>

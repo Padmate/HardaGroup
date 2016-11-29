@@ -13,7 +13,7 @@ namespace HardaGroup.DataAccess.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201608230603557_init"; }
+            get { return "201611290605063_init"; }
         }
         
         string IMigrationMetadata.Source

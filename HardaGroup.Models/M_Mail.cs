@@ -19,8 +19,7 @@ namespace HardaGroup.Models
         /// 如果有多个，格式为123@qq.com,456@qq.com
         /// </summary>
         [Required(ErrorMessage = "收件人不能为空")]
-        [RegularExpression(@"^(([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+([;.](([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\. 
-       ([a-zA-Z]{2,5}){1,25})+)*$"
+        [RegularExpression(@"^(([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+([;.](([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5}){1,25})+)*$"
             , ErrorMessage = "收件人邮箱格式不正确，多个邮箱请用';'隔开")]
         public string To { get; set; }
 
@@ -68,6 +67,21 @@ namespace HardaGroup.Models
         /// 邮件发送标记
         /// </summary>
         public bool SendTag { get; set; }
+
+        public string SendTagSearch { get; set; }
+
+        /// <summary>
+        /// 是否读取邮件
+        /// </summary>
+        public bool ReadTag { get; set; }
+
+        public string ReadTagSearch { get; set; }
+
+        /// <summary>
+        /// 阅读邮件日期
+        /// </summary>
+        public DateTime? ReadDate { get; set; }
+
     }
 
     /// <summary>

@@ -76,7 +76,7 @@ namespace HardaGroup.Web.Controllers
 
         // POST:
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveAddScope()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -126,7 +126,7 @@ namespace HardaGroup.Web.Controllers
 
         // POST:
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveEditScope()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -224,7 +224,7 @@ namespace HardaGroup.Web.Controllers
 
         // POST:
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveNewsScopeGlobalization()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -306,7 +306,7 @@ namespace HardaGroup.Web.Controllers
         /// <param name="ReturnUrl"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult UploadThumbnailsImage(string newsGlobalizationId,string culture ,HttpPostedFileBase file)
         {
             Message message = new Message();
@@ -352,7 +352,7 @@ namespace HardaGroup.Web.Controllers
 
         // POST:
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveAdd()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -427,7 +427,7 @@ namespace HardaGroup.Web.Controllers
         // POST:
         [HttpPost]
         [ValidateInput(false)]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveEdit()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -537,7 +537,7 @@ namespace HardaGroup.Web.Controllers
             return message;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult Delete(string NewsId)
         {
             B_News bNews = new B_News();
@@ -547,7 +547,7 @@ namespace HardaGroup.Web.Controllers
         }
 
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult BachDeleteById()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);
@@ -633,7 +633,7 @@ namespace HardaGroup.Web.Controllers
 
         // POST:
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = SystemRole.SystemAdmin + "," + SystemRole.BackstageAdmin)]
         public ActionResult SaveNewsGlobalization()
         {
             StreamReader srRequest = new StreamReader(Request.InputStream);

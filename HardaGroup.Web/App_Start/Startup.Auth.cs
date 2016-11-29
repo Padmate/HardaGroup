@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using HardaGroup.Web.Models;
 using HardaGroup.DataAccess;
+using HardaGroup.Entities;
 
 namespace HardaGroup.Web
 {

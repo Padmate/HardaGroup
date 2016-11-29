@@ -54,6 +54,22 @@ namespace HardaGroup.Utility
 
         #region ModuleType 模块类型
         /// <summary>
+        /// 首页-备用模块1
+        /// </summary>
+        public const string ModuleType_Home_Module1 = "home-module1";
+
+        /// <summary>
+        /// 首页-备用模块2
+        /// </summary>
+        public const string ModuleType_Home_Module2 = "home-module2";
+
+        /// <summary>
+        /// 首页-为什么选择华尔达
+        /// </summary>
+        public const string ModuleType_Home_WhyChooseHarda = "home-whychooseharda";
+
+
+        /// <summary>
         /// 智能制造简介
         /// </summary>
         public const string ModuleType_Manufacturing_Introduction = "manufacturing-introduction";
@@ -113,6 +129,9 @@ namespace HardaGroup.Utility
 
 
         public static Dictionary<string, string> Dic_ModuleType = new Dictionary<string, string>(){
+            {ModuleType_Home_Module1,"首页-备用模块1"},
+            {ModuleType_Home_Module2,"首页-备用模块2"},
+            {ModuleType_Home_WhyChooseHarda,"首页-为什么选择华尔达"},
             {ModuleType_Manufacturing_Introduction,"智能制造-制造简介"},
             {ModuleType_Manufacturing_ServiceScope,"智能制造-服务范围"},
             {ModuleType_Manufacturing_ServiceFeatures,"智能制造-服务特色"},

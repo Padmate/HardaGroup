@@ -1,0 +1,86 @@
+﻿@{
+    Layout = null;
+    var role = (M_Role)ViewData["role"];
+}
+@using HardaGroup.Utility;
+@using HardaGroup.Models;
+
+<div class="modal-body">
+
+    <h3 class="customer-h3 text-center">
+        修 改
+    </h3>
+    <hr />
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-4 control-label">
+                <label class="customer-content-sm">角色名称：</label>
+            </div>
+            <div class="col-md-8">
+                <input class="input-large" id="tbName" placeholder="角色名称" value="@role.Name"/>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-info"
+            data-dismiss="modal">
+        退 出
+    </button>
+    <button type="button" class="btn btn-danger" onclick="SaveEdit()">
+        保 存
+    </button>
+</div>
+
+<script type="text/javascript">
+
+    //修改或新增保存
+    function SaveEdit() {
+
+        $("body").showLoading();
+        var saveObj = ConstructSaveObj();
+        var jsonParam = JSON.stringify(saveObj);
+        $.ajax({
+            type: "POST",
+            url: "/Role/SaveEdit",
+            dataType: "json",
+            data: jsonParam,
+            async: false,   //同步
+            success: function (message) {
+
+                if (message.Success) {
+                    //图片上传成功后关闭对话框，刷新表格
+                    CloseModal();
+                    //刷新
+                    RefreshTable();
+                    $("body").hideLoading();
+
+                } else {
+                    $("body").hideLoading();
+
+                    layer.alert(message.Content, {
+                        skin: 'layui-layer-molv' //样式类名
+                      , closeBtn: 0
+                    });
+                    return;
+                }
+            }
+        });
+    }
+
+
+    //构造保存对象
+    function ConstructSaveObj() {
+        var obj = {
+            Id: '@role.Id',
+            Name: $("#tbName").val()
+
+        };
+        return obj;
+    }
+
+</script>

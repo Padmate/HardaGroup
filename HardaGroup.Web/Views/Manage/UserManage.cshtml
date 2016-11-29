@@ -1,0 +1,336 @@
+﻿@using HardaGroup.Utility;
+@using HardaGroup.Models;
+@{
+    Layout = "~/Views/Shared/_Admin.cshtml";
+    ViewBag.Title = "用户管理";
+    
+    var loginUser = (M_User)ViewData["LoginUser"];
+
+
+    var isSystemAdmin = "false";
+    if (loginUser.Roles != null)
+    {
+        var sysAdminRole = loginUser.Roles.Where(r => r.Name == SystemRole.Roles.SystemAdmin).ToList();
+        if (sysAdminRole.Count() > 0)
+        {
+            isSystemAdmin = "true";
+        }
+    }
+
+}
+
+<section class="content">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-xs-12 col-is-12 col-sm-12 col-md-12">
+            <div id="toolbar">
+                <a id="btnAdd" class="btn btn-success">
+                    <i class="glyphicon glyphicon-plus"></i> 新 增
+                </a>
+                <a id="btnEdit" class="btn btn-info">
+                    <i class="glyphicon glyphicon-edit"></i> 修 改
+                </a>
+                <a id="btnDelete" class="btn btn-danger">
+                    <i class="glyphicon glyphicon-remove"></i> 删 除
+                </a>
+                <a id="btnDetail" class="btn btn-default">
+                    <i class="glyphicon glyphicon-inbox"></i> 详细
+                </a>
+            </div>
+            <table id="table"></table>
+        </div>
+
+    </div>
+
+</section>
+
+<!--#region新增-->
+<div class="curd-model modal fade" id="templetemodal" role="dialog"
+     data-backdrop="static" aria-hidden="true">
+    <div class="modal-dialog mediu-modal">
+        <div class="modal-content mediu-modal-content">
+            <div id="divModalContent"></div>
+        </div>
+    </div>
+
+</div>
+
+
+<!--Script要放在HTML标签后，才能将值绑定到标签-->
+<script type="text/javascript">
+
+    var dicRoles = $.parseJSON('@Html.Raw(ViewData["Roles"])');
+
+    //bootstrap filter 选择项
+    var RoleNameTableSelect = {};
+    for (var i = 0; i < dicRoles.length; i++) {
+        RoleNameTableSelect[dicRoles[i].Key] = dicRoles[i].Value;
+
+    }
+
+
+    $(document).ready(function () {
+        InitTable();
+        InitToolBarButton();
+        InitModalEvent();
+    });
+    function InitTable() {
+        $('#table').bootstrapTable({
+            height: 500,
+            method: 'post',                 //The method type to request remote data.
+            url: '/User/GetPageData',
+            dataType: "json",               //The type of data that you are expecting back from the server.
+            contentType: 'application/json',
+            pagination: true,               //True to show a pagination toolbar on table bottom.
+            pageSize: 10,                   //初始化每页显示几条
+            pageNumber: 1,                   //初始化在第几页
+            pageList: [10, 25, 50, 100, 200, 'All'],
+            sidePagination: "server",       //服务端请求
+            idField: 'Id',
+            toolbar: '#toolbar',
+            showRefresh: true,
+            queryParams: ConstructQueryParams,
+            //queryParamsType: "limit",
+            locale: 'zh-CN',
+            paginationVAlign: 'bottom',  //分页条显示在顶部
+            clickToSelect: true,     //单击行选中数据
+            showColumns: true,
+            showToggle: true,
+            showExport: true, //数据导出
+            exportDataType: 'basic', // 'basic', 'all', 'selected'.
+            exportTypes: ['excel'],
+            filterControl: true,   //显示过滤
+            filterShowClear: true,  //显示清空过滤按钮
+            columns: [{
+                checkbox: true
+            },
+            {
+                field: 'Id',
+                title: 'Id',
+                visible: false,
+            },
+            {
+                field: 'UserName',
+                title: '用户名称',
+                filterControl: 'input'
+
+            },
+            {
+                field: 'Roles',
+                title: '所属角色',
+                formatter: function (value, row, index) {
+
+                    var rolesHtml = "";
+                    var roles = row.Roles;
+                    if (roles != null && roles.length > 0) {
+                        for (var i = 0; i < roles.length; i++) {
+
+                            var roleName = DicRoles(roles[i].Name);
+                            rolesHtml += roleName + "<br/>";
+
+                        }
+
+                    }
+                    return rolesHtml;
+                },
+
+            },
+            {
+                field: 'Email',
+                title: '邮箱',
+                sortable: true
+
+            }, {
+                field: 'PhoneNumber',
+                title: '联系电话',
+                sortable: true
+
+            }
+            ]
+        });
+    }
+    function ConstructQueryParams(param) {
+        var filterObj = {};
+        if (param.filter != null) {
+            filterObj = JSON.parse(param.filter);
+        }
+
+        var params = {
+            limit: param.limit, //页面大小
+            offset: param.offset,//偏移数量
+            page: param.offset / param.limit, //页码
+            UserName: filterObj.UserName == null ? "" : filterObj.UserName
+        };
+        return params;
+    }
+
+    function InitModalEvent() {
+        $('#templetemodal').on('show.bs.modal', function () {
+            //打开事件
+        });
+
+        $('#templetemodal').on('hide.bs.modal', function () {
+            // 关闭事件
+            $("#divModalContent").html("");
+
+        })
+
+
+    }
+
+    function CloseModal() {
+        $('#templetemodal').modal('hide');
+
+    }
+
+    function InitToolBarButton() {
+
+        $("#btnAdd").click(function () {
+            $('#templetemodal').modal('show');
+            $("#divModalContent").load("/User/Add");
+        });
+
+        $("#btnEdit").click(function () {
+
+            var selections = $('#table').bootstrapTable('getSelections');
+            if (selections.length == 0) {
+                layer.alert("请选择要将要修改的数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            } else if (selections.length != 1) {
+                layer.alert("只能选择一条数据进行修改", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+
+
+            if ('@isSystemAdmin' == "false"
+                && selections[0].IsSystemAdmin) {
+                layer.alert("对不起，您无权对系统管理员进行操作", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+
+            }
+            var id = selections[0].Id;
+            $('#templetemodal').modal('show');
+            $("#divModalContent").load("/User/Edit?userId=" + id);
+
+        });
+
+        $("#btnDelete").click(function () {
+            var selections = $('#table').bootstrapTable('getSelections');
+            if (selections.length == 0) {
+                layer.alert("请选择要将要删除的数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+            var contactIds = [];
+            for (var i = 0; i < selections.length; i++) {
+                var id = selections[i].Id;
+                contactIds.push(id);
+
+                if ('@isSystemAdmin' == "false"
+                && selections[i].IsSystemAdmin) {
+                    layer.alert("对不起，您无权对系统管理员进行操作", {
+                        skin: 'layui-layer-molv'
+                                , closeBtn: 0
+                                , shift: 5 //动画类型
+                    });
+                    return;
+
+                }
+
+            }
+
+            layer.confirm('确定删除该条记录吗？', {
+                btn: ['确定', '取消'] //可以无限个按钮
+
+            }, function (index, layero) {
+
+                layer.close(index);
+                //delete records
+                var jsonUserId = JSON.stringify(contactIds);
+                $.ajax({
+                    type: "post",//使用get方法访问后台
+                    dataType: "json",//返回json格式的数据
+                    url: "/User/BachDeleteById",
+                    data: jsonUserId,
+                    async: false,
+                    success: function (message) {
+                        if (message.Success) {
+                            RefreshTable();
+                        } else {
+                            layer.alert(message.Content, {
+                                skin: 'layui-layer-molv'
+                                , closeBtn: 0
+                                , shift: 5 //动画类型
+                            });
+                        }
+
+                    }
+                });
+
+
+            }, function (index) {
+
+            });
+
+
+        });
+
+        //详细
+        $("#btnDetail").click(function () {
+
+            var selections = $('#table').bootstrapTable('getSelections');
+            if (selections.length == 0) {
+                layer.alert("请选择数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            } else if (selections.length != 1) {
+                layer.alert("只能选择一条数据", {
+                    skin: 'layui-layer-molv'
+                            , closeBtn: 0
+                            , shift: 5 //动画类型
+                });
+                return;
+            }
+
+
+            var id = selections[0].Id;
+            $('#templetemodal').modal('show');
+            $("#divModalContent").load("/User/Detail?id=" + id);
+
+        });
+    }
+
+    function RefreshTable() {
+        $('#table').bootstrapTable('refresh');
+
+    }
+
+
+    function DicRoles(key) {
+        var result = key;
+        for (var i = 0; i < dicRoles.length; i++) {
+            if (key == dicRoles[i].Key) {
+                result = dicRoles[i].Value;
+            }
+        }
+        return result;
+    }
+</script>

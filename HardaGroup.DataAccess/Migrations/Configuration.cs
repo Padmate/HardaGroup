@@ -6,6 +6,8 @@ namespace HardaGroup.DataAccess.Migrations
     using System.Linq;
     using Microsoft.AspNet.Identity;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using HardaGroup.Utility;
+    using HardaGroup.Entities;
 
     internal sealed class Configuration : DbMigrationsConfiguration<HardaGroup.DataAccess.HardaDBContext>
     {
@@ -18,7 +20,7 @@ namespace HardaGroup.DataAccess.Migrations
         {
             #region Add Admin Role
             string adminRoleId = string.Empty;
-            string admin = "Admin";
+            string admin = SystemRole.SystemAdmin; //系统管理员
             var adminRole = context.Roles.FirstOrDefault(r => r.Name == admin);
             if (adminRole == null)
             {
@@ -36,7 +38,7 @@ namespace HardaGroup.DataAccess.Migrations
 
             #endregion
             #region Init Admin User
-            string userName = "Admin";
+            string userName = SystemRole.SystemAdmin;
             string password = "admin123";
             var user = context.Users.FirstOrDefault(u => u.UserName == userName);
             if (user == null)
@@ -48,7 +50,7 @@ namespace HardaGroup.DataAccess.Migrations
                 {
                     UserName = userName,
                     PasswordHash = passwordHash,
-                    Email = "123@qq.com",
+                    Email = "2727954462@qq.com",
                     EmailConfirmed = true,
                     SecurityStamp = Guid.NewGuid().ToString()
                 };

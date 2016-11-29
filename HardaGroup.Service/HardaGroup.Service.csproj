@@ -44,9 +44,11 @@
     <Compile Include="B_Image.cs" />
     <Compile Include="B_Job.cs" />
     <Compile Include="B_JobScope.cs" />
+    <Compile Include="B_Mail.cs" />
     <Compile Include="B_Module.cs" />
     <Compile Include="B_News.cs" />
     <Compile Include="B_NewsScope.cs" />
+    <Compile Include="B_Role.cs" />
     <Compile Include="B_User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -13,6 +13,7 @@ using HardaGroup.Utility;
 using HardaGroup.Models;
 using System.Collections.Generic;
 using System.Web.Script.Serialization;
+using System.IO;
 
 namespace HardaGroup.Web.Controllers
 {
@@ -143,6 +144,61 @@ namespace HardaGroup.Web.Controllers
 
             return View();
         }
+
+        public ActionResult UserManage()
+        {
+
+            //角色
+            ViewData["Roles"] = JsonHandle.ToJson(SystemRole.Dic_Roles);
+
+            //获取当前登录用户
+            var currentUser = this.GetCurrentUser();
+            ViewData["LoginUser"] = currentUser;
+            return View();
+        }
+
+        public ActionResult RoleManage()
+        {
+            //角色
+            ViewData["Roles"] = JsonHandle.ToJson(SystemRole.Dic_Roles);
+
+            return View();
+        }
+
+        /// <summary>
+        /// 用户信息
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult UserInfo()
+        {
+
+            //获取当前登录用户
+            var loginUser = this.GetCurrentUser();
+            B_User bUser = new B_User();
+            var user = bUser.GetUserByName(loginUser.UserName);
+            ViewData["UserInfo"] = user;
+            ViewData["JsonUserInfo"] = JsonHandle.ToJson(user);
+            return View();
+        }
+
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// 系统邮件
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Mail()
+        {
+            return View();
+        }
+        
     }
 }
 

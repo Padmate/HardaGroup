@@ -20,6 +20,7 @@ namespace HardaGroup.Web.Controllers
             //获取当前国际化代码
             var culture = GlobalizationHelp.GetCurrentThreadCultureCode();
 
+            B_Module bModule = new B_Module();
             B_News bNews = new B_News();
             //查找首页滚动的新闻
             var scrollNews = bNews.GetAllScrollNewsByCulture(culture);
@@ -27,6 +28,17 @@ namespace HardaGroup.Web.Controllers
             //查找热点新闻
             var hotNews = bNews.GetAllHotNewsByCulture(culture);
             ViewData["hotNews"] = hotNews;
+            //获取备用模块的内容
+            var module1 = bModule.GetModuleByCultureAndType(culture, Common.ModuleType_Home_Module1);
+            ViewData["module1"] = module1;
+
+            //获取备用模块的内容
+            var module2 = bModule.GetModuleByCultureAndType(culture, Common.ModuleType_Home_Module2);
+            ViewData["module2"] = module2;
+
+            //为什么选择华尔达
+            var whychooseharda = bModule.GetModuleByCultureAndType(culture, Common.ModuleType_Home_WhyChooseHarda);
+            ViewData["whychooseharda"] = whychooseharda;
 
             return View();
         }
